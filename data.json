@@ -1,6 +1,85 @@
 {
-  "cap_nhat_luc": "05/05/2026 08:23",
+  "cap_nhat_luc": "05/05/2026 08:34",
   "ten_bao_cao": "Dữ liệu Mang tải từ 7h đến 8h ngày 05/05/2026",
-  "tong_ban_ghi": 0,
-  "du_lieu": []
+  "tong_ban_ghi": 6,
+  "du_lieu": [
+    {
+      "stt": 3,
+      "teN_KHANG": "Tây Lương 8",
+      "thoI_GIAN": "2026-05-05 07:30:00",
+      "i_MANG_TAI": 123.32,
+      "i_LECH_PHA": 67.53,
+      "donG_DIEN_A": 42.0,
+      "donG_DIEN_B": 77.8,
+      "donG_DIEN_C": 89.0,
+      "daP_A": 227.8,
+      "daP_B": 226.3,
+      "daP_C": 227.0
+    },
+    {
+      "stt": 5,
+      "teN_KHANG": "An Ninh 6",
+      "thoI_GIAN": "2026-05-05 07:30:00",
+      "i_MANG_TAI": 140.29,
+      "i_LECH_PHA": 69.4,
+      "donG_DIEN_A": 70.55,
+      "donG_DIEN_B": 49.95,
+      "donG_DIEN_C": 101.25,
+      "daP_A": 226.4,
+      "daP_B": 225.8,
+      "daP_C": 226.0
+    },
+    {
+      "stt": 1,
+      "teN_KHANG": "Tây Lương 7",
+      "thoI_GIAN": "2026-05-05 07:00:00",
+      "i_MANG_TAI": 123.46,
+      "i_LECH_PHA": 28.9,
+      "donG_DIEN_A": 80.1,
+      "donG_DIEN_B": 89.1,
+      "donG_DIEN_C": 66.4,
+      "daP_A": 235.4,
+      "daP_B": 233.6,
+      "daP_C": 235.6
+    },
+    {
+      "stt": 2,
+      "teN_KHANG": "Tây Lương 8",
+      "thoI_GIAN": "2026-05-05 07:00:00",
+      "i_MANG_TAI": 118.61,
+      "i_LECH_PHA": 56.24,
+      "donG_DIEN_A": 55.9,
+      "donG_DIEN_B": 49.75,
+      "donG_DIEN_C": 85.6,
+      "daP_A": 229.7,
+      "daP_B": 228.8,
+      "daP_C": 229.5
+    },
+    {
+      "stt": 4,
+      "teN_KHANG": "An Ninh 6",
+      "thoI_GIAN": "2026-05-05 07:00:00",
+      "i_MANG_TAI": 198.35,
+      "i_LECH_PHA": 93.25,
+      "donG_DIEN_A": 53.6,
+      "donG_DIEN_B": 91.35,
+      "donG_DIEN_C": 143.15,
+      "daP_A": 228.9,
+      "daP_B": 227.6,
+      "daP_C": 227.6
+    },
+    {
+      "stt": 6,
+      "teN_KHANG": "Đông Long 6",
+      "thoI_GIAN": "2026-05-05 07:00:00",
+      "i_MANG_TAI": 132.4,
+      "i_LECH_PHA": 62.61,
+      "donG_DIEN_A": 71.85,
+      "donG_DIEN_B": 95.55,
+      "donG_DIEN_C": 50.15,
+      "daP_A": 233.8,
+      "daP_B": 233.1,
+      "daP_C": 233.7
+    }
+  ]
 }
