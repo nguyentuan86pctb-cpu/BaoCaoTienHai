@@ -229,8 +229,8 @@ let trangHienTai = 1;  // Trang đang xem
 // -------------------------------------------------------
 async function taiDuLieu() {
     try {
-        // Thêm timestamp để tránh cache trình duyệt
-        const res  = await fetch(`/data.json?t=${Date.now()}`);
+        // Fetch từ GitHub raw — tránh cache bằng timestamp
+        const res  = await fetch(`https://raw.githubusercontent.com/nguyentuan86pctb-cpu/BaoCaoTienHai/main/data.json?t=${Date.now()}`);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const json = await res.json();
 
