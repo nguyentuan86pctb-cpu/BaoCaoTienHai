@@ -1,6 +1,6 @@
 {
   "ngay_cap_nhat": "06/05/2026",
-  "cap_nhat_luc": "06/05/2026 09:56:19",
+  "cap_nhat_luc": "06/05/2026 10:56:52",
   "du_lieu": {
     "09h56": [
       {
@@ -43,6 +43,92 @@
         "daP_A": 231.9,
         "daP_B": 231.7,
         "daP_C": 232.3,
+        "conG_SUAT": 50
+      }
+    ],
+    "10h56": [
+      {
+        "stt": 2,
+        "teN_KHANG": "Tây Lương 10",
+        "thoI_GIAN": "2026-06-05 09:30:00",
+        "i_MANG_TAI": 101.98,
+        "i_LECH_PHA": 57.78,
+        "donG_DIEN_A": 42.3,
+        "donG_DIEN_B": 73.6,
+        "donG_DIEN_C": 46.6,
+        "daP_A": 236.0,
+        "daP_B": 235.5,
+        "daP_C": 234.9,
+        "conG_SUAT": 50
+      },
+      {
+        "stt": 4,
+        "teN_KHANG": "An Ninh 6",
+        "thoI_GIAN": "2026-06-05 09:30:00",
+        "i_MANG_TAI": 134.2,
+        "i_LECH_PHA": 39.91,
+        "donG_DIEN_A": 66.5,
+        "donG_DIEN_B": 66.3,
+        "donG_DIEN_C": 96.85,
+        "daP_A": 228.2,
+        "daP_B": 227.5,
+        "daP_C": 227.7,
+        "conG_SUAT": 50
+      },
+      {
+        "stt": 6,
+        "teN_KHANG": "Nam Chính 7",
+        "thoI_GIAN": "2026-06-05 09:30:00",
+        "i_MANG_TAI": 112.72,
+        "i_LECH_PHA": 35.51,
+        "donG_DIEN_A": 81.35,
+        "donG_DIEN_B": 56.45,
+        "donG_DIEN_C": 72.55,
+        "daP_A": 227.4,
+        "daP_B": 228.2,
+        "daP_C": 227.3,
+        "conG_SUAT": 50
+      },
+      {
+        "stt": 1,
+        "teN_KHANG": "Tây Lương 8",
+        "thoI_GIAN": "2026-06-05 09:00:00",
+        "i_MANG_TAI": 103.09,
+        "i_LECH_PHA": 45.11,
+        "donG_DIEN_A": 46.65,
+        "donG_DIEN_B": 74.4,
+        "donG_DIEN_C": 63.5,
+        "daP_A": 228.4,
+        "daP_B": 226.9,
+        "daP_C": 228.2,
+        "conG_SUAT": 50
+      },
+      {
+        "stt": 3,
+        "teN_KHANG": "An Ninh 6",
+        "thoI_GIAN": "2026-06-05 09:00:00",
+        "i_MANG_TAI": 140.5,
+        "i_LECH_PHA": 60.69,
+        "donG_DIEN_A": 57.8,
+        "donG_DIEN_B": 57.55,
+        "donG_DIEN_C": 101.4,
+        "daP_A": 227.0,
+        "daP_B": 226.1,
+        "daP_C": 226.1,
+        "conG_SUAT": 50
+      },
+      {
+        "stt": 5,
+        "teN_KHANG": "Đông Long 6",
+        "thoI_GIAN": "2026-06-05 09:00:00",
+        "i_MANG_TAI": 100.73,
+        "i_LECH_PHA": 33.4,
+        "donG_DIEN_A": 72.7,
+        "donG_DIEN_B": 62.75,
+        "donG_DIEN_C": 51.85,
+        "daP_A": 232.4,
+        "daP_B": 232.0,
+        "daP_C": 232.4,
         "conG_SUAT": 50
       }
     ]
