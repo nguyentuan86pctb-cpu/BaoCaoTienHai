@@ -1,6 +1,6 @@
 {
   "ngay_cap_nhat": "06/05/2026",
-  "cap_nhat_luc": "06/05/2026 16:45:19",
+  "cap_nhat_luc": "06/05/2026 17:15:20",
   "du_lieu": {
     "15h15": [
       {
@@ -147,6 +147,78 @@
       }
     ],
     "16h45": [
+      {
+        "stt": 2,
+        "teN_KHANG": "Tây Lương 8",
+        "thoI_GIAN": "2026-06-05 15:30:00",
+        "i_MANG_TAI": 106.0,
+        "i_LECH_PHA": 48.22,
+        "donG_DIEN_A": 48.3,
+        "donG_DIEN_B": 50.65,
+        "donG_DIEN_C": 76.5,
+        "daP_A": 226.8,
+        "daP_B": 225.7,
+        "daP_C": 226.2,
+        "conG_SUAT": 50
+      },
+      {
+        "stt": 4,
+        "teN_KHANG": "An Ninh 6",
+        "thoI_GIAN": "2026-06-05 15:30:00",
+        "i_MANG_TAI": 146.32,
+        "i_LECH_PHA": 96.94,
+        "donG_DIEN_A": 40.7,
+        "donG_DIEN_B": 54.55,
+        "donG_DIEN_C": 105.6,
+        "daP_A": 225.0,
+        "daP_B": 224.1,
+        "daP_C": 224.3,
+        "conG_SUAT": 50
+      },
+      {
+        "stt": 1,
+        "teN_KHANG": "Tây Lương 8",
+        "thoI_GIAN": "2026-06-05 15:00:00",
+        "i_MANG_TAI": 107.73,
+        "i_LECH_PHA": 53.3,
+        "donG_DIEN_A": 44.25,
+        "donG_DIEN_B": 66.55,
+        "donG_DIEN_C": 77.75,
+        "daP_A": 227.9,
+        "daP_B": 226.5,
+        "daP_C": 227.3,
+        "conG_SUAT": 50
+      },
+      {
+        "stt": 3,
+        "teN_KHANG": "An Ninh 6",
+        "thoI_GIAN": "2026-06-05 15:00:00",
+        "i_MANG_TAI": 196.69,
+        "i_LECH_PHA": 61.57,
+        "donG_DIEN_A": 76.0,
+        "donG_DIEN_B": 103.4,
+        "donG_DIEN_C": 141.95,
+        "daP_A": 225.9,
+        "daP_B": 225.0,
+        "daP_C": 225.2,
+        "conG_SUAT": 50
+      },
+      {
+        "stt": 5,
+        "teN_KHANG": "Tây Giang 11",
+        "thoI_GIAN": "2026-06-05 15:00:00",
+        "i_MANG_TAI": 105.02,
+        "i_LECH_PHA": 33.87,
+        "donG_DIEN_A": 378.96,
+        "donG_DIEN_B": 288.48,
+        "donG_DIEN_C": 272.8,
+        "daP_A": 221.6,
+        "daP_B": 222.9,
+        "daP_C": 234.1,
+        "conG_SUAT": 250
+      }
+    ],
+    "17h15": [
       {
         "stt": 2,
         "teN_KHANG": "Tây Lương 8",
