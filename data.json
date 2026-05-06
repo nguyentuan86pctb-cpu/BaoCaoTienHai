@@ -1,6 +1,6 @@
 {
   "ngay_cap_nhat": "06/05/2026",
-  "cap_nhat_luc": "06/05/2026 17:15:20",
+  "cap_nhat_luc": "06/05/2026 17:45:20",
   "du_lieu": {
     "15h15": [
       {
@@ -288,6 +288,148 @@
         "daP_B": 222.9,
         "daP_C": 234.1,
         "conG_SUAT": 250
+      }
+    ],
+    "17h45": [
+      {
+        "stt": 2,
+        "teN_KHANG": "Tây Lương 7",
+        "thoI_GIAN": "2026-06-05 16:30:00",
+        "i_MANG_TAI": 133.09,
+        "i_LECH_PHA": 25.45,
+        "donG_DIEN_A": 96.05,
+        "donG_DIEN_B": 74.4,
+        "donG_DIEN_C": 84.8,
+        "daP_A": 233.2,
+        "daP_B": 232.5,
+        "daP_C": 233.7,
+        "conG_SUAT": 50
+      },
+      {
+        "stt": 3,
+        "teN_KHANG": "Tây Lương 8",
+        "thoI_GIAN": "2026-06-05 16:30:00",
+        "i_MANG_TAI": 168.7,
+        "i_LECH_PHA": 41.37,
+        "donG_DIEN_A": 99.8,
+        "donG_DIEN_B": 80.15,
+        "donG_DIEN_C": 121.75,
+        "daP_A": 227.3,
+        "daP_B": 226.6,
+        "daP_C": 226.6,
+        "conG_SUAT": 50
+      },
+      {
+        "stt": 4,
+        "teN_KHANG": "Tây Lương 10",
+        "thoI_GIAN": "2026-06-05 16:30:00",
+        "i_MANG_TAI": 118.89,
+        "i_LECH_PHA": 77.48,
+        "donG_DIEN_A": 37.05,
+        "donG_DIEN_B": 85.8,
+        "donG_DIEN_C": 65.9,
+        "daP_A": 233.5,
+        "daP_B": 233.0,
+        "daP_C": 232.6,
+        "conG_SUAT": 50
+      },
+      {
+        "stt": 6,
+        "teN_KHANG": "An Ninh 6",
+        "thoI_GIAN": "2026-06-05 16:30:00",
+        "i_MANG_TAI": 177.84,
+        "i_LECH_PHA": 66.13,
+        "donG_DIEN_A": 66.4,
+        "donG_DIEN_B": 86.3,
+        "donG_DIEN_C": 128.35,
+        "daP_A": 226.7,
+        "daP_B": 225.8,
+        "daP_C": 225.7,
+        "conG_SUAT": 50
+      },
+      {
+        "stt": 7,
+        "teN_KHANG": "An Ninh 7",
+        "thoI_GIAN": "2026-06-05 16:30:00",
+        "i_MANG_TAI": 112.44,
+        "i_LECH_PHA": 53.39,
+        "donG_DIEN_A": 66.05,
+        "donG_DIEN_B": 81.15,
+        "donG_DIEN_C": 46.65,
+        "daP_A": 233.4,
+        "daP_B": 232.6,
+        "daP_C": 234.1,
+        "conG_SUAT": 50
+      },
+      {
+        "stt": 10,
+        "teN_KHANG": "Nam Chính 7",
+        "thoI_GIAN": "2026-06-05 16:30:00",
+        "i_MANG_TAI": 103.09,
+        "i_LECH_PHA": 27.95,
+        "donG_DIEN_A": 72.4,
+        "donG_DIEN_B": 55.55,
+        "donG_DIEN_C": 74.4,
+        "daP_A": 225.8,
+        "daP_B": 226.6,
+        "daP_C": 225.8,
+        "conG_SUAT": 50
+      },
+      {
+        "stt": 1,
+        "teN_KHANG": "Tây Lương 7",
+        "thoI_GIAN": "2026-06-05 16:00:00",
+        "i_MANG_TAI": 155.81,
+        "i_LECH_PHA": 26.93,
+        "donG_DIEN_A": 86.35,
+        "donG_DIEN_B": 112.45,
+        "donG_DIEN_C": 91.9,
+        "daP_A": 233.3,
+        "daP_B": 231.1,
+        "daP_C": 233.0,
+        "conG_SUAT": 50
+      },
+      {
+        "stt": 5,
+        "teN_KHANG": "An Ninh 6",
+        "thoI_GIAN": "2026-06-05 16:00:00",
+        "i_MANG_TAI": 126.85,
+        "i_LECH_PHA": 80.47,
+        "donG_DIEN_A": 45.75,
+        "donG_DIEN_B": 43.15,
+        "donG_DIEN_C": 91.55,
+        "daP_A": 226.3,
+        "daP_B": 225.9,
+        "daP_C": 225.7,
+        "conG_SUAT": 50
+      },
+      {
+        "stt": 8,
+        "teN_KHANG": "Đông Long 6",
+        "thoI_GIAN": "2026-06-05 16:00:00",
+        "i_MANG_TAI": 134.61,
+        "i_LECH_PHA": 63.74,
+        "donG_DIEN_A": 97.15,
+        "donG_DIEN_B": 69.05,
+        "donG_DIEN_C": 51.0,
+        "daP_A": 231.0,
+        "daP_B": 230.5,
+        "daP_C": 230.9,
+        "conG_SUAT": 50
+      },
+      {
+        "stt": 9,
+        "teN_KHANG": "Nam Chính 7",
+        "thoI_GIAN": "2026-06-05 16:00:00",
+        "i_MANG_TAI": 108.42,
+        "i_LECH_PHA": 28.69,
+        "donG_DIEN_A": 78.25,
+        "donG_DIEN_B": 59.2,
+        "donG_DIEN_C": 61.75,
+        "daP_A": 225.5,
+        "daP_B": 226.3,
+        "daP_C": 225.6,
+        "conG_SUAT": 50
       }
     ]
   }
