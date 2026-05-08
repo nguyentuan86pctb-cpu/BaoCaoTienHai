@@ -41,19 +41,19 @@
         table.dataTable tbody tr:hover { background-color: #eff6ff !important; }
 
         /* Style Dòng Đốc nợ (Khi tick checkbox) */
-        tr.da-doc-no td { background-color: #dcfce7 !important; /* Xanh lá nhạt */ transition: background-color 0.2s; }
+        tr.da-doc-no td { background-color: #dcfce7 !important; transition: background-color 0.2s; }
 
-        /* ===== CSS cho bảng dư nợ: thu gọn padding để vừa màn hình ===== */
+        /* ===== CSS cho bảng dư nợ: Đã tăng size chữ lên 14px để Mobile nhìn rõ ===== */
         #bang-duno th, #bang-duno td {
-            padding: 5px 7px !important;
-            font-size: 12px !important;
+            padding: 8px 10px !important;
+            font-size: 14px !important; 
             white-space: nowrap;
         }
         #bang-duno thead th {
             background: linear-gradient(135deg, #0054A6, #002B54) !important;
             color: #fff !important;
             font-weight: 700 !important;
-            font-size: 11px !important;
+            font-size: 12px !important;
         }
         /* Cột Tổng tiền nổi bật */
         .col-tong-tien { font-weight: 900; color: #c0392b; }
@@ -63,30 +63,19 @@
             body * { visibility: hidden; }
             body { padding-bottom: 0 !important; }
             #vung-in-duno, #vung-in-duno * { visibility: visible; }
-            #vung-in-duno {
-                position: absolute;
-                top: 0; left: 0;
-                width: 100%;
-            }
-            .dataTables_wrapper .dataTables_filter,
-            .dataTables_wrapper .dataTables_length,
-            .dataTables_wrapper .dataTables_info,
-            .dataTables_wrapper .dataTables_paginate { display: none !important; }
+            #vung-in-duno { position: absolute; top: 0; left: 0; width: 100%; }
+            .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_length,
+            .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_paginate { display: none !important; }
             
-            /* Ép bảng in */
             table { width: 100% !important; table-layout: auto !important; }
-            /* Cho phép tất cả các cột tự động rớt dòng thay vì kéo dài */
             th, td { padding: 3px 4px !important; font-size: 9px !important; white-space: normal !important; word-wrap: break-word !important; }
             
-            /* Thu hẹp cột Tên KH */
             .col-ten-kh { width: 18% !important; }
-            /* Ẩn cột Checkbox khi in */
-            .col-chk { display: none !important; }
+            .col-chk, .col-chi-tiet { display: none !important; }
 
-            /* Header in */
             #in-header { display: block !important; }
             #in-dong-tong { display: block !important; }
-            @page { size: A4 landscape; margin: 5mm; } /* Viền nhỏ lại để hiện nhiều hơn */
+            @page { size: A4 landscape; margin: 5mm; } 
         }
         #in-header { display: none; }
     </style>
@@ -291,14 +280,12 @@ function chuyenTab(tabName) {
     document.getElementById('tab-' + tabName).classList.remove('hidden');
     document.getElementById('tab-' + tabName).classList.add('block');
     
-    // Đồng bộ trạng thái Desktop Sidebar
     const classInactive = "cursor-pointer text-slate-400 hover:text-white hover:bg-white/5 rounded-lg flex items-center gap-3 px-4 py-3 border-l-4 border-transparent transition-transform transform hover:translate-x-1";
     const classActive = "cursor-pointer bg-gradient-to-r from-evnBlue to-[#004080] text-white rounded-lg shadow-md flex items-center gap-3 px-4 py-3 border-l-4 border-evnOrange transition-transform transform hover:translate-x-1";
     
     document.getElementById('btn-nav-mang-tai').className = (tabName === 'mang-tai' ? classActive : classInactive);
     document.getElementById('btn-nav-du-no').className = (tabName === 'du-no' ? classActive : classInactive);
 
-    // Đồng bộ trạng thái Mobile Bottom Nav
     const botInactive = "flex-1 py-3 flex flex-col items-center justify-center text-slate-500 border-t-2 border-transparent transition-all";
     const botActive = "flex-1 py-3 flex flex-col items-center justify-center text-evnBlue border-t-2 border-evnBlue bg-blue-50/50 transition-all";
     
@@ -308,12 +295,11 @@ function chuyenTab(tabName) {
     if (btnBotMangTai) btnBotMangTai.className = (tabName === 'mang-tai' ? botActive : botInactive);
     if (btnBotDuNo) btnBotDuNo.className = (tabName === 'du-no' ? botActive : botInactive);
 
-    // Kích hoạt load dữ liệu
     if (tabName === 'du-no' && dataTableDuNo === null) taiDuLieuDuNo();
 }
 
 // ==========================================
-// 2. LOGIC BÁO CÁO MANG TẢI
+// 2. LOGIC BÁO CÁO MANG TẢI (GIỮ NGUYÊN 100%)
 // ==========================================
 const SO_DONG_MOI_TRANG = 15;
 let duLieuToanBoGoc = {}; 
@@ -461,7 +447,6 @@ function renderDuLieu() {
 // ==========================================
 const STORAGE_KEY = 'evn_duno_ticks_tienhai';
 
-// -- CÁC HÀM XỬ LÝ LƯU TRỮ LOCALSTORAGE --
 function layDanhSachTick() {
     let homNay = new Date().toLocaleDateString('vi-VN');
     let data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
@@ -489,18 +474,15 @@ function luuTrangThaiTick(maKH, isTick) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 }
 
-// -- BIẾN TOÀN CỤC CHO DƯ NỢ --
 let dataTableDuNo = null;  
 let cotTNV_global = null;  
 let cotTien_global = null; 
 let nguongLocTien = 0;     
-let mangCotHoanChinh = []; // Lưu lại thứ tự cột sau khi sắp xếp
+let mangCotHoanChinh = []; 
 
 const COT_CAN_AN = [
-    'địa chỉ', 'dia chi',
-    'thu ngân', 'thu ngan', 'tnv', 'thu ngân viên',
-    'kỳ', 'tháng', 'năm', 'kỳ tháng năm', 'ky thang nam',
-    'loại hóa đơn', 'loai hoa don',
+    'địa chỉ', 'dia chi', 'thu ngân', 'thu ngan', 'tnv', 'thu ngân viên',
+    'kỳ', 'tháng', 'năm', 'kỳ tháng năm', 'ky thang nam', 'loại hóa đơn', 'loai hoa don',
     'ngày phát hành', 'ngay phat hanh'
 ];
 
@@ -523,12 +505,11 @@ async function taiDuLieuDuNo() {
 
         const keys = Object.keys(records[0]);
 
-        // Tự động nhận diện cột bất chấp tên JSON
         cotTNV_global  = keys.find(k => k.toLowerCase().includes('thu ngân') || k.toLowerCase().includes('tnv') || k.toLowerCase().includes('thu ngan'));
         cotTien_global = keys.find(k => k.toLowerCase().includes('tổng tiền') || k.toLowerCase().includes('tong tien') || k.toLowerCase().includes('nợ'));
-        let cotMaKH    = keys.find(k => k.toLowerCase().includes('mã') || k.toLowerCase().includes('mã kh'));
+        let cotMaKH    = keys.find(k => k.toLowerCase().includes('mã kh') || k.toLowerCase().includes('ma kh'));
+        let cotTenKH   = keys.find(k => k.toLowerCase().includes('tên kh') || k.toLowerCase().includes('ten kh'));
         let cotTram    = keys.find(k => k.toLowerCase().includes('trạm') || k.toLowerCase().includes('tram'));
-        let cotTenKH   = keys.find(k => k.toLowerCase().includes('tên') || k.toLowerCase().includes('tên kh'));
         let cotSDT     = keys.find(k => k.toLowerCase().includes('sdt') || k.toLowerCase().includes('điện thoại') || k.toLowerCase().includes('đt'));
 
         if (cotTNV_global) {
@@ -540,28 +521,32 @@ async function taiDuLieuDuNo() {
 
         if (dataTableDuNo) { dataTableDuNo.destroy(); $('#bang-duno').empty(); }
 
-        // BƯỚC 1: Sắp xếp lại thứ tự cột
-        let dsCotUuTien = [cotTram, cotTenKH, cotTien_global, cotSDT].filter(Boolean);
+        // BƯỚC 1: Cấu trúc ưu tiên: TRẠM -> TÊN KH -> MÃ KH -> TIỀN -> SĐT
+        let dsCotUuTien = [cotTram, cotTenKH, cotMaKH, cotTien_global, cotSDT].filter(Boolean);
         let dsCotConLai = keys.filter(k => !dsCotUuTien.includes(k));
         mangCotHoanChinh = [...dsCotUuTien, ...dsCotConLai];
 
-        // BƯỚC 2: Định dạng dữ liệu từng cột
+        // BƯỚC 2: Định dạng dữ liệu
         const columnDefs = mangCotHoanChinh.map((k) => {
+            let isUuTien = dsCotUuTien.includes(k);
             let title = k.toUpperCase();
             let className = '';
             
             if (k === cotTien_global) className += 'col-tong-tien text-right ';
             if (k === cotTenKH) className += 'col-ten-kh font-semibold text-evnDark ';
             
-            let def = { data: k, title: title, className: className.trim(), visible: !kiemTraAnCot(k) };
+            let def = { 
+                data: k, 
+                title: title, 
+                className: className.trim(), 
+                visible: isUuTien // Chỉ hiện 5 cột chính lên bảng
+            };
 
-            // Xử lý bù số 0 và tạo nút Click-to-call cho cột Số điện thoại
             if (k === cotSDT) {
                 def.render = function(data, type) {
                     if (!data) return '';
                     let sdt = String(data).trim();
                     if (sdt.length >= 8 && !sdt.startsWith('0')) sdt = '0' + sdt;
-                    
                     if (type === 'display') {
                         return `<a href="tel:${sdt}" class="text-evnBlue font-bold hover:text-evnOrange transition-colors flex items-center gap-1">
                                     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
@@ -574,73 +559,90 @@ async function taiDuLieuDuNo() {
             return def;
         });
 
-        // BƯỚC 3: Ghép cột Checkbox lên đầu
+        // BƯỚC 3: Ghép cột Checkbox ở đầu và Nút XEM ở cuối
         const finalColumns = [
             {
-                data: null,
-                title: '<span class="text-[10px]">ĐỐC</span>',
-                orderable: false,
-                searchable: false,
-                className: 'text-center col-chk',
+                data: null, title: '<span class="text-[10px]">ĐỐC</span>', orderable: false, searchable: false, className: 'text-center col-chk w-8',
                 render: function(data, type, row) {
                     let maKH = cotMaKH ? row[cotMaKH] : null;
-                    let isChecked = kiemTraDaTick(maKH) ? 'checked' : ''; // Khôi phục trạng thái tick
+                    let isChecked = kiemTraDaTick(maKH) ? 'checked' : '';
                     return `<input type="checkbox" data-makh="${maKH}" class="chk-doc-no w-4 h-4 cursor-pointer accent-green-600" ${isChecked}>`;
                 }
             },
-            ...columnDefs
+            ...columnDefs,
+            {
+                data: null, title: 'CHI TIẾT', orderable: false, searchable: false, className: 'text-center col-chi-tiet w-20',
+                render: function() {
+                    return `<button class="btn-mo-rong bg-white border border-evnBlue text-evnBlue px-2 py-1 rounded text-[10px] font-bold hover:bg-evnBlue hover:text-white transition-colors flex items-center justify-center gap-1 mx-auto shadow-sm w-full">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>XEM
+                            </button>`;
+                }
+            }
         ];
 
         dataTableDuNo = $('#bang-duno').DataTable({
-            data: records,
-            columns: finalColumns,
-            pageLength: 50,
-            lengthMenu: [[50, 100, 200, 500], [50, 100, 200, 1000]],
-            language: {
-                search: "Tìm kiếm:",
-                lengthMenu: "Hiện _MENU_ dòng",
-                info: "Dòng _START_–_END_ / Tổng _TOTAL_",
-                zeroRecords: "Không tìm thấy dữ liệu phù hợp",
-                paginate: { next: "Sau »", previous: "« Trước" }
-            },
+            data: records, columns: finalColumns,
+            pageLength: 50, lengthMenu: [[50, 100, 200, 500], [50, 100, 200, 1000]],
+            language: { search: "Tìm kiếm:", lengthMenu: "Hiện _MENU_ dòng", info: "Dòng _START_–_END_ / Tổng _TOTAL_", zeroRecords: "Không tìm thấy dữ liệu phù hợp", paginate: { next: "Sau »", previous: "« Trước" } },
             createdRow: function(row, data) {
-                // Khôi phục bôi nền xanh nếu đã tick
                 let maKH = cotMaKH ? data[cotMaKH] : null;
                 if (kiemTraDaTick(maKH)) $(row).addClass('da-doc-no');
-
                 if (cotTien_global) {
                     let val = parseFloat(String(data[cotTien_global]).replace(/\./g, '').replace(/,/g, ''));
                     if (val > 1000000) $('td.col-tong-tien', row).addClass('font-black text-red-700');
                 }
             },
-            scrollX: false,
-            autoWidth: true,
+            scrollX: true, 
+            autoWidth: false,
             dom: '<"flex flex-col md:flex-row md:justify-between items-center mb-2 gap-2"lf>rt<"flex flex-col md:flex-row md:justify-between items-center mt-2 gap-2"ip>'
         });
 
-        // BƯỚC 4: Bắt sự kiện Tick lưu vào bộ nhớ
+        // BƯỚC 4: Bắt sự kiện Tick
         $('#bang-duno').off('change', '.chk-doc-no').on('change', '.chk-doc-no', function() {
             let maKH = $(this).data('makh');
-            if ($(this).is(':checked')) {
-                $(this).closest('tr').addClass('da-doc-no');
-                luuTrangThaiTick(maKH, true);
+            if ($(this).is(':checked')) { $(this).closest('tr').addClass('da-doc-no'); luuTrangThaiTick(maKH, true); } 
+            else { $(this).closest('tr').removeClass('da-doc-no'); luuTrangThaiTick(maKH, false); }
+        });
+
+        // BƯỚC 5: Sự kiện Xổ chi tiết
+        $('#bang-duno tbody').off('click', '.btn-mo-rong').on('click', '.btn-mo-rong', function () {
+            let tr = $(this).closest('tr');
+            let row = dataTableDuNo.row(tr);
+
+            if (row.child.isShown()) {
+                row.child.hide();
+                tr.removeClass('bg-blue-50/50');
+                $(this).html(`<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg> XEM`);
+                $(this).removeClass('bg-evnBlue text-white').addClass('bg-white text-evnBlue');
             } else {
-                $(this).closest('tr').removeClass('da-doc-no');
-                luuTrangThaiTick(maKH, false);
+                let data = row.data();
+                let dsCotHienChiTiet = dsCotConLai.filter(k => !kiemTraAnCot(k)); // Loại bỏ cột rác
+                
+                let detailHtml = '<div class="p-3 bg-gradient-to-r from-blue-50 to-slate-50 border-y border-blue-200 shadow-inner grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2 text-sm">';
+                dsCotHienChiTiet.forEach(k => {
+                    let val = data[k] !== null && data[k] !== undefined && data[k] !== '' ? data[k] : '--';
+                    detailHtml += `
+                        <div class="flex justify-between items-center border-b border-blue-100/50 pb-1">
+                            <span class="font-bold text-slate-500 uppercase">${k}:</span>
+                            <span class="text-evnDark font-semibold text-right">${val}</span>
+                        </div>`;
+                });
+                detailHtml += '</div>';
+
+                row.child(detailHtml).show();
+                tr.addClass('bg-blue-50/50');
+                $(this).html(`<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg> ĐÓNG`);
+                $(this).removeClass('bg-white text-evnBlue').addClass('bg-evnBlue text-white');
             }
         });
 
-        // BƯỚC 5: Cấu hình lại bộ lọc
-        $.fn.dataTable.ext.search.length = 0; // Xoá sạch hàm lọc cũ tránh lỗi
+        // BƯỚC 6: Cấu hình lọc tiền & lọc TNV
+        $.fn.dataTable.ext.search.length = 0;
         $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
             if (settings.nTable.id !== 'bang-duno') return true;
-            if (nguongLocTien === 0) return true; 
-            if (!cotTien_global) return true;
-
-            const cotTienIdx = mangCotHoanChinh.indexOf(cotTien_global) + 1;
-            if (cotTienIdx < 1) return true;
-
-            const val = parseFloat(String(data[cotTienIdx]).replace(/\./g, '').replace(/,/g, '')) || 0;
+            if (nguongLocTien === 0 || !cotTien_global) return true;
+            let rowData = dataTableDuNo.row(dataIndex).data(); 
+            let val = parseFloat(String(rowData[cotTien_global]).replace(/\./g, '').replace(/,/g, '')) || 0;
             return val >= nguongLocTien;
         });
 
@@ -648,9 +650,7 @@ async function taiDuLieuDuNo() {
             let filtered = dataTableDuNo.rows({ search: 'applied' }).data();
             let sum = 0;
             filtered.each(function(v) {
-                if (cotTien_global && v[cotTien_global]) {
-                    sum += parseFloat(String(v[cotTien_global]).replace(/\./g, '').replace(/,/g, '')) || 0;
-                }
+                if (cotTien_global && v[cotTien_global]) sum += parseFloat(String(v[cotTien_global]).replace(/\./g, '').replace(/,/g, '')) || 0;
             });
             $('#thong-ke-duno').removeClass('hidden');
             $('#tong-hoa-don').text(new Intl.NumberFormat('vi-VN').format(filtered.length));
@@ -663,10 +663,8 @@ async function taiDuLieuDuNo() {
         $('#filter-tnv').off('change').on('change', function() {
             if (cotTNV_global) {
                 const val = $(this).val();
-                const idx = mangCotHoanChinh.indexOf(cotTNV_global) + 1;
-                dataTableDuNo.column(idx)
-                    .search(val ? '^' + $.fn.dataTable.util.escapeRegex(val) + '$' : '', true, false)
-                    .draw();
+                dataTableDuNo.column(mangCotHoanChinh.indexOf(cotTNV_global) + 1)
+                    .search(val ? '^' + $.fn.dataTable.util.escapeRegex(val) + '$' : '', true, false).draw();
             }
         });
 
@@ -677,9 +675,7 @@ async function taiDuLieuDuNo() {
 
 function locTheoSoTien(nguong, btn) {
     nguongLocTien = nguong;
-    document.querySelectorAll('.nut-loc-tien').forEach(b => {
-        b.className = 'nut-loc-tien px-3 py-1.5 rounded border text-xs font-bold shadow-sm bg-white text-slate-600 border-slate-300 hover:border-evnOrange';
-    });
+    document.querySelectorAll('.nut-loc-tien').forEach(b => { b.className = 'nut-loc-tien px-3 py-1.5 rounded border text-xs font-bold shadow-sm bg-white text-slate-600 border-slate-300 hover:border-evnOrange'; });
     btn.className = 'nut-loc-tien px-3 py-1.5 rounded border text-xs font-bold shadow-sm bg-evnOrange text-white border-evnOrange';
     if (dataTableDuNo) dataTableDuNo.draw();
 }
@@ -693,19 +689,13 @@ function xuatExcelTheoDieuKien() {
     const rows = dataTableDuNo.rows({ search: 'applied' }).data().toArray();
     if (rows.length === 0) { alert('Không có dữ liệu để xuất!'); return; }
 
-    // Bỏ qua cột Checkbox (index 0) khi xuất file
-    const cotHienThi = dataTableDuNo.columns().indexes().toArray()
-        .filter(i => dataTableDuNo.column(i).visible() && i > 0)
-        .map(i => ({
-            idx: i - 1, // Ánh xạ lại về index thực trong mangCotHoanChinh
-            keyData: mangCotHoanChinh[i - 1], // Key để bóc dữ liệu
-            title: $(dataTableDuNo.column(i).header()).text()
-        }));
-
+    // Chỉ xuất các cột không phải là cột rác bị cấm
+    const dsKeyXuat = mangCotHoanChinh.filter(k => !kiemTraAnCot(k)); 
     const duLieuXuat = [];
-    duLieuXuat.push(cotHienThi.map(c => c.title));
+    
+    duLieuXuat.push(dsKeyXuat.map(k => k.toUpperCase())); // Dòng Tiêu đề
     rows.forEach(row => {
-        duLieuXuat.push(cotHienThi.map(c => row[c.keyData] ?? ''));
+        duLieuXuat.push(dsKeyXuat.map(k => row[k] ?? '')); // Dữ liệu
     });
 
     const wb = XLSX.utils.book_new();
