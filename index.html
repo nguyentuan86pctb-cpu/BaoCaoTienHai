@@ -51,41 +51,34 @@
         /* Cột Tổng tiền nổi bật */
         .col-tong-tien { font-weight: 900; color: #c0392b; }
 
-        /* ===== CSS IN ẤN ===== */
+        /* ===== CSS IN ẤN - chỉ hiển thị bảng dư nợ, canh A4 ===== */
         @media print {
-            /* Ẩn toàn bộ giao diện, chỉ hiện vùng in */
+            /* Ẩn toàn bộ trang ngoại trừ vùng in */
             body * { visibility: hidden; }
-            #vung-in-full, #vung-in-full * { visibility: visible; }
-            #vung-in-full {
-                position: fixed;
+            #vung-in-duno, #vung-in-duno * { visibility: visible; }
+            #vung-in-duno {
+                position: absolute;
                 top: 0; left: 0;
-                width: 100%; height: auto;
+                width: 100%;
             }
-            /* Bảng in: font nhỏ, vừa A4 ngang */
-            #bang-in th, #bang-in td {
-                padding: 2px 4px !important;
-                font-size: 9px !important;
-                border: 1px solid #ccc !important;
-                word-break: break-word;
-            }
-            /* Cột tên khách hàng thu hẹp để các cột khác vừa trang */
-            #bang-in .col-ten-kh { max-width: 90px; word-break: break-word; white-space: normal; }
-            #bang-in thead th { background: #0054A6 !important; color: #fff !important; font-size: 8px !important; }
-            #bang-in { width: 100% !important; border-collapse: collapse; }
-            /* Ẩn dòng ký họ tên */
-            #in-ky-ten { display: none !important; }
-            @page { size: A4 landscape; margin: 8mm; }
+            /* Ẩn thanh công cụ DataTables khi in */
+            .dataTables_wrapper .dataTables_filter,
+            .dataTables_wrapper .dataTables_length,
+            .dataTables_wrapper .dataTables_info,
+            .dataTables_wrapper .dataTables_paginate { display: none !important; }
+            /* Đảm bảo bảng vừa trang A4 ngang */
+            table { width: 100% !important; font-size: 10px !important; }
+            th, td { padding: 3px 4px !important; font-size: 10px !important; }
+            /* Header in */
+            #in-header { display: block !important; }
+            @page { size: A4 landscape; margin: 10mm; }
         }
-        /* Bảng in và header in ẩn hoàn toàn trên màn hình */
-        #vung-in-full { display: none; }
-        /* Mobile bottom nav */
-        #mobile-nav {
-            display: none;
+        /* Dòng tổng kết khi in */
+        @media print {
+            #in-dong-tong { display: block !important; }
         }
-        @media (max-width: 767px) {
-            #mobile-nav { display: flex; }
-            body { padding-bottom: 64px; }
-        }
+        /* Header in và dòng tổng ẩn trên màn hình */
+        #in-header { display: none; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans flex h-screen overflow-hidden">
@@ -277,38 +270,7 @@
     </main>
 </div>
 
-<!-- ===== MOBILE BOTTOM NAV (chỉ hiển thị trên điện thoại) ===== -->
-<nav id="mobile-nav" class="fixed bottom-0 left-0 right-0 bg-evnDark border-t border-blue-900 z-50 flex h-16">
-    <a id="mob-btn-mang-tai" onclick="chuyenTab('mang-tai')" href="javascript:void(0)"
-       class="flex-1 flex flex-col items-center justify-center gap-0.5 text-white bg-evnBlue border-r border-blue-800">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
-        <span class="text-xs font-bold">Mang tải</span>
-    </a>
-    <a id="mob-btn-du-no" onclick="chuyenTab('du-no')" href="javascript:void(0)"
-       class="flex-1 flex flex-col items-center justify-center gap-0.5 text-slate-400">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-        <span class="text-xs font-bold">Dư nợ</span>
-    </a>
-</nav>
-
-<!-- ===== VÙNG IN ĐỘC LẬP — build bằng JS, ẩn trên màn hình, chỉ hiện khi print ===== -->
-<div id="vung-in-full">
-    <div style="text-align:center; margin-bottom:6px;">
-        <div style="font-size:14px; font-weight:900; text-transform:uppercase;">ĐIỆN LỰC TIỀN HẢI — EVNNPC</div>
-        <div style="font-size:12px; font-weight:700; text-transform:uppercase; margin-top:2px;">BÁO CÁO DƯ NỢ KHÁCH HÀNG</div>
-        <div id="in-subtitle" style="font-size:11px; margin-top:2px; color:#555;"></div>
-        <div id="in-ngay" style="font-size:10px; color:#777;"></div>
-    </div>
-    <table id="bang-in" style="width:100%; border-collapse:collapse;">
-        <thead id="bang-in-head"></thead>
-        <tbody id="bang-in-body"></tbody>
-    </table>
-    <!-- Dòng tổng kết -->
-    <div style="text-align:right; padding:4px 6px; border-top:2px solid #0054A6; font-size:10px; font-weight:900; background:#fff3cd; margin-top:2px;">
-        <span style="margin-right:24px;">Tổng số hóa đơn: <span id="in-tong-hoa-don" style="color:#E55D00;">0</span></span>
-        <span>Tổng dư nợ: <span id="in-tong-tien" style="color:#c0392b;">0 đ</span></span>
-    </div>
-</div>
+<!-- ===== THƯ VIỆN JS ===== -->
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <!-- SheetJS để xuất file Excel trực tiếp trên trình duyệt -->
@@ -327,19 +289,11 @@ function chuyenTab(tabName) {
     document.getElementById('tab-' + tabName).classList.remove('hidden');
     document.getElementById('tab-' + tabName).classList.add('block');
     
-    // Cập nhật sidebar desktop
     const classInactive = "cursor-pointer text-slate-400 hover:text-white hover:bg-white/5 rounded-lg flex items-center gap-3 px-4 py-3 border-l-4 border-transparent transition-transform transform hover:translate-x-1";
     const classActive = "cursor-pointer bg-gradient-to-r from-evnBlue to-[#004080] text-white rounded-lg shadow-md flex items-center gap-3 px-4 py-3 border-l-4 border-evnOrange transition-transform transform hover:translate-x-1";
+    
     document.getElementById('btn-nav-mang-tai').className = (tabName === 'mang-tai' ? classActive : classInactive);
     document.getElementById('btn-nav-du-no').className = (tabName === 'du-no' ? classActive : classInactive);
-
-    // Cập nhật mobile bottom nav
-    const mobActive   = 'flex-1 flex flex-col items-center justify-center gap-0.5 text-white bg-evnBlue border-r border-blue-800';
-    const mobInactive = 'flex-1 flex flex-col items-center justify-center gap-0.5 text-slate-400';
-    const mobMT = document.getElementById('mob-btn-mang-tai');
-    const mobDN = document.getElementById('mob-btn-du-no');
-    if (mobMT) mobMT.className = (tabName === 'mang-tai' ? mobActive : mobInactive);
-    if (mobDN) mobDN.className = (tabName === 'du-no'    ? mobActive : mobInactive);
 
     if (tabName === 'du-no' && dataTableDuNo === null) taiDuLieuDuNo();
 }
@@ -692,65 +646,43 @@ function xuatExcelTheoDieuKien() {
 }
 
 /**
- * In báo cáo dư nợ — build bảng in riêng từ TOÀN BỘ dữ liệu đã lọc
- * Không phụ thuộc phân trang, in đúng mốc tiền và TNV đang chọn
+ * In báo cáo dư nợ trực tiếp trên trình duyệt
+ * Dữ liệu in = TOÀN BỘ dữ liệu đã lọc (tất cả trang, không chỉ trang đang xem)
+ * Kèm dòng tổng: số hóa đơn + tổng tiền theo TNV đang chọn
  */
 function inBaoCaoDuNo() {
     if (!dataTableDuNo) { alert('Chưa có dữ liệu sếp ơi!'); return; }
 
-    // 1. Lấy toàn bộ dữ liệu đang lọc (bao gồm các trang chưa hiển thị)
-    const allRows = dataTableDuNo.rows({ search: 'applied' }).data().toArray();
-    if (allRows.length === 0) { alert('Không có dữ liệu để in!'); return; }
+    // Lấy tên TNV đang chọn
+    const tenTNV = $('#filter-tnv option:selected').text();
+    const subtitle = (tenTNV && tenTNV !== '-- Tất cả Thu ngân viên --')
+        ? `Thu ngân viên: ${tenTNV}`
+        : 'Tất cả Thu ngân viên';
 
-    // 2. Lấy danh sách cột đang hiển thị (không bị ẩn)
-    const keys = Object.keys(allRows[0]);
-    const cotHienThi = dataTableDuNo.columns().indexes().toArray()
-        .filter(i => dataTableDuNo.column(i).visible())
-        .map(i => ({ idx: i, key: keys[i], title: $(dataTableDuNo.column(i).header()).text() }));
-
-    // 3. Build thead bảng in
-    let headHtml = '<tr>';
-    cotHienThi.forEach(c => {
-        const isTenKH = c.title.toLowerCase().includes('tên') || c.title.toLowerCase().includes('khách');
-        headHtml += `<th class="${isTenKH ? 'col-ten-kh' : ''}">${c.title}</th>`;
-    });
-    headHtml += '</tr>';
-    document.getElementById('bang-in-head').innerHTML = headHtml;
-
-    // 4. Build tbody bảng in — toàn bộ dòng đã lọc
-    let bodyHtml = '';
-    allRows.forEach((row, idx) => {
-        bodyHtml += `<tr style="background:${idx % 2 === 0 ? '#fff' : '#f8fafc'};">`;
-        cotHienThi.forEach(c => {
-            const isTenKH = c.title.toLowerCase().includes('tên') || c.title.toLowerCase().includes('khách');
-            bodyHtml += `<td class="${isTenKH ? 'col-ten-kh' : ''}">${row[c.key] ?? ''}</td>`;
-        });
-        bodyHtml += '</tr>';
-    });
-    document.getElementById('bang-in-body').innerHTML = bodyHtml;
-
-    // 5. Tính tổng dư nợ toàn bộ dữ liệu lọc
+    // Tính tổng từ TOÀN BỘ dòng đang lọc (kể cả trang sau)
+    const allFilteredRows = dataTableDuNo.rows({ search: 'applied' }).data();
+    let tongSoHoaDon = allFilteredRows.length;
     let tongSoTien = 0;
-    allRows.forEach(row => {
-        if (cotTien_global && row[cotTien_global]) {
-            tongSoTien += parseFloat(String(row[cotTien_global]).replace(/\./g, '').replace(/,/g, '')) || 0;
+    allFilteredRows.each(function(v) {
+        if (cotTien_global && v[cotTien_global]) {
+            tongSoTien += parseFloat(String(v[cotTien_global]).replace(/\./g, '').replace(/,/g, '')) || 0;
         }
     });
-    document.getElementById('in-tong-hoa-don').textContent = new Intl.NumberFormat('vi-VN').format(allRows.length);
-    document.getElementById('in-tong-tien').textContent = new Intl.NumberFormat('vi-VN').format(tongSoTien) + ' đ';
 
-    // 6. Cập nhật header in
-    const tenTNV = $('#filter-tnv option:selected').text();
-    document.getElementById('in-subtitle').textContent =
-        (tenTNV && tenTNV !== '-- Tất cả Thu ngân viên --') ? `Thu ngân viên: ${tenTNV}` : 'Tất cả Thu ngân viên';
+    // Cập nhật header in
+    document.getElementById('in-subtitle').textContent = subtitle;
     document.getElementById('in-ngay').textContent =
         `Ngày in: ${new Date().toLocaleDateString('vi-VN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`;
 
-    // 7. Hiện vùng in rồi gọi lệnh print
-    document.getElementById('vung-in-full').style.display = 'block';
+    // Cập nhật dòng tổng kết in
+    document.getElementById('in-tong-hoa-don').textContent = new Intl.NumberFormat('vi-VN').format(tongSoHoaDon);
+    document.getElementById('in-tong-tien').textContent = new Intl.NumberFormat('vi-VN').format(tongSoTien) + ' đ';
+    document.getElementById('in-dong-tong').style.display = 'table-row';
+
     window.print();
-    // Ẩn lại sau khi in xong
-    setTimeout(() => { document.getElementById('vung-in-full').style.display = 'none'; }, 500);
+
+    // Ẩn dòng tổng sau khi in xong (tránh hiển thị trên web)
+    setTimeout(() => { document.getElementById('in-dong-tong').style.display = 'none'; }, 1000);
 }
 
 // ==========================================
