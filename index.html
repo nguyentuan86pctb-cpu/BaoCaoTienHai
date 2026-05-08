@@ -13,12 +13,7 @@
     tailwind.config = {
         theme: {
             extend: {
-                colors: {
-                    evnBlue: "#0054A6",
-                    evnDark: "#002B54",
-                    evnOrange: "#F37021",
-                    evnOrangeDark: "#E55D00",
-                },
+                colors: { evnBlue: "#0054A6", evnDark: "#002B54", evnOrange: "#F37021", evnOrangeDark: "#E55D00" },
                 fontFamily: { sans: ['Public Sans', 'sans-serif'] }
             }
         }
@@ -29,8 +24,6 @@
     ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
     ::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: #a8a8a8; }
-    
-    /* Giao diện DataTables bám theo Tailwind */
     .dataTables_wrapper .dataTables_filter input { border: 1px solid #cbd5e1; border-radius: 6px; padding: 4px 8px; outline: none; margin-bottom: 10px; margin-left: 8px; }
     .dataTables_wrapper .dataTables_filter input:focus { border-color: #0054A6; }
     .dataTables_wrapper .dataTables_length select { border: 1px solid #cbd5e1; border-radius: 6px; padding: 4px; margin: 0 4px; }
@@ -75,9 +68,7 @@
                                 <svg class="w-6 h-6 text-evnOrange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                                 BÁO CÁO MANG TẢI TRẠM BIẾN ÁP
                             </h2>
-                            <p id="cap-nhat-luc" class="text-sm text-slate-500 mt-1 flex items-center gap-1">
-                                Đang tải dữ liệu...
-                            </p>
+                            <p id="cap-nhat-luc" class="text-sm text-slate-500 mt-1 flex items-center gap-1">Đang tải dữ liệu...</p>
                         </div>
                         
                         <div class="flex items-center gap-2">
@@ -133,7 +124,7 @@
                                 <svg class="w-6 h-6 text-evnOrange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 BÁO CÁO DƯ NỢ KHÁCH HÀNG
                             </h2>
-                            <p id="cap-nhat-luc-duno" class="text-sm text-slate-500 mt-1">Đang tải dữ liệu...</p>
+                            <p id="cap-nhat-luc-duno" class="text-sm text-slate-500 mt-1">Đang kết nối hệ thống...</p>
                         </div>
                         <div class="flex flex-wrap items-center gap-2">
                             <select id="filter-tnv" class="bg-white border border-slate-300 text-slate-700 font-semibold px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-evnBlue">
@@ -146,6 +137,11 @@
                         </div>
                     </div>
                     
+                    <div id="thong-ke-duno" class="hidden bg-gradient-to-r from-orange-50 to-orange-100 border border-orange-200 px-5 py-4 rounded-xl shadow-sm flex flex-col md:flex-row justify-between items-center gap-2">
+                        <span class="text-slate-700 font-semibold text-lg uppercase">Tổng số hóa đơn: <span id="tong-hoa-don" class="font-black text-evnOrangeDark text-2xl ml-1">0</span></span>
+                        <span class="text-slate-700 font-semibold text-lg uppercase">Tổng dư nợ: <span id="tong-tien-no" class="font-black text-red-600 text-2xl ml-1">0</span> <span class="text-sm font-bold">VNĐ</span></span>
+                    </div>
+
                     <div class="border border-slate-200 rounded-xl shadow-sm bg-white p-2 md:p-4">
                         <div class="overflow-x-auto w-full">
                             <table id="bang-duno" class="w-full text-left border-collapse whitespace-nowrap stripe hover row-border" style="width:100%">
@@ -163,9 +159,6 @@
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
 <script>
-// ==========================================
-// LOGIC CHUYỂN TAB VÀ QUẢN LÝ GIAO DIỆN
-// ==========================================
 function chuyenTab(tabName) {
     document.getElementById('tab-mang-tai').classList.add('hidden');
     document.getElementById('tab-mang-tai').classList.remove('block');
@@ -182,106 +175,94 @@ function chuyenTab(tabName) {
     const classActive = "cursor-pointer bg-gradient-to-r from-evnBlue to-[#004080] text-white rounded-lg shadow-md flex items-center gap-3 px-4 py-3 border-l-4 border-evnOrange transition-transform transform hover:translate-x-1";
     document.getElementById('btn-nav-' + tabName).className = classActive;
 
-    // Kích hoạt load dữ liệu Dư nợ khi bấm sang tab lần đầu tiên
-    if (tabName === 'du-no' && dataTableDuNo === null) {
-        taiDuLieuDuNo();
-    }
+    if (tabName === 'du-no' && dataTableDuNo === null) taiDuLieuDuNo();
 }
 
-// ==========================================
-// LOGIC DỮ LIỆU DƯ NỢ (MỚI)
-// ==========================================
 let dataTableDuNo = null;
 
 async function taiDuLieuDuNo() {
     try {
-        document.getElementById('cap-nhat-luc-duno').innerHTML = 'Đang kết nối hệ thống dữ liệu...';
-        
         const res = await fetch(`https://raw.githubusercontent.com/nguyentuan86pctb-cpu/BaoCaoTienHai/main/data_duno.json?t=${Date.now()}`);
-        if (!res.ok) throw new Error("Chưa tìm thấy file data_duno.json trên Github (Có thể Tool chưa đẩy dữ liệu).");
+        if (!res.ok) throw new Error("Chưa có dữ liệu mới trên Github.");
         const json = await res.json();
         
         const records = json.du_lieu || [];
-        if (records.length === 0) {
-            document.getElementById('cap-nhat-luc-duno').innerHTML = '<span class="text-orange-600 font-bold">Hiện không có khách hàng nào đang nợ.</span>';
-            return;
-        }
+        if (records.length === 0) return;
 
         const svgCheck = `<svg class="w-4 h-4 text-green-600 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
-        document.getElementById('cap-nhat-luc-duno').innerHTML = `${svgCheck} Cập nhật lúc: <span class="font-bold text-evnDark ml-1">${json.cap_nhat_luc || '--'}</span> <span class="mx-2">—</span> Tổng nợ: <span class="font-bold text-red-600">${json.tong_so_kh || records.length}</span> khách hàng`;
+        document.getElementById('cap-nhat-luc-duno').innerHTML = `${svgCheck} Cập nhật lúc: <span class="font-bold text-evnDark ml-1">${json.cap_nhat_luc || '--'}</span>`;
 
-        // Lấy danh sách key (cột) từ JSON
         const keys = Object.keys(records[0]);
-        
-        // Nhận diện cột Thu ngân và Cột chứa Số tiền bằng từ khóa
         let cotThuNgan = keys.find(k => k.toLowerCase().includes('thu ngân') || k.toLowerCase().includes('tnv'));
-        let cotTien = keys.find(k => k.toLowerCase().includes('tiền') || k.toLowerCase().includes('nợ') || k.toLowerCase().includes('phải thu') || k.toLowerCase().includes('số tiền'));
+        let cotTien = keys.find(k => k.toLowerCase().includes('tổng tiền') || k.toLowerCase().includes('tiền') || k.toLowerCase().includes('nợ'));
 
-        // Đổ dữ liệu vào Dropdown Lọc Thu Ngân
         if (cotThuNgan) {
             const danhSachTNV = [...new Set(records.map(r => r[cotThuNgan]))].filter(Boolean).sort();
             const select = document.getElementById('filter-tnv');
             select.innerHTML = '<option value="">-- Tất cả Thu ngân viên --</option>';
-            danhSachTNV.forEach(tnv => {
-                select.innerHTML += `<option value="${tnv}">${tnv}</option>`;
-            });
+            danhSachTNV.forEach(tnv => select.innerHTML += `<option value="${tnv}">${tnv}</option>`);
         }
 
-        // Hủy bảng cũ nếu đang tồn tại (để rebuild)
         if (dataTableDuNo) {
             dataTableDuNo.destroy();
             $('#bang-duno').empty();
         }
 
-        // Khởi tạo cột tự động cho DataTables
-        const columnsConfig = keys.map(k => ({ 
-            data: k, 
-            title: k.toUpperCase(),
-            render: function(data, type, row) {
-                // Nếu là cột tiền -> Định dạng có dấu phẩy cho dễ đọc
-                if (k === cotTien && type === 'display') {
-                    let num = parseFloat(String(data).replace(/,/g, ''));
-                    if (!isNaN(num)) return new Intl.NumberFormat('vi-VN').format(num);
-                }
-                return data;
-            }
-        }));
+        const columnsConfig = keys.map(k => ({ data: k, title: k.toUpperCase() }));
 
-        // Gọi DataTables
         dataTableDuNo = $('#bang-duno').DataTable({
             data: records,
             columns: columnsConfig,
             pageLength: 20,
             lengthMenu: [20, 50, 100, 200],
             language: {
-                search: "Tìm kiếm nhanh (Tên KH, Mã KH...):",
-                lengthMenu: "Hiển thị _MENU_ KH/trang",
-                info: "Đang hiển thị _START_ đến _END_ trong tổng _TOTAL_ Khách nợ",
-                infoEmpty: "Không có dữ liệu phù hợp",
-                zeroRecords: "Không tìm thấy khách hàng nào khớp",
+                search: "Tìm nhanh (Tên, Mã KH...):",
+                lengthMenu: "Hiển thị _MENU_ KH",
+                info: "Hiển thị _START_ đến _END_ trong _TOTAL_ Khách nợ",
+                infoEmpty: "Trống",
+                zeroRecords: "Không tìm thấy",
                 paginate: { first: "Đầu", last: "Cuối", next: "Sau", previous: "Trước" }
             },
-            createdRow: function(row, data, dataIndex) {
-                // Tô đỏ toàn bộ dòng nếu Số tiền nợ > 1,000,000
+            createdRow: function(row, data) {
                 if (cotTien) {
-                    let tien = parseFloat(String(data[cotTien]).replace(/,/g, ''));
+                    let tien = parseFloat(String(data[cotTien]).replace(/\./g, '').replace(/,/g, ''));
                     if (tien > 1000000) {
                         $(row).addClass('bg-red-50 text-red-900 font-medium');
-                        // In đậm riêng ô tiền
                         $('td', row).eq(keys.indexOf(cotTien)).addClass('font-black text-red-600');
                     }
                 }
             },
             scrollX: true,
             autoWidth: false,
-            order: [] // Không tự sắp xếp mặc định để giữ nguyên logic Excel
+            order: [] 
         });
 
-        // Kích hoạt sự kiện Bấm Dropdown -> Lọc Bảng
+        // Hàm cập nhật Thống kê
+        function capNhatThongKe() {
+            let count = 0;
+            let sum = 0;
+            let filteredData = dataTableDuNo.rows({ search: 'applied' }).data();
+            
+            count = filteredData.length;
+            filteredData.each(function(value) {
+                if (cotTien && value[cotTien]) {
+                    let tienStr = String(value[cotTien]).replace(/\./g, '').replace(/,/g, ''); 
+                    sum += parseFloat(tienStr) || 0;
+                }
+            });
+            
+            $('#thong-ke-duno').removeClass('hidden');
+            $('#tong-hoa-don').text(new Intl.NumberFormat('vi-VN').format(count));
+            $('#tong-tien-no').text(new Intl.NumberFormat('vi-VN').format(sum));
+        }
+
+        // Tự động cộng tổng mỗi khi lọc Thu ngân viên hoặc tìm kiếm
+        dataTableDuNo.on('draw', function () { capNhatThongKe(); });
+        capNhatThongKe(); // Gọi chạy lần đầu
+
         $('#filter-tnv').off('change').on('change', function() {
             if (cotThuNgan) {
                 const val = $(this).val();
-                // Escape regex để tìm kiếm chính xác 100% cụm từ
                 dataTableDuNo.column(keys.indexOf(cotThuNgan)).search(val ? '^' + $.fn.dataTable.util.escapeRegex(val) + '$' : '', true, false).draw();
             }
         });
@@ -291,10 +272,7 @@ async function taiDuLieuDuNo() {
     }
 }
 
-
-// ==========================================
-// LOGIC DỮ LIỆU BÁO CÁO MANG TẢI CŨ (KHÔNG CHẠM VÀO)
-// ==========================================
+// LOGIC BÁO CÁO MANG TẢI (Fix lỗi mảng rỗng)
 const SO_DONG_MOI_TRANG = 15;
 let duLieuToanBoTheoGio = {}; 
 let duLieuCuaMocHienTai = []; 
@@ -305,14 +283,11 @@ async function taiDuLieu() {
         const res = await fetch(`https://raw.githubusercontent.com/nguyentuan86pctb-cpu/BaoCaoTienHai/main/data.json?t=${Date.now()}`);
         const json = await res.json();
         
-        // --- ĐOẠN ĐÃ FIX LỖI ---
-        // Lọc lấy dữ liệu của ngày mới nhất để render các mốc giờ
         const duLieuGoc = json.du_lieu || {};
         const cacNgay = Object.keys(duLieuGoc).sort();
         const ngayMoiNhat = cacNgay[cacNgay.length - 1]; 
         
         duLieuToanBoTheoGio = ngayMoiNhat ? duLieuGoc[ngayMoiNhat] : {};
-        // -----------------------
         
         const svgCheck = `<svg class="w-4 h-4 text-green-600 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
         document.getElementById('cap-nhat-luc').innerHTML = `${svgCheck} Dữ liệu ngày: <span class="font-bold text-evnDark ml-1">${ngayMoiNhat || '--'}</span> <span class="hidden md:inline mx-2">—</span> Đồng bộ lần cuối: <span class="font-medium text-slate-600">${json.cap_nhat_luc || '--'}</span>`;
@@ -320,7 +295,6 @@ async function taiDuLieu() {
         taoNutChonGio();
     } catch (err) {
         document.getElementById('bang-du-lieu-desktop').innerHTML = `<tr><td colspan="12" class="text-center text-red-600 py-10 font-bold bg-red-50">Lỗi kết nối: ${err.message}</td></tr>`;
-        document.getElementById('bang-du-lieu-mobile').innerHTML = `<div class="text-center text-red-600 py-10 font-bold bg-red-50 rounded-lg">Lỗi kết nối: ${err.message}</div>`;
         document.getElementById('vung-chon-gio').innerHTML = '';
     }
 }
@@ -328,7 +302,6 @@ async function taiDuLieu() {
 function taoNutChonGio() {
     const vungChon = document.getElementById('vung-chon-gio');
     const cacMocGio = Object.keys(duLieuToanBoTheoGio).sort(); 
-    
     if (cacMocGio.length === 0) {
         vungChon.innerHTML = '<span class="text-slate-500 italic px-2">Hôm nay chưa có bản ghi nào được rút...</span>';
         duLieuCuaMocHienTai = [];
@@ -348,14 +321,9 @@ function taoNutChonGio() {
 }
 
 function chonMocGio(gio) {
-    document.querySelectorAll('.nut-gio').forEach(btn => {
-        btn.className = "nut-gio px-4 py-1.5 rounded border text-sm font-bold shadow-sm transition-all bg-white text-slate-600 border-slate-300 hover:border-evnOrange hover:text-evnOrange";
-    });
-    
+    document.querySelectorAll('.nut-gio').forEach(btn => btn.className = "nut-gio px-4 py-1.5 rounded border text-sm font-bold shadow-sm bg-white text-slate-600 border-slate-300");
     const btnActive = document.getElementById(`btn-gio-${gio}`);
-    if (btnActive) {
-        btnActive.className = "nut-gio px-4 py-1.5 rounded border text-sm font-bold shadow-sm transition-all bg-evnOrange text-white border-evnOrange";
-    }
+    if (btnActive) btnActive.className = "nut-gio px-4 py-1.5 rounded border text-sm font-bold shadow-sm bg-evnOrange text-white border-evnOrange";
 
     duLieuCuaMocHienTai = duLieuToanBoTheoGio[gio] || [];
     trangHienTai = 1;
@@ -364,32 +332,24 @@ function chonMocGio(gio) {
 
 function renderDuLieu() {
     const tbodyDesktop = document.getElementById('bang-du-lieu-desktop');
-    const containerMobile = document.getElementById('bang-du-lieu-mobile');
-    
     if (duLieuCuaMocHienTai.length === 0) {
         tbodyDesktop.innerHTML = `<tr><td colspan="12" class="text-center text-slate-500 py-10 font-medium bg-slate-50">Không có dữ liệu cho mốc giờ này</td></tr>`;
-        containerMobile.innerHTML = `<div class="text-center text-slate-500 py-10 font-medium bg-slate-50 rounded-lg border border-slate-200">Không có dữ liệu cho mốc giờ này</div>`;
-        document.getElementById('phan-trang-info').textContent = `--`;
         document.getElementById('phan-trang-nut').innerHTML = '';
         return;
     }
 
     const batDau = (trangHienTai - 1) * SO_DONG_MOI_TRANG;
     const duLieuTrang = duLieuCuaMocHienTai.slice(batDau, batDau + SO_DONG_MOI_TRANG);
-
     let htmlDesktop = '';
-    let htmlMobile = '';
 
     duLieuTrang.forEach((row, idx) => {
         const mtVal = parseFloat(row.i_MANG_TAI || 0);
         const lpVal = parseFloat(row.i_LECH_PHA || 0);
-        
         const styleMT = mtVal >= 200 ? `<span class="bg-red-100 text-red-700 border border-red-300 px-2 py-0.5 rounded shadow-sm font-bold">${mtVal.toFixed(2)}</span>` : mtVal.toFixed(2);
         const styleLP = lpVal >= 50 ? `<span class="bg-red-100 text-red-700 border border-red-300 px-2 py-0.5 rounded shadow-sm font-bold">${lpVal.toFixed(2)}</span>` : lpVal.toFixed(2);
-        const mauNen = idx % 2 === 0 ? 'bg-white' : 'bg-slate-50';
 
         htmlDesktop += `
-        <tr class="hover:bg-blue-50 transition-colors ${mauNen}">
+        <tr class="hover:bg-blue-50 transition-colors ${idx % 2 === 0 ? 'bg-white' : 'bg-slate-50'}">
             <td class="px-3 py-3 border-r border-slate-200 text-center font-medium text-slate-500">${row.stt ?? ''}</td>
             <td class="px-4 py-3 border-r border-slate-200 font-bold text-evnDark">${row.teN_KHANG ?? ''}</td>
             <td class="px-4 py-3 border-r border-slate-200 text-right font-black text-evnOrangeDark bg-orange-50/50">${row.conG_SUAT ?? '0'}</td>
@@ -403,85 +363,22 @@ function renderDuLieu() {
             <td class="px-3 py-3 border-r border-slate-200 text-right text-slate-600">${row.daP_B ?? ''}</td>
             <td class="px-3 py-3 text-right text-slate-600">${row.daP_C ?? ''}</td>
         </tr>`;
-
-        const theBaoDong = (mtVal >= 200 || lpVal >= 50) ? 'border-red-500' : 'border-evnBlue';
-        
-        htmlMobile += `
-        <div class="bg-white rounded-xl shadow-md border-l-4 ${theBaoDong} p-4 flex flex-col gap-2 relative overflow-hidden mb-3">
-            <div class="flex justify-between items-start border-b border-slate-100 pb-2">
-                <div>
-                    <h3 class="font-bold text-lg text-evnDark">${row.teN_KHANG ?? ''}</h3>
-                    <p class="text-xs text-slate-500">${row.thoI_GIAN ?? ''}</p>
-                </div>
-                <div class="bg-orange-100 text-evnOrangeDark px-3 py-1 rounded-full font-black text-sm border border-orange-200">
-                    ${row.conG_SUAT ?? '0'} kW
-                </div>
-            </div>
-            
-            <div class="grid grid-cols-2 gap-2 mt-2">
-                <div class="bg-slate-50 p-2 rounded border border-slate-100 flex justify-between items-center">
-                    <span class="text-xs text-slate-500">Mang tải:</span>
-                    <span class="text-sm">${styleMT}</span>
-                </div>
-                <div class="bg-slate-50 p-2 rounded border border-slate-100 flex justify-between items-center">
-                    <span class="text-xs text-slate-500">Lệch pha:</span>
-                    <span class="text-sm">${styleLP}</span>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-3 gap-2 mt-1">
-                <div class="bg-blue-50/50 p-1.5 rounded border border-blue-100 flex flex-col items-center">
-                    <span class="text-[10px] text-slate-500 font-semibold">I_A (A)</span>
-                    <span class="text-sm font-bold text-evnDark">${row.donG_DIEN_A ?? '-'}</span>
-                </div>
-                <div class="bg-blue-50/50 p-1.5 rounded border border-blue-100 flex flex-col items-center">
-                    <span class="text-[10px] text-slate-500 font-semibold">I_B (A)</span>
-                    <span class="text-sm font-bold text-evnDark">${row.donG_DIEN_B ?? '-'}</span>
-                </div>
-                <div class="bg-blue-50/50 p-1.5 rounded border border-blue-100 flex flex-col items-center">
-                    <span class="text-[10px] text-slate-500 font-semibold">I_C (A)</span>
-                    <span class="text-sm font-bold text-evnDark">${row.donG_DIEN_C ?? '-'}</span>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-3 gap-2 mt-1">
-                <div class="bg-orange-50/50 p-1.5 rounded border border-orange-100 flex flex-col items-center">
-                    <span class="text-[10px] text-slate-500 font-semibold">U_A (V)</span>
-                    <span class="text-sm font-bold text-evnDark">${row.daP_A ?? '-'}</span>
-                </div>
-                <div class="bg-orange-50/50 p-1.5 rounded border border-orange-100 flex flex-col items-center">
-                    <span class="text-[10px] text-slate-500 font-semibold">U_B (V)</span>
-                    <span class="text-sm font-bold text-evnDark">${row.daP_B ?? '-'}</span>
-                </div>
-                <div class="bg-orange-50/50 p-1.5 rounded border border-orange-100 flex flex-col items-center">
-                    <span class="text-[10px] text-slate-500 font-semibold">U_C (V)</span>
-                    <span class="text-sm font-bold text-evnDark">${row.daP_C ?? '-'}</span>
-                </div>
-            </div>
-        </div>`;
     });
     
     tbodyDesktop.innerHTML = htmlDesktop;
-    containerMobile.innerHTML = htmlMobile;
-    
     document.getElementById('phan-trang-info').textContent = `Đang xem: ${batDau + 1} - ${Math.min(batDau + SO_DONG_MOI_TRANG, duLieuCuaMocHienTai.length)} / Tổng ${duLieuCuaMocHienTai.length} trạm`;
-    renderPhanTrang();
-}
-
-function renderPhanTrang() {
-    const tongTrang = Math.ceil(duLieuCuaMocHienTai.length / SO_DONG_MOI_TRANG);
+    
     const div = document.getElementById('phan-trang-nut');
     div.innerHTML = '';
-    for (let i = 1; i <= tongTrang; i++) {
+    for (let i = 1; i <= Math.ceil(duLieuCuaMocHienTai.length / SO_DONG_MOI_TRANG); i++) {
         const btn = document.createElement('button');
         btn.textContent = i;
-        btn.className = `w-8 h-8 rounded-md border font-semibold shadow-sm transition-all ${i === trangHienTai ? 'bg-evnBlue text-white border-evnBlue' : 'bg-white text-slate-600 border-slate-300 hover:border-evnBlue hover:text-evnBlue'}`;
+        btn.className = `w-8 h-8 rounded-md border font-semibold shadow-sm transition-all ${i === trangHienTai ? 'bg-evnBlue text-white border-evnBlue' : 'bg-white text-slate-600 border-slate-300'}`;
         btn.onclick = () => { trangHienTai = i; renderDuLieu(); };
         div.appendChild(btn);
     }
 }
 
-// Khởi chạy ngầm Báo cáo Mang tải
 taiDuLieu();
 setInterval(taiDuLieu, 60000);
 </script>
