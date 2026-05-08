@@ -515,9 +515,9 @@ async function taiDuLieuDuNo() {
         dataTableDuNo = $('#bang-duno').DataTable({
             data: records,
             columns: columnDefs,
-            // Mặc định hiển thị 50 dòng, có thể chọn 50/100/200/500
+            // Mặc định hiển thị 50 dòng, có thể chọn 50/100/200/1000
             pageLength: 50,
-            lengthMenu: [[50, 100, 200, 500], [50, 100, 200, 500]],
+            lengthMenu: [[50, 100, 200, 500], [50, 100, 200, 1000]],
             language: {
                 search: "Tìm kiếm:",
                 lengthMenu: "Hiện _MENU_ dòng",
