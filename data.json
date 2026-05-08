@@ -1,5 +1,5 @@
 {
-  "cap_nhat_luc": "08/05/2026 18:45:16",
+  "cap_nhat_luc": "08/05/2026 19:15:24",
   "du_lieu": {
     "07/05/2026": {
       "15h30": [
@@ -303,6 +303,22 @@
         }
       ],
       "18h45": [
+        {
+          "stt": 1,
+          "teN_KHANG": "Tây An 2",
+          "thoI_GIAN": "2026-08-05 17:30:00",
+          "i_MANG_TAI": 107.5,
+          "i_LECH_PHA": 88.98,
+          "donG_DIEN_A": 59.82,
+          "donG_DIEN_B": 106.47,
+          "donG_DIEN_C": 155.16,
+          "daP_A": 227.6,
+          "daP_B": 226,
+          "daP_C": 225.3,
+          "conG_SUAT": 100
+        }
+      ],
+      "19h15": [
         {
           "stt": 1,
           "teN_KHANG": "Tây An 2",
