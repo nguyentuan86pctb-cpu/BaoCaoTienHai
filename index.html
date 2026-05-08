@@ -305,10 +305,17 @@ async function taiDuLieu() {
         const res = await fetch(`https://raw.githubusercontent.com/nguyentuan86pctb-cpu/BaoCaoTienHai/main/data.json?t=${Date.now()}`);
         const json = await res.json();
         
-        duLieuToanBoTheoGio = json.du_lieu || {};
+        // --- ĐOẠN ĐÃ FIX LỖI ---
+        // Lọc lấy dữ liệu của ngày mới nhất để render các mốc giờ
+        const duLieuGoc = json.du_lieu || {};
+        const cacNgay = Object.keys(duLieuGoc).sort();
+        const ngayMoiNhat = cacNgay[cacNgay.length - 1]; 
+        
+        duLieuToanBoTheoGio = ngayMoiNhat ? duLieuGoc[ngayMoiNhat] : {};
+        // -----------------------
         
         const svgCheck = `<svg class="w-4 h-4 text-green-600 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
-        document.getElementById('cap-nhat-luc').innerHTML = `${svgCheck} Dữ liệu ngày: <span class="font-bold text-evnDark ml-1">${json.ngay_cap_nhat || '--'}</span> <span class="hidden md:inline mx-2">—</span> Đồng bộ lần cuối: <span class="font-medium text-slate-600">${json.cap_nhat_luc || '--'}</span>`;
+        document.getElementById('cap-nhat-luc').innerHTML = `${svgCheck} Dữ liệu ngày: <span class="font-bold text-evnDark ml-1">${ngayMoiNhat || '--'}</span> <span class="hidden md:inline mx-2">—</span> Đồng bộ lần cuối: <span class="font-medium text-slate-600">${json.cap_nhat_luc || '--'}</span>`;
         
         taoNutChonGio();
     } catch (err) {
