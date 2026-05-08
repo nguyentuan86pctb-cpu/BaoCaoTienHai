@@ -30,15 +30,56 @@
         ::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #a8a8a8; }
         
-        /* Custom DataTables */
+        /* ===== Custom DataTables ===== */
         .dataTables_wrapper .dataTables_filter input { border: 1px solid #cbd5e1; border-radius: 6px; padding: 4px 8px; outline: none; margin-bottom: 10px; margin-left: 8px; }
         .dataTables_wrapper .dataTables_length select { border: 1px solid #cbd5e1; border-radius: 6px; padding: 4px; margin: 0 4px; }
         table.dataTable thead th { border-bottom: 2px solid #0054A6 !important; background-color: #f8fafc; }
         table.dataTable tbody tr:hover { background-color: #eff6ff !important; }
+
+        /* ===== CSS cho bảng dư nợ: thu gọn padding để vừa màn hình ===== */
+        #bang-duno th, #bang-duno td {
+            padding: 5px 7px !important;
+            font-size: 12px !important;
+            white-space: nowrap;
+        }
+        #bang-duno thead th {
+            background: linear-gradient(135deg, #0054A6, #002B54) !important;
+            color: #fff !important;
+            font-weight: 700 !important;
+            font-size: 11px !important;
+        }
+        /* Cột Tổng tiền nổi bật */
+        .col-tong-tien { font-weight: 900; color: #c0392b; }
+
+        /* ===== CSS IN ẤN - chỉ hiển thị bảng dư nợ, canh A4 ===== */
+        @media print {
+            /* Ẩn toàn bộ trang ngoại trừ vùng in */
+            body * { visibility: hidden; }
+            #vung-in-duno, #vung-in-duno * { visibility: visible; }
+            #vung-in-duno {
+                position: absolute;
+                top: 0; left: 0;
+                width: 100%;
+            }
+            /* Ẩn thanh công cụ DataTables khi in */
+            .dataTables_wrapper .dataTables_filter,
+            .dataTables_wrapper .dataTables_length,
+            .dataTables_wrapper .dataTables_info,
+            .dataTables_wrapper .dataTables_paginate { display: none !important; }
+            /* Đảm bảo bảng vừa trang A4 ngang */
+            table { width: 100% !important; font-size: 10px !important; }
+            th, td { padding: 3px 4px !important; font-size: 10px !important; }
+            /* Header in */
+            #in-header { display: block !important; }
+            @page { size: A4 landscape; margin: 10mm; }
+        }
+        /* Header in ẩn trên màn hình */
+        #in-header { display: none; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans flex h-screen overflow-hidden">
 
+<!-- ===== SIDEBAR NAVIGATION (GIỮ NGUYÊN) ===== -->
 <nav class="bg-evnDark text-white fixed left-0 top-0 h-full w-[260px] shadow-2xl flex flex-col py-6 z-40 hidden md:flex border-r border-blue-900">
     <div class="px-6 mb-8 flex flex-col gap-1">
         <span class="text-2xl font-black tracking-tight text-white drop-shadow-md">EVNNPC</span>
@@ -57,6 +98,7 @@
     </div>
 </nav>
 
+<!-- ===== NỘI DUNG CHÍNH ===== -->
 <div class="flex-1 flex flex-col md:ml-[260px] h-full w-full overflow-hidden">
     <header class="bg-white border-b border-slate-200 shadow-sm flex justify-center items-center h-16 px-4 sticky top-0 z-50">
         <h1 class="text-xl md:text-2xl font-black text-evnBlue drop-shadow-sm tracking-tight text-center uppercase">TỔNG HỢP BÁO CÁO ĐIỆN LỰC TIỀN HẢI</h1>
@@ -65,6 +107,9 @@
     <main class="flex-1 overflow-y-auto p-2 md:p-6 bg-slate-50">
         <div class="max-w-[1600px] mx-auto flex flex-col gap-4 md:gap-6">
             
+            <!-- ==========================================
+                 TAB MANG TẢI — GIỮ NGUYÊN TOÀN BỘ
+                 ========================================== -->
             <div id="tab-mang-tai" class="block">
                 <section class="bg-white rounded-xl border border-slate-200 shadow-lg p-4 md:p-6 flex flex-col gap-4">
                     <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 border-b border-slate-100 pb-4">
@@ -134,8 +179,13 @@
                 </section>
             </div>
 
+            <!-- ==========================================
+                 TAB DƯ NỢ — ĐÃ CẢI TIẾN
+                 ========================================== -->
             <div id="tab-du-no" class="hidden">
                 <section class="bg-white rounded-xl border border-slate-200 shadow-lg p-4 md:p-6 flex flex-col gap-4">
+                    
+                    <!-- Tiêu đề + nút hành động -->
                     <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 border-b border-slate-100 pb-4">
                         <div>
                             <h2 class="text-xl md:text-2xl font-bold text-evnDark flex items-center gap-2 uppercase">
@@ -144,32 +194,64 @@
                             </h2>
                             <p id="cap-nhat-luc-duno" class="text-sm text-slate-500 mt-1">Đang tải dữ liệu...</p>
                         </div>
+                        <!-- Nhóm nút: lọc TNV + làm mới + xuất file + in -->
                         <div class="flex flex-wrap items-center gap-2">
-                            <select id="filter-tnv" class="bg-white border border-slate-300 text-slate-700 font-semibold px-3 py-2 rounded-lg shadow-sm focus:border-evnBlue outline-none">
+                            <!-- Lọc theo thu ngân viên -->
+                            <select id="filter-tnv" class="bg-white border border-slate-300 text-slate-700 font-semibold px-3 py-2 rounded-lg shadow-sm focus:border-evnBlue outline-none text-sm">
                                 <option value="">-- Tất cả Thu ngân viên --</option>
                             </select>
-                            <button onclick="taiDuLieuDuNo()" class="bg-white text-slate-700 border border-slate-300 font-semibold px-4 py-2 rounded-lg shadow-sm hover:bg-slate-50 hover:text-evnBlue transition-all flex items-center gap-2">
+                            <!-- Nút làm mới -->
+                            <button onclick="taiDuLieuDuNo()" class="bg-white text-slate-700 border border-slate-300 font-semibold px-3 py-2 rounded-lg shadow-sm hover:bg-slate-50 hover:text-evnBlue transition-all flex items-center gap-1.5 text-sm">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
                                 Làm mới
                             </button>
-                        </div>
-                    </div>
-                    
-                    <div id="thong-ke-duno" class="hidden bg-gradient-to-r from-orange-50 to-orange-100 border border-orange-200 px-6 py-5 rounded-xl shadow-sm flex flex-col md:flex-row justify-around items-center gap-4">
-                        <div class="text-center">
-                            <p class="text-slate-600 font-bold text-sm uppercase mb-1">Tổng số hóa đơn</p>
-                            <span id="tong-hoa-don" class="font-black text-evnOrangeDark text-3xl">0</span>
-                        </div>
-                        <div class="w-px h-10 bg-orange-200 hidden md:block"></div>
-                        <div class="text-center">
-                            <p class="text-slate-600 font-bold text-sm uppercase mb-1">Tổng dư nợ (VNĐ)</p>
-                            <span id="tong-tien-no" class="font-black text-red-600 text-3xl">0</span>
+                            <!-- Nút xuất Excel theo TNV đang chọn -->
+                            <button onclick="xuatExcelTheoDieuKien()" class="bg-green-600 text-white border border-green-700 font-semibold px-3 py-2 rounded-lg shadow-sm hover:bg-green-700 transition-all flex items-center gap-1.5 text-sm">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                Xuất Excel
+                            </button>
+                            <!-- Nút in trực tiếp -->
+                            <button onclick="inBaoCaoDuNo()" class="bg-evnBlue text-white border border-evnDark font-semibold px-3 py-2 rounded-lg shadow-sm hover:bg-evnDark transition-all flex items-center gap-1.5 text-sm">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                                In báo cáo
+                            </button>
                         </div>
                     </div>
 
-                    <div class="border border-slate-200 rounded-xl shadow-sm bg-white p-2 md:p-4">
+                    <!-- Bộ lọc dư nợ theo mức tiền -->
+                    <div class="flex flex-wrap items-center gap-2 border-b border-slate-100 pb-3">
+                        <span class="font-bold text-slate-700 text-xs uppercase w-28">LỌC DƯ NỢ ≥:</span>
+                        <button onclick="locTheoSoTien(0, this)"    class="nut-loc-tien px-3 py-1.5 rounded border text-xs font-bold shadow-sm bg-evnBlue text-white border-evnBlue">Tất cả</button>
+                        <button onclick="locTheoSoTien(500000, this)"    class="nut-loc-tien px-3 py-1.5 rounded border text-xs font-bold shadow-sm bg-white text-slate-600 border-slate-300 hover:border-evnOrange">≥ 500.000</button>
+                        <button onclick="locTheoSoTien(1000000, this)"   class="nut-loc-tien px-3 py-1.5 rounded border text-xs font-bold shadow-sm bg-white text-slate-600 border-slate-300 hover:border-evnOrange">≥ 1.000.000</button>
+                        <button onclick="locTheoSoTien(2000000, this)"   class="nut-loc-tien px-3 py-1.5 rounded border text-xs font-bold shadow-sm bg-white text-slate-600 border-slate-300 hover:border-evnOrange">≥ 2.000.000</button>
+                        <button onclick="locTheoSoTien(3000000, this)"   class="nut-loc-tien px-3 py-1.5 rounded border text-xs font-bold shadow-sm bg-white text-slate-600 border-slate-300 hover:border-evnOrange">≥ 3.000.000</button>
+                    </div>
+
+                    <!-- Thống kê tổng hợp -->
+                    <div id="thong-ke-duno" class="hidden bg-gradient-to-r from-orange-50 to-orange-100 border border-orange-200 px-6 py-4 rounded-xl shadow-sm flex flex-col md:flex-row justify-around items-center gap-4">
+                        <div class="text-center">
+                            <p class="text-slate-600 font-bold text-xs uppercase mb-1">Số khách hàng hiển thị</p>
+                            <span id="tong-hoa-don" class="font-black text-evnOrangeDark text-2xl">0</span>
+                        </div>
+                        <div class="w-px h-8 bg-orange-200 hidden md:block"></div>
+                        <div class="text-center">
+                            <p class="text-slate-600 font-bold text-xs uppercase mb-1">Tổng dư nợ (VNĐ)</p>
+                            <span id="tong-tien-no" class="font-black text-red-600 text-2xl">0</span>
+                        </div>
+                    </div>
+
+                    <!-- Vùng in — bao gồm header in và bảng DataTables -->
+                    <div id="vung-in-duno" class="border border-slate-200 rounded-xl shadow-sm bg-white p-2 md:p-3">
+                        <!-- Header chỉ hiển thị khi in -->
+                        <div id="in-header" class="text-center mb-3">
+                            <div class="font-black text-lg uppercase">ĐIỆN LỰC TIỀN HẢI — EVNNPC</div>
+                            <div class="font-bold text-base uppercase mt-1">BÁO CÁO DƯ NỢ KHÁCH HÀNG</div>
+                            <div id="in-subtitle" class="text-sm mt-1 text-gray-600"></div>
+                            <div id="in-ngay" class="text-sm text-gray-500"></div>
+                        </div>
                         <div class="overflow-x-auto w-full">
-                            <table id="bang-duno" class="w-full text-left border-collapse whitespace-nowrap stripe hover row-border" style="width:100%"></table>
+                            <table id="bang-duno" class="w-full text-left border-collapse stripe hover row-border" style="width:100%"></table>
                         </div>
                     </div>
                 </section>
@@ -179,12 +261,15 @@
     </main>
 </div>
 
+<!-- ===== THƯ VIỆN JS ===== -->
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<!-- SheetJS để xuất file Excel trực tiếp trên trình duyệt -->
+<script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
 
 <script>
 // ==========================================
-// 1. QUẢN LÝ TAB & SIDEBAR
+// 1. QUẢN LÝ TAB & SIDEBAR (GIỮ NGUYÊN)
 // ==========================================
 function chuyenTab(tabName) {
     document.getElementById('tab-mang-tai').classList.add('hidden');
@@ -205,7 +290,7 @@ function chuyenTab(tabName) {
 }
 
 // ==========================================
-// 2. LOGIC BÁO CÁO MANG TẢI (TBA)
+// 2. LOGIC BÁO CÁO MANG TẢI (GIỮ NGUYÊN HOÀN TOÀN)
 // ==========================================
 const SO_DONG_MOI_TRANG = 15;
 let duLieuToanBoGoc = {}; 
@@ -350,9 +435,31 @@ function renderDuLieu() {
 }
 
 // ==========================================
-// 3. LOGIC BÁO CÁO DƯ NỢ (DATATABLES)
+// 3. LOGIC BÁO CÁO DƯ NỢ — ĐÃ CẢI TIẾN
 // ==========================================
-let dataTableDuNo = null;
+let dataTableDuNo = null;  // Instance DataTables
+let cotTNV_global = null;  // Tên cột Thu Ngân Viên (lưu global để dùng ở các hàm khác)
+let cotTien_global = null; // Tên cột Tổng tiền (lưu global để dùng ở filter/xuất)
+let nguongLocTien = 0;     // Ngưỡng lọc dư nợ hiện tại (0 = tất cả)
+
+// Danh sách tên cột cần ẨN trên web (so sánh lowercase)
+const COT_CAN_AN = [
+    'địa chỉ', 'dia chi',
+    'thu ngân', 'thu ngan', 'tnv', 'thu ngân viên',
+    'kỳ', 'tháng', 'năm', 'kỳ tháng năm', 'ky thang nam',
+    'loại hóa đơn', 'loai hoa don',
+    'ngày phát hành', 'ngay phat hanh'
+];
+
+/**
+ * Kiểm tra tên cột có thuộc danh sách cần ẩn không
+ * @param {string} tenCot - Tên cột cần kiểm tra
+ * @returns {boolean}
+ */
+function kiemTraAnCot(tenCot) {
+    const ten = tenCot.toLowerCase().trim();
+    return COT_CAN_AN.some(an => ten.includes(an));
+}
 
 async function taiDuLieuDuNo() {
     try {
@@ -360,56 +467,112 @@ async function taiDuLieuDuNo() {
         if (!res.ok) throw new Error("Chưa có data_duno.json trên Github sếp ơi!");
         const json = await res.json();
         
-        const records = json.du_lieu || [];
+        // Giới hạn tối đa 500 dòng hiển thị
+        const records = (json.du_lieu || []).slice(0, 500);
         if (records.length === 0) return;
 
+        // Hiển thị thời gian cập nhật
         const svgCheck = `<svg class="w-4 h-4 text-green-600 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
         document.getElementById('cap-nhat-luc-duno').innerHTML = `${svgCheck} Cập nhật lúc: <span class="font-bold text-evnDark ml-1">${json.cap_nhat_luc || '--'}</span>`;
 
         const keys = Object.keys(records[0]);
-        let cotTNV = keys.find(k => k.toLowerCase().includes('thu ngân') || k.toLowerCase().includes('tnv'));
-        let cotTien = keys.find(k => k.toLowerCase().includes('tổng tiền') || k.toLowerCase().includes('tiền') || k.toLowerCase().includes('nợ'));
 
-        if (cotTNV) {
-            const listTNV = [...new Set(records.map(r => r[cotTNV]))].filter(Boolean).sort();
+        // Xác định cột Thu ngân viên và cột Tổng tiền
+        cotTNV_global  = keys.find(k => k.toLowerCase().includes('thu ngân') || k.toLowerCase().includes('tnv') || k.toLowerCase().includes('thu ngan'));
+        cotTien_global = keys.find(k => k.toLowerCase().includes('tổng tiền') || k.toLowerCase().includes('tong tien') || k.toLowerCase().includes('nợ'));
+
+        // Populate dropdown filter thu ngân viên
+        if (cotTNV_global) {
+            const listTNV = [...new Set(records.map(r => r[cotTNV_global]))].filter(Boolean).sort();
             const select = document.getElementById('filter-tnv');
             select.innerHTML = '<option value="">-- Tất cả Thu ngân viên --</option>';
             listTNV.forEach(t => select.innerHTML += `<option value="${t}">${t}</option>`);
         }
 
+        // Hủy DataTable cũ nếu đã tồn tại
         if (dataTableDuNo) { dataTableDuNo.destroy(); $('#bang-duno').empty(); }
 
+        // Xây dựng config cột: ẩn các cột theo danh sách COT_CAN_AN
+        const columnDefs = keys.map((k, idx) => ({
+            data: k,
+            title: k.toUpperCase(),
+            // Thêm class đặc biệt cho cột tổng tiền
+            className: k === cotTien_global ? 'col-tong-tien text-right' : '',
+            // Ẩn cột nếu tên cột nằm trong danh sách cần ẩn
+            visible: !kiemTraAnCot(k)
+        }));
+
+        // Khởi tạo DataTable với cấu hình mới
         dataTableDuNo = $('#bang-duno').DataTable({
             data: records,
-            columns: keys.map(k => ({ data: k, title: k.toUpperCase() })),
-            pageLength: 20,
-            language: { search: "Tìm kiếm tên/mã KH:", lengthMenu: "Hiện _MENU_ dòng", info: "Dòng _START_-_END_ / Tổng _TOTAL_", zeroRecords: "Không thấy ai sếp ạ", paginate: { next: "Sau", previous: "Trước" } },
+            columns: columnDefs,
+            // Hiển thị tối đa 500 dòng, không cho chọn số khác
+            pageLength: 500,
+            lengthMenu: [[500], [500]],
+            language: {
+                search: "Tìm kiếm:",
+                lengthMenu: "Hiện _MENU_ dòng",
+                info: "Dòng _START_–_END_ / Tổng _TOTAL_",
+                zeroRecords: "Không tìm thấy dữ liệu phù hợp",
+                paginate: { next: "Sau »", previous: "« Trước" }
+            },
+            // Tô màu dòng có dư nợ cao
             createdRow: function(row, data) {
-                if (cotTien) {
-                    let val = parseFloat(String(data[cotTien]).replace(/\./g, '').replace(/,/g, ''));
-                    if (val > 1000000) { $(row).addClass('bg-red-50 text-red-900 font-medium'); $('td', row).eq(keys.indexOf(cotTien)).addClass('font-black text-red-600'); }
+                if (cotTien_global) {
+                    let val = parseFloat(String(data[cotTien_global]).replace(/\./g, '').replace(/,/g, ''));
+                    if (val > 1000000) {
+                        $(row).addClass('bg-red-50');
+                        $('td.col-tong-tien', row).addClass('font-black text-red-700');
+                    }
                 }
             },
-            scrollX: true,
-            autoWidth: false
+            // Tắt scroll ngang, để bảng tự co theo cột hiển thị
+            scrollX: false,
+            autoWidth: true,
+            // Tắt DOM mặc định của DataTables, chỉ giữ tìm kiếm và bảng
+            dom: '<"flex flex-wrap justify-between items-center mb-2"lf>rt<"flex flex-wrap justify-between items-center mt-2"ip>'
         });
 
+        // Đăng ký custom search function cho lọc theo ngưỡng tiền
+        $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
+            // Chỉ áp dụng cho bảng dư nợ
+            if (settings.nTable.id !== 'bang-duno') return true;
+            if (nguongLocTien === 0) return true; // Không lọc nếu ngưỡng = 0
+            if (!cotTien_global) return true;
+
+            const idxTien = dataTableDuNo.column(cotTien_global + ':name').index();
+            const cotTienIdx = keys.indexOf(cotTien_global);
+            if (cotTienIdx < 0) return true;
+
+            const val = parseFloat(String(data[cotTienIdx]).replace(/\./g, '').replace(/,/g, '')) || 0;
+            return val >= nguongLocTien;
+        });
+
+        // Hàm cập nhật thống kê tổng tiền và số dòng
         function capNhatThongKe() {
             let filtered = dataTableDuNo.rows({ search: 'applied' }).data();
             let sum = 0;
             filtered.each(function(v) {
-                if (cotTien && v[cotTien]) sum += parseFloat(String(v[cotTien]).replace(/\./g, '').replace(/,/g, '')) || 0;
+                if (cotTien_global && v[cotTien_global]) {
+                    sum += parseFloat(String(v[cotTien_global]).replace(/\./g, '').replace(/,/g, '')) || 0;
+                }
             });
             $('#thong-ke-duno').removeClass('hidden');
             $('#tong-hoa-don').text(new Intl.NumberFormat('vi-VN').format(filtered.length));
-            $('#tong-tien-no').text(new Intl.NumberFormat('vi-VN').format(sum));
+            $('#tong-tien-no').text(new Intl.NumberFormat('vi-VN').format(sum) + ' đ');
         }
 
         dataTableDuNo.on('draw', capNhatThongKe);
         capNhatThongKe();
 
+        // Lọc theo thu ngân viên (exact match)
         $('#filter-tnv').off('change').on('change', function() {
-            if (cotTNV) dataTableDuNo.column(keys.indexOf(cotTNV)).search($(this).val() ? '^' + $.fn.dataTable.util.escapeRegex($(this).val()) + '$' : '', true, false).draw();
+            if (cotTNV_global) {
+                const val = $(this).val();
+                dataTableDuNo.column(keys.indexOf(cotTNV_global))
+                    .search(val ? '^' + $.fn.dataTable.util.escapeRegex(val) + '$' : '', true, false)
+                    .draw();
+            }
         });
 
     } catch (err) {
@@ -417,9 +580,85 @@ async function taiDuLieuDuNo() {
     }
 }
 
+/**
+ * Lọc bảng theo ngưỡng dư nợ tối thiểu
+ * @param {number} nguong - Số tiền tối thiểu (0 = tất cả)
+ * @param {HTMLElement} btn - Nút được click để cập nhật style active
+ */
+function locTheoSoTien(nguong, btn) {
+    nguongLocTien = nguong;
+    // Cập nhật style nút active
+    document.querySelectorAll('.nut-loc-tien').forEach(b => {
+        b.className = 'nut-loc-tien px-3 py-1.5 rounded border text-xs font-bold shadow-sm bg-white text-slate-600 border-slate-300 hover:border-evnOrange';
+    });
+    btn.className = 'nut-loc-tien px-3 py-1.5 rounded border text-xs font-bold shadow-sm bg-evnOrange text-white border-evnOrange';
+    // Kích hoạt lại bộ lọc DataTables
+    if (dataTableDuNo) dataTableDuNo.draw();
+}
+
+/**
+ * Xuất file Excel theo điều kiện đang lọc (TNV + ngưỡng tiền)
+ * Sử dụng SheetJS (xlsx.full.min.js)
+ */
+function xuatExcelTheoDieuKien() {
+    if (!dataTableDuNo) { alert('Chưa có dữ liệu sếp ơi!'); return; }
+
+    // Lấy tên TNV đang lọc để đặt tên file
+    const tenTNV = $('#filter-tnv').val() || 'TatCa';
+    const tenFile = `DuNo_${tenTNV.replace(/\s+/g, '_')}_${new Date().toLocaleDateString('vi-VN').replace(/\//g, '-')}.xlsx`;
+
+    // Lấy dữ liệu các dòng đang hiển thị (đã qua filter)
+    const rows = dataTableDuNo.rows({ search: 'applied' }).data().toArray();
+    if (rows.length === 0) { alert('Không có dữ liệu để xuất!'); return; }
+
+    // Lấy danh sách cột đang hiển thị (không ẩn)
+    const cotHienThi = dataTableDuNo.columns().indexes().toArray()
+        .filter(i => dataTableDuNo.column(i).visible())
+        .map(i => ({
+            idx: i,
+            title: $(dataTableDuNo.column(i).header()).text()
+        }));
+
+    // Tạo mảng dữ liệu xuất: header + rows
+    const duLieuXuat = [];
+    // Dòng header
+    duLieuXuat.push(cotHienThi.map(c => c.title));
+    // Dữ liệu từng dòng
+    rows.forEach(row => {
+        const keys = Object.keys(row);
+        duLieuXuat.push(cotHienThi.map(c => row[keys[c.idx]] ?? ''));
+    });
+
+    // Tạo workbook và xuất file
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.aoa_to_sheet(duLieuXuat);
+    XLSX.utils.book_append_sheet(wb, ws, 'DuNo');
+    XLSX.writeFile(wb, tenFile);
+}
+
+/**
+ * In báo cáo dư nợ trực tiếp trên trình duyệt
+ * Dữ liệu in = dữ liệu đang hiển thị trên bảng
+ */
+function inBaoCaoDuNo() {
+    if (!dataTableDuNo) { alert('Chưa có dữ liệu sếp ơi!'); return; }
+
+    // Cập nhật header in trước khi print
+    const tenTNV = $('#filter-tnv option:selected').text();
+    const subtitle = tenTNV && tenTNV !== '-- Tất cả Thu ngân viên --'
+        ? `Thu ngân viên: ${tenTNV}`
+        : 'Tất cả Thu ngân viên';
+    document.getElementById('in-subtitle').textContent = subtitle;
+    document.getElementById('in-ngay').textContent = `Ngày in: ${new Date().toLocaleDateString('vi-VN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`;
+
+    window.print();
+}
+
+// ==========================================
 // KHỞI CHẠY
+// ==========================================
 taiDuLieu();
-setInterval(taiDuLieu, 60000); // Tự làm mới sau mỗi phút
+setInterval(taiDuLieu, 60000); // Tự làm mới tab mang tải sau mỗi phút
 </script>
 </body>
 </html>
