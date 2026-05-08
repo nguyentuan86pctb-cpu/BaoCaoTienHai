@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EVNNPC - Điện lực Tiền Hải Dashboard</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    evnBlue: "#0054A6",
+                    evnDark: "#002B54",
+                    evnOrange: "#F37021",
+                    evnOrangeDark: "#E55D00",
+                },
+                fontFamily: { sans: ['Public Sans', 'sans-serif'] }
+            }
+        }
+    }
+</script>
+<style>
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #a8a8a8; }
+</style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans flex h-screen overflow-hidden">
+
+<nav class="bg-evnDark text-white fixed left-0 top-0 h-full w-[260px] shadow-2xl flex flex-col py-6 z-40 hidden md:flex border-r border-blue-900">
+    <div class="px-6 mb-8 flex flex-col gap-1">
+        <span class="text-2xl font-black tracking-tight text-white drop-shadow-md">EVNNPC</span>
+        <span class="text-evnOrange font-bold text-xs uppercase tracking-widest">Điện lực Tiền Hải</span>
+    </div>
+    <div class="flex-1 overflow-y-auto flex flex-col gap-2 px-3">
+        <a id="btn-nav-mang-tai" onclick="chuyenTab('mang-tai')" class="cursor-pointer bg-gradient-to-r from-evnBlue to-[#004080] text-white rounded-lg shadow-md flex items-center gap-3 px-4 py-3 border-l-4 border-evnOrange transition-transform transform hover:translate-x-1" href="javascript:void(0)">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+            <span class="font-semibold">Báo cáo mang tải</span>
+        </a>
+
+        <a id="btn-nav-du-no" onclick="chuyenTab('du-no')" class="cursor-pointer text-slate-400 hover:text-white hover:bg-white/5 rounded-lg flex items-center gap-3 px-4 py-3 border-l-4 border-transparent transition-transform transform hover:translate-x-1" href="javascript:void(0)">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <span class="font-semibold">Báo cáo Dư nợ</span>
+        </a>
+    </div>
+</nav>
+
+<div class="flex-1 flex flex-col md:ml-[260px] h-full w-full overflow-hidden">
+    <header class="bg-white border-b border-slate-200 shadow-sm flex justify-center items-center h-16 px-4 sticky top-0 z-50">
+        <h1 class="text-xl md:text-2xl font-black text-evnBlue drop-shadow-sm tracking-tight text-center uppercase">TỔNG HỢP BÁO CÁO ĐIỆN LỰC TIỀN HẢI</h1>
+    </header>
+
+    <main class="flex-1 overflow-y-auto p-2 md:p-6 bg-slate-50">
+        <div class="max-w-[1600px] mx-auto flex flex-col gap-4 md:gap-6">
+            
+            <div id="tab-mang-tai" class="block">
+                <section class="bg-white rounded-xl border border-slate-200 shadow-lg p-4 md:p-6 flex flex-col gap-4">
+                    <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 border-b border-slate-100 pb-4">
+                        <div>
+                            <h2 class="text-xl md:text-2xl font-bold text-evnDark flex items-center gap-2 uppercase">
+                                <svg class="w-6 h-6 text-evnOrange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                                BÁO CÁO MANG TẢI TRẠM BIẾN ÁP
+                            </h2>
+                            <p id="cap-nhat-luc" class="text-sm text-slate-500 mt-1 flex items-center gap-1">
+                                Đang tải dữ liệu...
+                            </p>
+                        </div>
+                        
+                        <div class="flex items-center gap-2">
+                            <button onclick="taiDuLieu()" class="bg-white text-slate-700 border border-slate-300 font-semibold px-3 py-2 rounded-lg shadow-sm hover:bg-slate-50 hover:text-evnBlue transition-all active:scale-95 flex items-center gap-2 text-sm md:text-base">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                                Làm mới
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="vung-chon-gio" class="flex flex-wrap items-center gap-2 border-b border-slate-100 pb-3">
+                        </div>
+
+                    <div id="bang-du-lieu-mobile" class="grid grid-cols-1 gap-4 md:hidden">
+                        <div class="text-center py-10 text-slate-500 font-medium animate-pulse">Đang kết nối hệ thống...</div>
+                    </div>
+
+                    <div class="hidden md:block border border-slate-200 rounded-xl overflow-hidden shadow-sm bg-white">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse whitespace-nowrap">
+                                <thead class="bg-gradient-to-r from-evnBlue to-evnDark text-white font-semibold text-sm">
+                                    <tr>
+                                        <th class="px-3 py-3 border-r border-blue-800 text-center">STT</th>
+                                        <th class="px-4 py-3 border-r border-blue-800 uppercase">Tên khách hàng</th>
+                                        <th class="px-4 py-3 border-r border-blue-800 text-right uppercase text-yellow-300 drop-shadow-md">Công suất (kW)</th>
+                                        <th class="px-4 py-3 border-r border-blue-800 uppercase">Thời gian</th>
+                                        <th class="px-4 py-3 border-r border-blue-800 text-right uppercase">Mang tải (%)</th>
+                                        <th class="px-4 py-3 border-r border-blue-800 text-right uppercase">Lệch pha (%)</th>
+                                        <th class="px-3 py-3 border-r border-blue-800 text-right">I_A (A)</th>
+                                        <th class="px-3 py-3 border-r border-blue-800 text-right">I_B (A)</th>
+                                        <th class="px-3 py-3 border-r border-blue-800 text-right">I_C (A)</th>
+                                        <th class="px-3 py-3 border-r border-blue-800 text-right">U_A (V)</th>
+                                        <th class="px-3 py-3 border-r border-blue-800 text-right">U_B (V)</th>
+                                        <th class="px-3 py-3 text-right">U_C (V)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bang-du-lieu-desktop" class="text-sm divide-y divide-slate-200">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-slate-50 px-4 md:px-5 py-3 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center text-sm gap-3">
+                        <span id="phan-trang-info" class="font-medium text-slate-600">--</span>
+                        <div id="phan-trang-nut" class="flex flex-wrap justify-center gap-1.5"></div>
+                    </div>
+                </section>
+            </div>
+
+            <div id="tab-du-no" class="hidden">
+                <section class="bg-white rounded-xl border border-slate-200 shadow-lg p-4 md:p-6 flex flex-col gap-4 min-h-[500px]">
+                    <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 border-b border-slate-100 pb-4">
+                        <div>
+                            <h2 class="text-xl md:text-2xl font-bold text-evnDark flex items-center gap-2 uppercase">
+                                <svg class="w-6 h-6 text-evnOrange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                BÁO CÁO DƯ NỢ (ĐANG PHÁT TRIỂN)
+                            </h2>
+                            <p class="text-sm text-slate-500 mt-1">
+                                Khu vực hiển thị thông tin dư nợ tiền điện.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex-1 flex flex-col justify-center items-center text-slate-400 font-medium py-20 border-2 border-dashed border-slate-300 bg-slate-50 rounded-xl">
+                        <svg class="w-16 h-16 mb-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                        <p class="text-lg">Khu vực code giao diện Dư nợ </p>
+                    </div>
+                </section>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<script>
+// ==========================================
+// LOGIC CHUYỂN TAB (MỚI THÊM)
+// ==========================================
+function chuyenTab(tabName) {
+    // 1. Ẩn tất cả nội dung
+    document.getElementById('tab-mang-tai').classList.add('hidden');
+    document.getElementById('tab-mang-tai').classList.remove('block');
+    document.getElementById('tab-du-no').classList.add('hidden');
+    document.getElementById('tab-du-no').classList.remove('block');
+    
+    // 2. Hiện Tab được chọn
+    document.getElementById('tab-' + tabName).classList.remove('hidden');
+    document.getElementById('tab-' + tabName).classList.add('block');
+    
+    // 3. Reset class tất cả nút trên Sidebar về Inactive
+    const classInactive = "cursor-pointer text-slate-400 hover:text-white hover:bg-white/5 rounded-lg flex items-center gap-3 px-4 py-3 border-l-4 border-transparent transition-transform transform hover:translate-x-1";
+    document.getElementById('btn-nav-mang-tai').className = classInactive;
+    document.getElementById('btn-nav-du-no').className = classInactive;
+    
+    // 4. Set class Active cho nút được bấm
+    const classActive = "cursor-pointer bg-gradient-to-r from-evnBlue to-[#004080] text-white rounded-lg shadow-md flex items-center gap-3 px-4 py-3 border-l-4 border-evnOrange transition-transform transform hover:translate-x-1";
+    document.getElementById('btn-nav-' + tabName).className = classActive;
+}
+
+// ==========================================
+// LOGIC DỮ LIỆU CŨ (GIỮ NGUYÊN)
+// ==========================================
+const SO_DONG_MOI_TRANG = 15;
+let duLieuToanBoTheoGio = {}; 
+let duLieuCuaMocHienTai = []; 
+let trangHienTai = 1;
+
+async function taiDuLieu() {
+    try {
+        const res = await fetch(`https://raw.githubusercontent.com/nguyentuan86pctb-cpu/BaoCaoTienHai/main/data.json?t=${Date.now()}`);
+        const json = await res.json();
+        
+        duLieuToanBoTheoGio = json.du_lieu || {};
+        
+        const svgCheck = `<svg class="w-4 h-4 text-green-600 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
+        document.getElementById('cap-nhat-luc').innerHTML = `${svgCheck} Dữ liệu ngày: <span class="font-bold text-evnDark ml-1">${json.ngay_cap_nhat || '--'}</span> <span class="hidden md:inline mx-2">—</span> Đồng bộ lần cuối: <span class="font-medium text-slate-600">${json.cap_nhat_luc || '--'}</span>`;
+        
+        taoNutChonGio();
+    } catch (err) {
+        document.getElementById('bang-du-lieu-desktop').innerHTML = `<tr><td colspan="12" class="text-center text-red-600 py-10 font-bold bg-red-50">Lỗi kết nối: ${err.message}</td></tr>`;
+        document.getElementById('bang-du-lieu-mobile').innerHTML = `<div class="text-center text-red-600 py-10 font-bold bg-red-50 rounded-lg">Lỗi kết nối: ${err.message}</div>`;
+        document.getElementById('vung-chon-gio').innerHTML = '';
+    }
+}
+
+function taoNutChonGio() {
+    const vungChon = document.getElementById('vung-chon-gio');
+    const cacMocGio = Object.keys(duLieuToanBoTheoGio).sort(); 
+    
+    if (cacMocGio.length === 0) {
+        vungChon.innerHTML = '<span class="text-slate-500 italic px-2">Hôm nay chưa có bản ghi nào được rút...</span>';
+        duLieuCuaMocHienTai = [];
+        renderDuLieu();
+        return;
+    }
+
+    let html = '<span class="font-bold text-slate-700 py-1 mr-2 text-sm uppercase">CHỌN MỐC BÁO CÁO:</span>';
+    
+    const mocMacDinh = cacMocGio[cacMocGio.length - 1];
+
+    cacMocGio.forEach(gio => {
+        html += `<button onclick="chonMocGio('${gio}')" id="btn-gio-${gio}" class="nut-gio px-4 py-1.5 rounded border text-sm font-bold shadow-sm transition-all ${gio === mocMacDinh ? 'bg-evnOrange text-white border-evnOrange' : 'bg-white text-slate-600 border-slate-300 hover:border-evnOrange hover:text-evnOrange'}">${gio}</button>`;
+    });
+    
+    vungChon.innerHTML = html;
+    chonMocGio(mocMacDinh); 
+}
+
+function chonMocGio(gio) {
+    document.querySelectorAll('.nut-gio').forEach(btn => {
+        btn.className = "nut-gio px-4 py-1.5 rounded border text-sm font-bold shadow-sm transition-all bg-white text-slate-600 border-slate-300 hover:border-evnOrange hover:text-evnOrange";
+    });
+    
+    const btnActive = document.getElementById(`btn-gio-${gio}`);
+    if (btnActive) {
+        btnActive.className = "nut-gio px-4 py-1.5 rounded border text-sm font-bold shadow-sm transition-all bg-evnOrange text-white border-evnOrange";
+    }
+
+    duLieuCuaMocHienTai = duLieuToanBoTheoGio[gio] || [];
+    trangHienTai = 1;
+    renderDuLieu();
+}
+
+function renderDuLieu() {
+    const tbodyDesktop = document.getElementById('bang-du-lieu-desktop');
+    const containerMobile = document.getElementById('bang-du-lieu-mobile');
+    
+    if (duLieuCuaMocHienTai.length === 0) {
+        tbodyDesktop.innerHTML = `<tr><td colspan="12" class="text-center text-slate-500 py-10 font-medium bg-slate-50">Không có dữ liệu cho mốc giờ này</td></tr>`;
+        containerMobile.innerHTML = `<div class="text-center text-slate-500 py-10 font-medium bg-slate-50 rounded-lg border border-slate-200">Không có dữ liệu cho mốc giờ này</div>`;
+        document.getElementById('phan-trang-info').textContent = `--`;
+        document.getElementById('phan-trang-nut').innerHTML = '';
+        return;
+    }
+
+    const batDau = (trangHienTai - 1) * SO_DONG_MOI_TRANG;
+    const duLieuTrang = duLieuCuaMocHienTai.slice(batDau, batDau + SO_DONG_MOI_TRANG);
+
+    let htmlDesktop = '';
+    let htmlMobile = '';
+
+    duLieuTrang.forEach((row, idx) => {
+        const mtVal = parseFloat(row.i_MANG_TAI || 0);
+        const lpVal = parseFloat(row.i_LECH_PHA || 0);
+        
+        const styleMT = mtVal >= 200 ? `<span class="bg-red-100 text-red-700 border border-red-300 px-2 py-0.5 rounded shadow-sm font-bold">${mtVal.toFixed(2)}</span>` : mtVal.toFixed(2);
+        const styleLP = lpVal >= 50 ? `<span class="bg-red-100 text-red-700 border border-red-300 px-2 py-0.5 rounded shadow-sm font-bold">${lpVal.toFixed(2)}</span>` : lpVal.toFixed(2);
+        const mauNen = idx % 2 === 0 ? 'bg-white' : 'bg-slate-50';
+
+        htmlDesktop += `
+        <tr class="hover:bg-blue-50 transition-colors ${mauNen}">
+            <td class="px-3 py-3 border-r border-slate-200 text-center font-medium text-slate-500">${row.stt ?? ''}</td>
+            <td class="px-4 py-3 border-r border-slate-200 font-bold text-evnDark">${row.teN_KHANG ?? ''}</td>
+            <td class="px-4 py-3 border-r border-slate-200 text-right font-black text-evnOrangeDark bg-orange-50/50">${row.conG_SUAT ?? '0'}</td>
+            <td class="px-4 py-3 border-r border-slate-200 text-slate-600">${row.thoI_GIAN ?? ''}</td>
+            <td class="px-4 py-3 border-r border-slate-200 text-right">${styleMT}</td>
+            <td class="px-4 py-3 border-r border-slate-200 text-right">${styleLP}</td>
+            <td class="px-3 py-3 border-r border-slate-200 text-right text-slate-600">${row.donG_DIEN_A ?? ''}</td>
+            <td class="px-3 py-3 border-r border-slate-200 text-right text-slate-600">${row.donG_DIEN_B ?? ''}</td>
+            <td class="px-3 py-3 border-r border-slate-200 text-right text-slate-600">${row.donG_DIEN_C ?? ''}</td>
+            <td class="px-3 py-3 border-r border-slate-200 text-right text-slate-600">${row.daP_A ?? ''}</td>
+            <td class="px-3 py-3 border-r border-slate-200 text-right text-slate-600">${row.daP_B ?? ''}</td>
+            <td class="px-3 py-3 text-right text-slate-600">${row.daP_C ?? ''}</td>
+        </tr>`;
+
+        const theBaoDong = (mtVal >= 200 || lpVal >= 50) ? 'border-red-500' : 'border-evnBlue';
+        
+        htmlMobile += `
+        <div class="bg-white rounded-xl shadow-md border-l-4 ${theBaoDong} p-4 flex flex-col gap-2 relative overflow-hidden mb-3">
+            <div class="flex justify-between items-start border-b border-slate-100 pb-2">
+                <div>
+                    <h3 class="font-bold text-lg text-evnDark">${row.teN_KHANG ?? ''}</h3>
+                    <p class="text-xs text-slate-500">${row.thoI_GIAN ?? ''}</p>
+                </div>
+                <div class="bg-orange-100 text-evnOrangeDark px-3 py-1 rounded-full font-black text-sm border border-orange-200">
+                    ${row.conG_SUAT ?? '0'} kW
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-2 mt-2">
+                <div class="bg-slate-50 p-2 rounded border border-slate-100 flex justify-between items-center">
+                    <span class="text-xs text-slate-500">Mang tải:</span>
+                    <span class="text-sm">${styleMT}</span>
+                </div>
+                <div class="bg-slate-50 p-2 rounded border border-slate-100 flex justify-between items-center">
+                    <span class="text-xs text-slate-500">Lệch pha:</span>
+                    <span class="text-sm">${styleLP}</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-2 mt-1">
+                <div class="bg-blue-50/50 p-1.5 rounded border border-blue-100 flex flex-col items-center">
+                    <span class="text-[10px] text-slate-500 font-semibold">I_A (A)</span>
+                    <span class="text-sm font-bold text-evnDark">${row.donG_DIEN_A ?? '-'}</span>
+                </div>
+                <div class="bg-blue-50/50 p-1.5 rounded border border-blue-100 flex flex-col items-center">
+                    <span class="text-[10px] text-slate-500 font-semibold">I_B (A)</span>
+                    <span class="text-sm font-bold text-evnDark">${row.donG_DIEN_B ?? '-'}</span>
+                </div>
+                <div class="bg-blue-50/50 p-1.5 rounded border border-blue-100 flex flex-col items-center">
+                    <span class="text-[10px] text-slate-500 font-semibold">I_C (A)</span>
+                    <span class="text-sm font-bold text-evnDark">${row.donG_DIEN_C ?? '-'}</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-2 mt-1">
+                <div class="bg-orange-50/50 p-1.5 rounded border border-orange-100 flex flex-col items-center">
+                    <span class="text-[10px] text-slate-500 font-semibold">U_A (V)</span>
+                    <span class="text-sm font-bold text-evnDark">${row.daP_A ?? '-'}</span>
+                </div>
+                <div class="bg-orange-50/50 p-1.5 rounded border border-orange-100 flex flex-col items-center">
+                    <span class="text-[10px] text-slate-500 font-semibold">U_B (V)</span>
+                    <span class="text-sm font-bold text-evnDark">${row.daP_B ?? '-'}</span>
+                </div>
+                <div class="bg-orange-50/50 p-1.5 rounded border border-orange-100 flex flex-col items-center">
+                    <span class="text-[10px] text-slate-500 font-semibold">U_C (V)</span>
+                    <span class="text-sm font-bold text-evnDark">${row.daP_C ?? '-'}</span>
+                </div>
+            </div>
+        </div>`;
+    });
+    
+    tbodyDesktop.innerHTML = htmlDesktop;
+    containerMobile.innerHTML = htmlMobile;
+    
+    document.getElementById('phan-trang-info').textContent = `Đang xem: ${batDau + 1} - ${Math.min(batDau + SO_DONG_MOI_TRANG, duLieuCuaMocHienTai.length)} / Tổng ${duLieuCuaMocHienTai.length} trạm`;
+    renderPhanTrang();
+}
+
+function renderPhanTrang() {
+    const tongTrang = Math.ceil(duLieuCuaMocHienTai.length / SO_DONG_MOI_TRANG);
+    const div = document.getElementById('phan-trang-nut');
+    div.innerHTML = '';
+    for (let i = 1; i <= tongTrang; i++) {
+        const btn = document.createElement('button');
+        btn.textContent = i;
+        btn.className = `w-8 h-8 rounded-md border font-semibold shadow-sm transition-all ${i === trangHienTai ? 'bg-evnBlue text-white border-evnBlue' : 'bg-white text-slate-600 border-slate-300 hover:border-evnBlue hover:text-evnBlue'}`;
+        btn.onclick = () => { trangHienTai = i; renderDuLieu(); };
+        div.appendChild(btn);
+    }
+}
+
+taiDuLieu();
+setInterval(taiDuLieu, 60000);
+</script>
+</body>
+</html>
