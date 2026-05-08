@@ -457,12 +457,44 @@ function renderDuLieu() {
 }
 
 // ==========================================
-// 3. LOGIC BÁO CÁO DƯ NỢ (CẢI TIẾN)
+// 3. LOGIC BÁO CÁO DƯ NỢ (CẢI TIẾN & NÂNG CẤP)
 // ==========================================
+const STORAGE_KEY = 'evn_duno_ticks_tienhai';
+
+// -- CÁC HÀM XỬ LÝ LƯU TRỮ LOCALSTORAGE --
+function layDanhSachTick() {
+    let homNay = new Date().toLocaleDateString('vi-VN');
+    let data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    if (data.ngay !== homNay) {
+        data = { ngay: homNay, dsMaKH: [] };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+    return data.dsMaKH || [];
+}
+
+function kiemTraDaTick(maKH) {
+    if (!maKH) return false;
+    let ds = layDanhSachTick();
+    return ds.includes(String(maKH));
+}
+
+function luuTrangThaiTick(maKH, isTick) {
+    if (!maKH) return;
+    let data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    let ds = data.dsMaKH || [];
+    maKH = String(maKH);
+    if (isTick && !ds.includes(maKH)) ds.push(maKH);
+    else if (!isTick) ds = ds.filter(k => k !== maKH);
+    data.dsMaKH = ds;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+// -- BIẾN TOÀN CỤC CHO DƯ NỢ --
 let dataTableDuNo = null;  
 let cotTNV_global = null;  
 let cotTien_global = null; 
 let nguongLocTien = 0;     
+let mangCotHoanChinh = []; // Lưu lại thứ tự cột sau khi sắp xếp
 
 const COT_CAN_AN = [
     'địa chỉ', 'dia chi',
@@ -491,8 +523,13 @@ async function taiDuLieuDuNo() {
 
         const keys = Object.keys(records[0]);
 
+        // Tự động nhận diện cột bất chấp tên JSON
         cotTNV_global  = keys.find(k => k.toLowerCase().includes('thu ngân') || k.toLowerCase().includes('tnv') || k.toLowerCase().includes('thu ngan'));
         cotTien_global = keys.find(k => k.toLowerCase().includes('tổng tiền') || k.toLowerCase().includes('tong tien') || k.toLowerCase().includes('nợ'));
+        let cotMaKH    = keys.find(k => k.toLowerCase().includes('mã') || k.toLowerCase().includes('ma kh'));
+        let cotTram    = keys.find(k => k.toLowerCase().includes('trạm') || k.toLowerCase().includes('tram'));
+        let cotTenKH   = keys.find(k => k.toLowerCase().includes('tên') || k.toLowerCase().includes('khách hàng'));
+        let cotSDT     = keys.find(k => k.toLowerCase().includes('sdt') || k.toLowerCase().includes('điện thoại') || k.toLowerCase().includes('đt'));
 
         if (cotTNV_global) {
             const listTNV = [...new Set(records.map(r => r[cotTNV_global]))].filter(Boolean).sort();
@@ -503,23 +540,41 @@ async function taiDuLieuDuNo() {
 
         if (dataTableDuNo) { dataTableDuNo.destroy(); $('#bang-duno').empty(); }
 
-        // Bổ sung Cột Checkbox lên đầu mảng cột
-        const columnDefs = keys.map((k) => {
+        // BƯỚC 1: Sắp xếp lại thứ tự cột
+        let dsCotUuTien = [cotTram, cotTenKH, cotTien_global, cotSDT].filter(Boolean);
+        let dsCotConLai = keys.filter(k => !dsCotUuTien.includes(k));
+        mangCotHoanChinh = [...dsCotUuTien, ...dsCotConLai];
+
+        // BƯỚC 2: Định dạng dữ liệu từng cột
+        const columnDefs = mangCotHoanChinh.map((k) => {
             let title = k.toUpperCase();
             let className = '';
             
             if (k === cotTien_global) className += 'col-tong-tien text-right ';
-            if (title.includes('TÊN') || title.includes('KHÁCH HÀNG')) className += 'col-ten-kh ';
+            if (k === cotTenKH) className += 'col-ten-kh font-semibold text-evnDark ';
             
-            return {
-                data: k,
-                title: title,
-                className: className.trim(),
-                visible: !kiemTraAnCot(k)
-            };
+            let def = { data: k, title: title, className: className.trim(), visible: !kiemTraAnCot(k) };
+
+            // Xử lý bù số 0 và tạo nút Click-to-call cho cột Số điện thoại
+            if (k === cotSDT) {
+                def.render = function(data, type) {
+                    if (!data) return '';
+                    let sdt = String(data).trim();
+                    if (sdt.length >= 8 && !sdt.startsWith('0')) sdt = '0' + sdt;
+                    
+                    if (type === 'display') {
+                        return `<a href="tel:${sdt}" class="text-evnBlue font-bold hover:text-evnOrange transition-colors flex items-center gap-1">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                                    ${sdt}
+                                </a>`;
+                    }
+                    return sdt;
+                };
+            }
+            return def;
         });
 
-        // Ghép cột Checkbox + Cột Dữ liệu
+        // BƯỚC 3: Ghép cột Checkbox lên đầu
         const finalColumns = [
             {
                 data: null,
@@ -527,8 +582,10 @@ async function taiDuLieuDuNo() {
                 orderable: false,
                 searchable: false,
                 className: 'text-center col-chk',
-                render: function() {
-                    return '<input type="checkbox" class="chk-doc-no w-4 h-4 cursor-pointer accent-green-600">';
+                render: function(data, type, row) {
+                    let maKH = cotMaKH ? row[cotMaKH] : null;
+                    let isChecked = kiemTraDaTick(maKH) ? 'checked' : ''; // Khôi phục trạng thái tick
+                    return `<input type="checkbox" data-makh="${maKH}" class="chk-doc-no w-4 h-4 cursor-pointer accent-green-600" ${isChecked}>`;
                 }
             },
             ...columnDefs
@@ -547,12 +604,13 @@ async function taiDuLieuDuNo() {
                 paginate: { next: "Sau »", previous: "« Trước" }
             },
             createdRow: function(row, data) {
+                // Khôi phục bôi nền xanh nếu đã tick
+                let maKH = cotMaKH ? data[cotMaKH] : null;
+                if (kiemTraDaTick(maKH)) $(row).addClass('da-doc-no');
+
                 if (cotTien_global) {
                     let val = parseFloat(String(data[cotTien_global]).replace(/\./g, '').replace(/,/g, ''));
-                    if (val > 1000000) {
-                        // Tô đỏ chữ cho nợ quá 1 triệu
-                        $('td.col-tong-tien', row).addClass('font-black text-red-700');
-                    }
+                    if (val > 1000000) $('td.col-tong-tien', row).addClass('font-black text-red-700');
                 }
             },
             scrollX: false,
@@ -560,22 +618,26 @@ async function taiDuLieuDuNo() {
             dom: '<"flex flex-col md:flex-row md:justify-between items-center mb-2 gap-2"lf>rt<"flex flex-col md:flex-row md:justify-between items-center mt-2 gap-2"ip>'
         });
 
-        // Bắt sự kiện Tick ô Đốc Nợ -> Tô sáng dòng
+        // BƯỚC 4: Bắt sự kiện Tick lưu vào bộ nhớ
         $('#bang-duno').off('change', '.chk-doc-no').on('change', '.chk-doc-no', function() {
+            let maKH = $(this).data('makh');
             if ($(this).is(':checked')) {
                 $(this).closest('tr').addClass('da-doc-no');
+                luuTrangThaiTick(maKH, true);
             } else {
                 $(this).closest('tr').removeClass('da-doc-no');
+                luuTrangThaiTick(maKH, false);
             }
         });
 
-        // Custom search tiền nợ
+        // BƯỚC 5: Cấu hình lại bộ lọc
+        $.fn.dataTable.ext.search.length = 0; // Xoá sạch hàm lọc cũ tránh lỗi
         $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
             if (settings.nTable.id !== 'bang-duno') return true;
             if (nguongLocTien === 0) return true; 
             if (!cotTien_global) return true;
 
-            const cotTienIdx = keys.indexOf(cotTien_global) + 1; // +1 vì đã chèn cột checkbox ở đầu
+            const cotTienIdx = mangCotHoanChinh.indexOf(cotTien_global) + 1;
             if (cotTienIdx < 1) return true;
 
             const val = parseFloat(String(data[cotTienIdx]).replace(/\./g, '').replace(/,/g, '')) || 0;
@@ -601,8 +663,8 @@ async function taiDuLieuDuNo() {
         $('#filter-tnv').off('change').on('change', function() {
             if (cotTNV_global) {
                 const val = $(this).val();
-                // Index +1 vì có cột checkbox ở đầu
-                dataTableDuNo.column(keys.indexOf(cotTNV_global) + 1)
+                const idx = mangCotHoanChinh.indexOf(cotTNV_global) + 1;
+                dataTableDuNo.column(idx)
                     .search(val ? '^' + $.fn.dataTable.util.escapeRegex(val) + '$' : '', true, false)
                     .draw();
             }
@@ -635,15 +697,15 @@ function xuatExcelTheoDieuKien() {
     const cotHienThi = dataTableDuNo.columns().indexes().toArray()
         .filter(i => dataTableDuNo.column(i).visible() && i > 0)
         .map(i => ({
-            idx: i - 1, // Dữ liệu thật từ mảng object
+            idx: i - 1, // Ánh xạ lại về index thực trong mangCotHoanChinh
+            keyData: mangCotHoanChinh[i - 1], // Key để bóc dữ liệu
             title: $(dataTableDuNo.column(i).header()).text()
         }));
 
     const duLieuXuat = [];
     duLieuXuat.push(cotHienThi.map(c => c.title));
     rows.forEach(row => {
-        const keys = Object.keys(row);
-        duLieuXuat.push(cotHienThi.map(c => row[keys[c.idx]] ?? ''));
+        duLieuXuat.push(cotHienThi.map(c => row[c.keyData] ?? ''));
     });
 
     const wb = XLSX.utils.book_new();
@@ -656,7 +718,7 @@ function inBaoCaoDuNo() {
     if (!dataTableDuNo) { alert('Chưa có dữ liệu sếp ơi!'); return; }
 
     const tenTNV = $('#filter-tnv option:selected').text();
-    const subtitle = (tenTNV && tenTNV !== '-- Chọn Thu ngân viên --') ? `Thu ngân viên: ${tenTNV}` : 'Tất cả Thu ngân viên';
+    const subtitle = (tenTNV && tenTNV !== '-- Tất cả Thu ngân viên --') ? `Thu ngân viên: ${tenTNV}` : 'Tất cả Thu ngân viên';
 
     const allFilteredRows = dataTableDuNo.rows({ search: 'applied' }).data();
     let tongSoHoaDon = allFilteredRows.length;
@@ -674,7 +736,6 @@ function inBaoCaoDuNo() {
     document.getElementById('in-tong-tien').textContent = new Intl.NumberFormat('vi-VN').format(tongSoTien) + ' đ';
     document.getElementById('in-dong-tong').style.display = 'block';
 
-    // Gọi lệnh in của Browser
     window.print();
 
     setTimeout(() => { document.getElementById('in-dong-tong').style.display = 'none'; }, 1000);
