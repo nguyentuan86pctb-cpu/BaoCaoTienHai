@@ -526,9 +526,9 @@ async function taiDuLieuDuNo() {
         // Tự động nhận diện cột bất chấp tên JSON
         cotTNV_global  = keys.find(k => k.toLowerCase().includes('thu ngân') || k.toLowerCase().includes('tnv') || k.toLowerCase().includes('thu ngan'));
         cotTien_global = keys.find(k => k.toLowerCase().includes('tổng tiền') || k.toLowerCase().includes('tong tien') || k.toLowerCase().includes('nợ'));
-        let cotMaKH    = keys.find(k => k.toLowerCase().includes('mã') || k.toLowerCase().includes('ma kh'));
+        let cotMaKH    = keys.find(k => k.toLowerCase().includes('mã') || k.toLowerCase().includes('mã kh'));
         let cotTram    = keys.find(k => k.toLowerCase().includes('trạm') || k.toLowerCase().includes('tram'));
-        let cotTenKH   = keys.find(k => k.toLowerCase().includes('tên') || k.toLowerCase().includes('khách hàng'));
+        let cotTenKH   = keys.find(k => k.toLowerCase().includes('tên') || k.toLowerCase().includes('tên kh'));
         let cotSDT     = keys.find(k => k.toLowerCase().includes('sdt') || k.toLowerCase().includes('điện thoại') || k.toLowerCase().includes('đt'));
 
         if (cotTNV_global) {
