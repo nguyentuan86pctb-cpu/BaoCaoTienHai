@@ -73,7 +73,7 @@
             #in-header { display: block !important; }
             @page { size: A4 landscape; margin: 10mm; }
         }
-        /* Header in ẩn trên màn hình */
+        /* Header in và dòng tổng ẩn trên màn hình */
         #in-header { display: none; }
     </style>
 </head>
@@ -251,7 +251,21 @@
                             <div id="in-ngay" class="text-sm text-gray-500"></div>
                         </div>
                         <div class="overflow-x-auto w-full">
-                            <table id="bang-duno" class="w-full text-left border-collapse stripe hover row-border" style="width:100%"></table>
+                            <table id="bang-duno" class="w-full text-left border-collapse stripe hover row-border" style="width:100%">
+                                <tfoot>
+                                    <!-- Dòng tổng kết: chỉ hiển thị khi in, ẩn trên web -->
+                                    <tr id="in-dong-tong" style="display:none; font-weight:900; background:#fff3cd;">
+                                        <td colspan="99" style="text-align:right; padding:6px 10px; border-top:2px solid #0054A6; font-size:12px;">
+                                            <span style="margin-right:30px;">
+                                                Tổng số hóa đơn: <span id="in-tong-hoa-don" style="color:#E55D00;">0</span>
+                                            </span>
+                                            <span>
+                                                Tổng dư nợ: <span id="in-tong-tien" style="color:#c0392b;">0 đ</span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
                         </div>
                     </div>
                 </section>
@@ -467,8 +481,8 @@ async function taiDuLieuDuNo() {
         if (!res.ok) throw new Error("Chưa có data_duno.json trên Github sếp ơi!");
         const json = await res.json();
         
-        // Giới hạn tối đa 500 dòng hiển thị
-        const records = (json.du_lieu || []).slice(0, 500);
+        // Lấy toàn bộ dữ liệu, không cắt cứng — DataTables tự phân trang
+        const records = json.du_lieu || [];
         if (records.length === 0) return;
 
         // Hiển thị thời gian cập nhật
@@ -506,9 +520,9 @@ async function taiDuLieuDuNo() {
         dataTableDuNo = $('#bang-duno').DataTable({
             data: records,
             columns: columnDefs,
-            // Hiển thị tối đa 500 dòng, không cho chọn số khác
-            pageLength: 500,
-            lengthMenu: [[500], [500]],
+            // Mặc định hiển thị 50 dòng, có thể chọn 50/100/200/500
+            pageLength: 50,
+            lengthMenu: [[50, 100, 200, 500], [50, 100, 200, 500]],
             language: {
                 search: "Tìm kiếm:",
                 lengthMenu: "Hiện _MENU_ dòng",
@@ -638,20 +652,42 @@ function xuatExcelTheoDieuKien() {
 
 /**
  * In báo cáo dư nợ trực tiếp trên trình duyệt
- * Dữ liệu in = dữ liệu đang hiển thị trên bảng
+ * Dữ liệu in = TOÀN BỘ dữ liệu đã lọc (tất cả trang, không chỉ trang đang xem)
+ * Kèm dòng tổng: số hóa đơn + tổng tiền theo TNV đang chọn
  */
 function inBaoCaoDuNo() {
     if (!dataTableDuNo) { alert('Chưa có dữ liệu sếp ơi!'); return; }
 
-    // Cập nhật header in trước khi print
+    // Lấy tên TNV đang chọn
     const tenTNV = $('#filter-tnv option:selected').text();
-    const subtitle = tenTNV && tenTNV !== '-- Tất cả Thu ngân viên --'
+    const subtitle = (tenTNV && tenTNV !== '-- Tất cả Thu ngân viên --')
         ? `Thu ngân viên: ${tenTNV}`
         : 'Tất cả Thu ngân viên';
+
+    // Tính tổng từ TOÀN BỘ dòng đang lọc (kể cả trang sau)
+    const allFilteredRows = dataTableDuNo.rows({ search: 'applied' }).data();
+    let tongSoHoaDon = allFilteredRows.length;
+    let tongSoTien = 0;
+    allFilteredRows.each(function(v) {
+        if (cotTien_global && v[cotTien_global]) {
+            tongSoTien += parseFloat(String(v[cotTien_global]).replace(/\./g, '').replace(/,/g, '')) || 0;
+        }
+    });
+
+    // Cập nhật header in
     document.getElementById('in-subtitle').textContent = subtitle;
-    document.getElementById('in-ngay').textContent = `Ngày in: ${new Date().toLocaleDateString('vi-VN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`;
+    document.getElementById('in-ngay').textContent =
+        `Ngày in: ${new Date().toLocaleDateString('vi-VN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`;
+
+    // Cập nhật dòng tổng kết in
+    document.getElementById('in-tong-hoa-don').textContent = new Intl.NumberFormat('vi-VN').format(tongSoHoaDon);
+    document.getElementById('in-tong-tien').textContent = new Intl.NumberFormat('vi-VN').format(tongSoTien) + ' đ';
+    document.getElementById('in-dong-tong').style.display = 'table-row';
 
     window.print();
+
+    // Ẩn dòng tổng sau khi in xong (tránh hiển thị trên web)
+    setTimeout(() => { document.getElementById('in-dong-tong').style.display = 'none'; }, 1000);
 }
 
 // ==========================================
