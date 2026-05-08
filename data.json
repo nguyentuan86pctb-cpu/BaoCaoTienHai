@@ -1,5 +1,5 @@
 {
-  "cap_nhat_luc": "08/05/2026 19:45:39",
+  "cap_nhat_luc": "08/05/2026 20:16:32",
   "du_lieu": {
     "07/05/2026": {
       "15h30": [
@@ -335,6 +335,36 @@
         }
       ],
       "19h45": [
+        {
+          "stt": 1,
+          "teN_KHANG": "Tây An 2",
+          "thoI_GIAN": "2026-08-05 17:30:00",
+          "i_MANG_TAI": 107.5,
+          "i_LECH_PHA": 88.98,
+          "donG_DIEN_A": 59.82,
+          "donG_DIEN_B": 106.47,
+          "donG_DIEN_C": 155.16,
+          "daP_A": 227.6,
+          "daP_B": 226.0,
+          "daP_C": 225.3,
+          "conG_SUAT": 100
+        },
+        {
+          "stt": 2,
+          "teN_KHANG": "Nam Hưng 3",
+          "thoI_GIAN": "2026-08-05 17:30:00",
+          "i_MANG_TAI": 104.96,
+          "i_LECH_PHA": 104.01,
+          "donG_DIEN_A": 272.7,
+          "donG_DIEN_B": 98.8,
+          "donG_DIEN_C": 130.1,
+          "daP_A": 224.1,
+          "daP_B": 226.1,
+          "daP_C": 225.6,
+          "conG_SUAT": 180
+        }
+      ],
+      "20h16": [
         {
           "stt": 1,
           "teN_KHANG": "Tây An 2",
