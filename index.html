@@ -79,42 +79,232 @@
                         </div>
                     </div>
 
-                    <div id="vung-chon-gio" class="flex flex-wrap items-center gap-2 border-b border-slate-100 pb-3"></div>
-
-                    <div id="bang-du-lieu-mobile" class="grid grid-cols-1 gap-4 md:hidden">
-                        <div class="text-center py-10 text-slate-500 font-medium animate-pulse">Đang kết nối hệ thống...</div>
-                    </div>
-
-                    <div class="hidden md:block border border-slate-200 rounded-xl overflow-hidden shadow-sm bg-white">
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left border-collapse whitespace-nowrap">
-                                <thead class="bg-gradient-to-r from-evnBlue to-evnDark text-white font-semibold text-sm">
-                                    <tr>
-                                        <th class="px-3 py-3 border-r border-blue-800 text-center">STT</th>
-                                        <th class="px-4 py-3 border-r border-blue-800 uppercase">Tên khách hàng</th>
-                                        <th class="px-4 py-3 border-r border-blue-800 text-right uppercase text-yellow-300 drop-shadow-md">Công suất (kW)</th>
-                                        <th class="px-4 py-3 border-r border-blue-800 uppercase">Thời gian</th>
-                                        <th class="px-4 py-3 border-r border-blue-800 text-right uppercase">Mang tải (%)</th>
-                                        <th class="px-4 py-3 border-r border-blue-800 text-right uppercase">Lệch pha (%)</th>
-                                        <th class="px-3 py-3 border-r border-blue-800 text-right">I_A (A)</th>
-                                        <th class="px-3 py-3 border-r border-blue-800 text-right">I_B (A)</th>
-                                        <th class="px-3 py-3 border-r border-blue-800 text-right">I_C (A)</th>
-                                        <th class="px-3 py-3 border-r border-blue-800 text-right">U_A (V)</th>
-                                        <th class="px-3 py-3 border-r border-blue-800 text-right">U_B (V)</th>
-                                        <th class="px-3 py-3 text-right">U_C (V)</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="bang-du-lieu-desktop" class="text-sm divide-y divide-slate-200"></tbody>
-                            </table>
+                    <div class="flex flex-col gap-3 border-b border-slate-100 pb-4 mb-2">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <span class="font-bold text-slate-700 text-sm uppercase w-32">XEM THEO NGÀY:</span>
+                            <button onclick="locTheoNgay('hom-nay', this)" class="nut-loc-ngay px-4 py-1.5 rounded border text-sm font-bold shadow-sm bg-evnBlue text-white border-evnBlue">Hôm nay</button>
+                            <button onclick="locTheoNgay('hom-qua', this)" class="nut-loc-ngay px-4 py-1.5 rounded border text-sm font-bold shadow-sm bg-white text-slate-600 border-slate-300">Hôm qua</button>
+                            <button onclick="locTheoNgay('7-ngay', this)" class="nut-loc-ngay px-4 py-1.5 rounded border text-sm font-bold shadow-sm bg-white text-slate-600 border-slate-300">7 ngày qua</button>
+                            <button onclick="locTheoNgay('tat-ca', this)" class="nut-loc-ngay px-4 py-1.5 rounded border text-sm font-bold shadow-sm bg-white text-slate-600 border-slate-300">Tất cả</button>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <span class="font-bold text-slate-700 text-sm uppercase w-32">KHOẢNG NGÀY:</span>
+                            <input type="date" id="tu-ngay" class="border border-slate-300 rounded px-2 py-1.5 text-sm focus:outline-none focus:border-evnBlue">
+                            <span class="text-slate-500">›</span>
+                            <input type="date" id="den-ngay" class="border border-slate-300 rounded px-2 py-1.5 text-sm focus:outline-none focus:border-evnBlue">
+                            <button onclick="locKhoangNgay()" class="bg-evnOrange text-white px-4 py-1.5 rounded border border-evnOrange text-sm font-bold shadow-sm hover:bg-evnOrangeDark transition-colors">Áp dụng</button>
                         </div>
                     </div>
                     
-                    <div class="bg-slate-50 px-4 md:px-5 py-3 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center text-sm gap-3">
-                        <span id="phan-trang-info" class="font-medium text-slate-600">--</span>
-                        <div id="phan-trang-nut" class="flex flex-wrap justify-center gap-1.5"></div>
+                    <div class="flex flex-wrap items-center gap-2 border-b border-slate-100 pb-3">
+                        <span class="font-bold text-slate-700 text-sm uppercase w-32">CHỌN MỐC:</span>
+                        <div id="vung-chon-gio" class="flex flex-wrap gap-2"></div>
                     </div>
-                </section>
-            </div>
+                    ```
+
+---
+
+### BƯỚC 2: Cập nhật JS xử lý Mang Tải
+Sếp cuộn xuống cuối file, tìm đoạn `// LOGIC BÁO CÁO MANG TẢI (Fix lỗi mảng rỗng)` và **thay thế toàn bộ** phần JS bên dưới nó cho đến sát thẻ `</script>` bằng đoạn code này:
+
+```javascript
+// ==========================================
+// LOGIC BÁO CÁO MANG TẢI (Đã khôi phục bộ lọc ngày)
+// ==========================================
+const SO_DONG_MOI_TRANG = 15;
+let duLieuToanBoGoc = {}; // Chứa toàn bộ JSON nguyên bản
+let danhSachNgayLoc = []; // Chứa các ngày đang được chọn (DD/MM/YYYY)
+let duLieuCuaMocHienTai = []; 
+let trangHienTai = 1;
+
+// Helper: Chuyển Date object sang DD/MM/YYYY
+function taoChuoiNgay(dateObj) {
+    let d = dateObj.getDate().toString().padStart(2, '0');
+    let m = (dateObj.getMonth() + 1).toString().padStart(2, '0');
+    let y = dateObj.getFullYear();
+    return `${d}/${m}/${y}`;
+}
+
+async function taiDuLieu() {
+    try {
+        const res = await fetch(`https://raw.githubusercontent.com/nguyentuan86pctb-cpu/BaoCaoTienHai/main/data.json?t=${Date.now()}`);
+        const json = await res.json();
+        
+        duLieuToanBoGoc = json.du_lieu || {};
+        
+        const svgCheck = `<svg class="w-4 h-4 text-green-600 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
+        document.getElementById('cap-nhat-luc').innerHTML = `${svgCheck} Dữ liệu tích lũy: <span class="font-bold text-evnDark ml-1">${Object.keys(duLieuToanBoGoc).length} ngày</span> <span class="hidden md:inline mx-2">—</span> Đồng bộ lần cuối: <span class="font-medium text-slate-600">${json.cap_nhat_luc || '--'}</span>`;
+        
+        // Mặc định load "Hôm nay"
+        let btnHomNay = document.querySelector(".nut-loc-ngay");
+        if(btnHomNay) locTheoNgay('hom-nay', btnHomNay);
+        else locTheoNgay('hom-nay');
+
+    } catch (err) {
+        document.getElementById('bang-du-lieu-desktop').innerHTML = `<tr><td colspan="12" class="text-center text-red-600 py-10 font-bold bg-red-50">Lỗi kết nối: ${err.message}</td></tr>`;
+        document.getElementById('vung-chon-gio').innerHTML = '';
+    }
+}
+
+// XỬ LÝ NÚT LỌC NHANH
+function locTheoNgay(loai, btnElement = null) {
+    // Đổi màu nút
+    if (btnElement) {
+        document.querySelectorAll('.nut-loc-ngay').forEach(btn => {
+            btn.className = "nut-loc-ngay px-4 py-1.5 rounded border text-sm font-bold shadow-sm bg-white text-slate-600 border-slate-300";
+        });
+        btnElement.className = "nut-loc-ngay px-4 py-1.5 rounded border text-sm font-bold shadow-sm bg-evnBlue text-white border-evnBlue";
+    }
+
+    let homNay = new Date();
+    danhSachNgayLoc = [];
+
+    if (loai === 'hom-nay') {
+        danhSachNgayLoc.push(taoChuoiNgay(homNay));
+    } else if (loai === 'hom-qua') {
+        let homQua = new Date(homNay);
+        homQua.setDate(homNay.getDate() - 1);
+        danhSachNgayLoc.push(taoChuoiNgay(homQua));
+    } else if (loai === '7-ngay') {
+        for (let i = 0; i < 7; i++) {
+            let d = new Date(homNay);
+            d.setDate(homNay.getDate() - i);
+            danhSachNgayLoc.push(taoChuoiNgay(d));
+        }
+    } else if (loai === 'tat-ca') {
+        danhSachNgayLoc = Object.keys(duLieuToanBoGoc);
+    }
+    
+    taoNutChonGio();
+}
+
+// XỬ LÝ NÚT ÁP DỤNG KHOẢNG NGÀY
+function locKhoangNgay() {
+    let tuNgayStr = document.getElementById('tu-ngay').value;
+    let denNgayStr = document.getElementById('den-ngay').value;
+    
+    if(!tuNgayStr || !denNgayStr) {
+        alert("Vui lòng chọn đầy đủ Từ ngày và Đến ngày!");
+        return;
+    }
+
+    // Reset màu nút bấm nhanh
+    document.querySelectorAll('.nut-loc-ngay').forEach(btn => {
+        btn.className = "nut-loc-ngay px-4 py-1.5 rounded border text-sm font-bold shadow-sm bg-white text-slate-600 border-slate-300";
+    });
+
+    danhSachNgayLoc = [];
+    let start = new Date(tuNgayStr);
+    let end = new Date(denNgayStr);
+
+    for (let dt = new Date(start); dt <= end; dt.setDate(dt.getDate() + 1)) {
+        danhSachNgayLoc.push(taoChuoiNgay(new Date(dt)));
+    }
+    taoNutChonGio();
+}
+
+// TẠO NÚT MỐC GIỜ DỰA TRÊN NGÀY ĐÃ LỌC
+function taoNutChonGio() {
+    const vungChon = document.getElementById('vung-chon-gio');
+    let cacMocGio = new Set();
+    
+    // Gộp tất cả mốc giờ của các ngày được chọn
+    danhSachNgayLoc.forEach(ngay => {
+        if (duLieuToanBoGoc[ngay]) {
+            Object.keys(duLieuToanBoGoc[ngay]).forEach(gio => cacMocGio.add(gio));
+        }
+    });
+
+    let mangMocGio = Array.from(cacMocGio).sort();
+
+    if (mangMocGio.length === 0) {
+        vungChon.innerHTML = '<span class="text-slate-500 italic px-2">Không có dữ liệu trong khoảng thời gian này.</span>';
+        duLieuCuaMocHienTai = [];
+        renderDuLieu();
+        return;
+    }
+
+    let html = '';
+    const mocMacDinh = mangMocGio[mangMocGio.length - 1];
+
+    mangMocGio.forEach(gio => {
+        html += `<button onclick="chonMocGio('${gio}')" id="btn-gio-${gio}" class="nut-gio px-4 py-1.5 rounded border text-sm font-bold shadow-sm transition-all ${gio === mocMacDinh ? 'bg-evnOrange text-white border-evnOrange' : 'bg-white text-slate-600 border-slate-300 hover:border-evnOrange hover:text-evnOrange'}">${gio}</button>`;
+    });
+    
+    vungChon.innerHTML = html;
+    chonMocGio(mocMacDinh); 
+}
+
+// CHỌN MỐC GIỜ -> GỘP DATA TỪ CÁC NGÀY CHỨA GIỜ ĐÓ
+function chonMocGio(gio) {
+    document.querySelectorAll('.nut-gio').forEach(btn => btn.className = "nut-gio px-4 py-1.5 rounded border text-sm font-bold shadow-sm bg-white text-slate-600 border-slate-300");
+    const btnActive = document.getElementById(`btn-gio-${gio}`);
+    if (btnActive) btnActive.className = "nut-gio px-4 py-1.5 rounded border text-sm font-bold shadow-sm bg-evnOrange text-white border-evnOrange";
+
+    duLieuCuaMocHienTai = [];
+    danhSachNgayLoc.forEach(ngay => {
+        if(duLieuToanBoGoc[ngay] && duLieuToanBoGoc[ngay][gio]) {
+            duLieuCuaMocHienTai = duLieuCuaMocHienTai.concat(duLieuToanBoGoc[ngay][gio]);
+        }
+    });
+
+    trangHienTai = 1;
+    renderDuLieu();
+}
+
+// RENDER BẢNG
+function renderDuLieu() {
+    const tbodyDesktop = document.getElementById('bang-du-lieu-desktop');
+    if (duLieuCuaMocHienTai.length === 0) {
+        tbodyDesktop.innerHTML = `<tr><td colspan="12" class="text-center text-slate-500 py-10 font-medium bg-slate-50">Không có dữ liệu cho mốc giờ này</td></tr>`;
+        document.getElementById('phan-trang-nut').innerHTML = '';
+        document.getElementById('phan-trang-info').textContent = `--`;
+        return;
+    }
+
+    const batDau = (trangHienTai - 1) * SO_DONG_MOI_TRANG;
+    const duLieuTrang = duLieuCuaMocHienTai.slice(batDau, batDau + SO_DONG_MOI_TRANG);
+    let htmlDesktop = '';
+
+    duLieuTrang.forEach((row, idx) => {
+        const mtVal = parseFloat(row.i_MANG_TAI || 0);
+        const lpVal = parseFloat(row.i_LECH_PHA || 0);
+        const styleMT = mtVal >= 200 ? `<span class="bg-red-100 text-red-700 border border-red-300 px-2 py-0.5 rounded shadow-sm font-bold">${mtVal.toFixed(2)}</span>` : mtVal.toFixed(2);
+        const styleLP = lpVal >= 50 ? `<span class="bg-red-100 text-red-700 border border-red-300 px-2 py-0.5 rounded shadow-sm font-bold">${lpVal.toFixed(2)}</span>` : lpVal.toFixed(2);
+
+        htmlDesktop += `
+        <tr class="hover:bg-blue-50 transition-colors ${idx % 2 === 0 ? 'bg-white' : 'bg-slate-50'}">
+            <td class="px-3 py-3 border-r border-slate-200 text-center font-medium text-slate-500">${row.stt ?? ''}</td>
+            <td class="px-4 py-3 border-r border-slate-200 font-bold text-evnDark">${row.teN_KHANG ?? ''}</td>
+            <td class="px-4 py-3 border-r border-slate-200 text-right font-black text-evnOrangeDark bg-orange-50/50">${row.conG_SUAT ?? '0'}</td>
+            <td class="px-4 py-3 border-r border-slate-200 text-slate-600">${row.thoI_GIAN ?? ''}</td>
+            <td class="px-4 py-3 border-r border-slate-200 text-right">${styleMT}</td>
+            <td class="px-4 py-3 border-r border-slate-200 text-right">${styleLP}</td>
+            <td class="px-3 py-3 border-r border-slate-200 text-right text-slate-600">${row.donG_DIEN_A ?? ''}</td>
+            <td class="px-3 py-3 border-r border-slate-200 text-right text-slate-600">${row.donG_DIEN_B ?? ''}</td>
+            <td class="px-3 py-3 border-r border-slate-200 text-right text-slate-600">${row.donG_DIEN_C ?? ''}</td>
+            <td class="px-3 py-3 border-r border-slate-200 text-right text-slate-600">${row.daP_A ?? ''}</td>
+            <td class="px-3 py-3 border-r border-slate-200 text-right text-slate-600">${row.daP_B ?? ''}</td>
+            <td class="px-3 py-3 text-right text-slate-600">${row.daP_C ?? ''}</td>
+        </tr>`;
+    });
+    
+    tbodyDesktop.innerHTML = htmlDesktop;
+    document.getElementById('phan-trang-info').textContent = `Đang xem: ${batDau + 1} - ${Math.min(batDau + SO_DONG_MOI_TRANG, duLieuCuaMocHienTai.length)} / Tổng ${duLieuCuaMocHienTai.length} trạm`;
+    
+    const div = document.getElementById('phan-trang-nut');
+    div.innerHTML = '';
+    for (let i = 1; i <= Math.ceil(duLieuCuaMocHienTai.length / SO_DONG_MOI_TRANG); i++) {
+        const btn = document.createElement('button');
+        btn.textContent = i;
+        btn.className = `w-8 h-8 rounded-md border font-semibold shadow-sm transition-all ${i === trangHienTai ? 'bg-evnBlue text-white border-evnBlue' : 'bg-white text-slate-600 border-slate-300'}`;
+        btn.onclick = () => { trangHienTai = i; renderDuLieu(); };
+        div.appendChild(btn);
+    }
+}
+
+taiDuLieu();
+setInterval(taiDuLieu, 60000);
 
             <div id="tab-du-no" class="hidden">
                 <section class="bg-white rounded-xl border border-slate-200 shadow-lg p-4 md:p-6 flex flex-col gap-4">
