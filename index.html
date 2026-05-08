@@ -73,6 +73,10 @@
             #in-header { display: block !important; }
             @page { size: A4 landscape; margin: 10mm; }
         }
+        /* Dòng tổng kết khi in */
+        @media print {
+            #in-dong-tong { display: block !important; }
+        }
         /* Header in và dòng tổng ẩn trên màn hình */
         #in-header { display: none; }
     </style>
@@ -251,21 +255,12 @@
                             <div id="in-ngay" class="text-sm text-gray-500"></div>
                         </div>
                         <div class="overflow-x-auto w-full">
-                            <table id="bang-duno" class="w-full text-left border-collapse stripe hover row-border" style="width:100%">
-                                <tfoot>
-                                    <!-- Dòng tổng kết: chỉ hiển thị khi in, ẩn trên web -->
-                                    <tr id="in-dong-tong" style="display:none; font-weight:900; background:#fff3cd;">
-                                        <td colspan="99" style="text-align:right; padding:6px 10px; border-top:2px solid #0054A6; font-size:12px;">
-                                            <span style="margin-right:30px;">
-                                                Tổng số hóa đơn: <span id="in-tong-hoa-don" style="color:#E55D00;">0</span>
-                                            </span>
-                                            <span>
-                                                Tổng dư nợ: <span id="in-tong-tien" style="color:#c0392b;">0 đ</span>
-                                            </span>
-                                        </td>
-                                    </tr>
-                                </tfoot>
-                            </table>
+                            <table id="bang-duno" class="w-full text-left border-collapse stripe hover row-border" style="width:100%"></table>
+                        </div>
+                        <!-- Dòng tổng kết in: nằm NGOÀI table, chỉ hiện khi in -->
+                        <div id="in-dong-tong" style="display:none; text-align:right; padding:6px 10px; border-top:2px solid #0054A6; font-size:12px; font-weight:900; background:#fff3cd; margin-top:2px;">
+                            <span style="margin-right:30px;">Tổng số hóa đơn: <span id="in-tong-hoa-don" style="color:#E55D00;">0</span></span>
+                            <span>Tổng dư nợ: <span id="in-tong-tien" style="color:#c0392b;">0 đ</span></span>
                         </div>
                     </div>
                 </section>
