@@ -61,10 +61,7 @@
             #in-dong-tong { display: block !important; }
 
             /* === IN THONG BAO TIEN DIEN === */
-            /* Mac dinh an vung thong bao khi in bang du no */
             #vung-in-thong-bao { display: none; }
-
-            /* Khi body co class dang-in-thong-bao: chi hien vung thong bao */
             body.dang-in-thong-bao * { visibility: hidden !important; }
             body.dang-in-thong-bao #vung-in-thong-bao,
             body.dang-in-thong-bao #vung-in-thong-bao * { visibility: visible !important; }
@@ -74,16 +71,14 @@
                 top: 0; left: 0; width: 100%;
                 background: #fff;
             }
-            /* An bang du no khi in thong bao */
             body.dang-in-thong-bao #in-header,
             body.dang-in-thong-bao #vung-bang-in-tang-hinh { display: none !important; }
 
-            /* Layout 1 trang A4 ngang = 2 lien dat canh nhau */
             .trang-in-a4 {
                 page-break-after: always;
                 page-break-inside: avoid;
                 width: 100%;
-                height: 190mm; /* Bóp chiều cao an toàn để bù trừ lề, triệt tiêu lỗi tràn trang */
+                height: 190mm; 
                 display: flex;
                 flex-direction: row;
                 box-sizing: border-box;
@@ -91,17 +86,14 @@
                 color: #000;
                 overflow: hidden;
             }
-
-            /* BÍ QUYẾT: Dòng này triệt tiêu trang trắng thừa ở tờ in cuối cùng */
+            
             .trang-in-a4:last-child {
                 page-break-after: auto;
             }
 
-            /* Mỗi liên chiếm đúng 50% trang */
             .lien-thong-bao {
                 width: 50%;
                 height: 100%;
-                /* BÍ QUYẾT: Đẩy lề dưới (padding-bottom) lên 38mm để chừa ra một vùng trống an toàn chứa cụm chữ ký, chữ sẽ tự động ngắt không tràn xuống đè nữa */
                 padding: 6mm 10mm 38mm 10mm;  
                 display: block;             
                 position: relative;         
@@ -110,7 +102,6 @@
                 overflow: hidden;
             }
 
-            /* Duong cat giua 2 lien */
             .duong-cat-doc {
                 border-left: 1px dashed #666;
                 margin: 0;
@@ -126,10 +117,10 @@
                 font-size: 18px;
                 color: #666;
                 background: #fff;
-                padding: 3px 0;
+                padding: 5px 0;
                 transform: translateY(-50%);
             }
-        } /* Dong @media print */
+        } 
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans flex h-screen overflow-hidden">
@@ -296,6 +287,21 @@
                             <button onclick="locTheoSoTien(1000000, this)"   class="nut-loc-tien px-3 py-1.5 rounded border text-xs font-bold shadow-sm bg-white text-slate-600 border-slate-300 hover:border-evnOrange">≥ 1 Tr</button>
                             <button onclick="locTheoSoTien(2000000, this)"   class="nut-loc-tien px-3 py-1.5 rounded border text-xs font-bold shadow-sm bg-white text-slate-600 border-slate-300 hover:border-evnOrange">≥ 2 Tr</button>
                             <button onclick="locTheoSoTien(3000000, this)"   class="nut-loc-tien px-3 py-1.5 rounded border text-xs font-bold shadow-sm bg-white text-slate-600 border-slate-300 hover:border-evnOrange">≥ 3 Tr</button>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-3 border-b border-slate-100 pb-3 mt-1">
+                        <span class="font-bold text-slate-700 text-xs uppercase w-full md:w-28 mb-1 md:mb-0">SẮP XẾP:</span>
+                        <div class="flex flex-wrap items-center gap-4 bg-blue-50/50 border border-blue-200 px-4 py-2 rounded-lg shadow-sm">
+                            <label class="flex items-center gap-2 cursor-pointer font-bold text-evnDark hover:text-evnBlue transition-colors text-xs md:text-sm" title="Gộp các khách hàng cùng một Trạm lại với nhau">
+                                <input type="checkbox" id="sort-tram" class="w-4 h-4 accent-evnBlue cursor-pointer">
+                                Gộp theo Trạm
+                            </label>
+                            <div class="w-px h-5 bg-blue-300 hidden md:block"></div>
+                            <label class="flex items-center gap-2 cursor-pointer font-bold text-evnDark hover:text-evnBlue transition-colors text-xs md:text-sm" title="Sắp xếp đúng thứ tự Cột (VD: 1.2 đứng trước 1.10) trong từng Trạm">
+                                <input type="checkbox" id="sort-cot" class="w-4 h-4 accent-evnBlue cursor-pointer">
+                                Thứ tự Cột
+                            </label>
                         </div>
                     </div>
 
@@ -558,11 +564,23 @@ function luuTrangThaiTick(maKH, isTick) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 }
 
+// KHAI BÁO BIẾN TOÀN CỤC CHUẨN XÁC ĐỂ XỬ LÝ SẮP XẾP
 let dataTableDuNo = null;  
 let cotTNV_global = null;  
 let cotTien_global = null; 
+let cotTram_global = null; // Biến lưu tên cột Trạm
+let cotCot_global = null;  // Biến lưu tên cột Cột
 let nguongLocTien = 0;     
 let mangCotHoanChinh = []; 
+
+// THUẬT TOÁN SẮP XẾP THÔNG MINH CHO CỘT (Natural Sort)
+// Tránh lỗi kinh điển: 1.10 bị xếp trước 1.2
+$.fn.dataTable.ext.type.order['natural-asc'] = function (a, b) {
+    return String(a).localeCompare(String(b), undefined, {numeric: true, sensitivity: 'base'});
+};
+$.fn.dataTable.ext.type.order['natural-desc'] = function (a, b) {
+    return String(b).localeCompare(String(a), undefined, {numeric: true, sensitivity: 'base'});
+};
 
 const COT_CAN_AN = [
     'địa chỉ', 'dia chi', 'thu ngân', 'thu ngan', 'tnv', 'thu ngân viên',
@@ -588,9 +606,12 @@ async function taiDuLieuDuNo() {
         const keys = Object.keys(records[0]);
         cotTNV_global  = keys.find(k => k.toLowerCase().includes('thu ngân') || k.toLowerCase().includes('tnv') || k.toLowerCase().includes('thu ngan'));
         cotTien_global = keys.find(k => k.toLowerCase().includes('tổng tiền') || k.toLowerCase().includes('tong tien') || k.toLowerCase().includes('nợ'));
+        cotTram_global = keys.find(k => k.toLowerCase().includes('trạm') || k.toLowerCase().includes('tram'));
+        cotCot_global  = keys.find(k => k.toLowerCase().includes('cột') || k.toLowerCase().includes('cot'));
+
         let cotMaKH    = keys.find(k => k.toLowerCase().includes('mã kh') || k.toLowerCase().includes('ma kh'));
         let cotTenKH   = keys.find(k => k.toLowerCase().includes('tên kh') || k.toLowerCase().includes('ten kh'));
-        let cotTram    = keys.find(k => k.toLowerCase().includes('trạm') || k.toLowerCase().includes('tram'));
+        let cotTram    = cotTram_global;
         let cotSDT     = keys.find(k => k.toLowerCase().includes('sdt') || k.toLowerCase().includes('điện thoại') || k.toLowerCase().includes('đt'));
 
         if (cotTNV_global) {
@@ -600,13 +621,22 @@ async function taiDuLieuDuNo() {
             listTNV.forEach(t => select.innerHTML += `<option value="${t}">${t}</option>`);
         }
 
+        // Reset nút Sắp xếp trên giao diện
+        $('#sort-tram').prop('checked', false);
+        $('#sort-cot').prop('checked', false);
+
         if (dataTableDuNo) { dataTableDuNo.destroy(); $('#bang-duno').empty(); }
 
         mangCotHoanChinh = keys; 
 
-        let cotAnSearch = keys.map(k => ({ data: k, visible: false }));
+        // GẮN THUẬT TOÁN SẮP XẾP THÔNG MINH CHO CỘT VÀ TRẠM
+        let cotAnSearch = keys.map(k => {
+            if (k === cotCot_global || k === cotTram_global) {
+                return { data: k, visible: false, type: 'natural' };
+            }
+            return { data: k, visible: false };
+        });
 
-        // BƯỚC 3.1: GẮN CHECKBOX MASTER VÀO TIÊU ĐỀ CỘT ĐỐC
         const finalColumns = [
             {
                 data: null, 
@@ -627,11 +657,12 @@ async function taiDuLieuDuNo() {
                     let ten = cotTenKH && row[cotTenKH] ? row[cotTenKH] : '--';
                     let ma = cotMaKH && row[cotMaKH] ? row[cotMaKH] : '--';
                     let tram = cotTram && row[cotTram] ? row[cotTram] : '--';
+                    let cot = cotCot_global && row[cotCot_global] ? String(row[cotCot_global]).replace(/\.0$/, '').trim() : '--';
                     if (type === 'display') {
                         return `
                             <div class="text-evnDark font-bold text-[16px] md:text-[18px] leading-snug whitespace-normal max-w-[200px] md:max-w-xs">${ten}</div>
                             <div class="text-[11px] md:text-[12px] text-slate-500 mt-1 whitespace-normal">
-                                Mã: <span class="font-semibold text-slate-700">${ma}</span> <span class="mx-1">|</span> Trạm: <span class="font-semibold text-slate-700">${tram}</span>
+                                Mã: <span class="font-semibold text-slate-700">${ma}</span> <span class="mx-1">|</span> Trạm: <span class="font-semibold text-evnBlue">${tram}</span> <span class="mx-1">|</span> Cột: <span class="font-semibold text-slate-700">${cot}</span>
                             </div>`;
                     }
                     return ten; 
@@ -644,7 +675,6 @@ async function taiDuLieuDuNo() {
                     let tenKH = cotTenKH && row[cotTenKH] ? row[cotTenKH] : '--';
                     let sdt = cotSDT && row[cotSDT] ? String(row[cotSDT]).trim() : '';
                     
-                    // Logic xử lý SĐT trong bảng
                     let sdtClean = sdt.replace(/\.0$/, '').trim();
                     if (sdtClean && sdtClean !== 'NaN' && sdtClean !== 'null') {
                         if (sdtClean.length >= 8 && !sdtClean.startsWith('0')) sdtClean = '0' + sdtClean;
@@ -685,10 +715,38 @@ async function taiDuLieuDuNo() {
             dom: '<"flex flex-col md:flex-row md:justify-between items-center mb-2 gap-2"lf>rt<"flex flex-col md:flex-row md:justify-between items-center mt-2 gap-2"ip>'
         });
 
+        // BẮT SỰ KIỆN SẮP XẾP VÀ GỘP NHÓM
+        $('#sort-tram').off('change').on('change', function() {
+            if ($(this).is(':checked')) {
+                $('#sort-cot').prop('checked', false); 
+                if (dataTableDuNo && cotTram_global) {
+                    let colTramIdx = 4 + mangCotHoanChinh.indexOf(cotTram_global);
+                    dataTableDuNo.order([[colTramIdx, 'asc']]).draw();
+                }
+            } else {
+                 if (dataTableDuNo) dataTableDuNo.order([[1, 'asc']]).draw(); 
+            }
+        });
+
+        $('#sort-cot').off('change').on('change', function() {
+            if ($(this).is(':checked')) {
+                $('#sort-tram').prop('checked', true); 
+                if (dataTableDuNo && cotTram_global && cotCot_global) {
+                    let colTramIdx = 4 + mangCotHoanChinh.indexOf(cotTram_global);
+                    let colCotIdx = 4 + mangCotHoanChinh.indexOf(cotCot_global);
+                    dataTableDuNo.order([[colTramIdx, 'asc'], [colCotIdx, 'asc']]).draw();
+                }
+            } else {
+                if (dataTableDuNo && cotTram_global) {
+                    let colTramIdx = 4 + mangCotHoanChinh.indexOf(cotTram_global);
+                    dataTableDuNo.order([[colTramIdx, 'asc']]).draw();
+                }
+            }
+        });
+
         // BƯỚC 3.2: BẮT SỰ KIỆN CHỌN TẤT CẢ / ĐẢO CHỌN TỪ CHECKBOX MASTER
         $('#bang-duno').off('change', '#chk-master-doc').on('change', '#chk-master-doc', function() {
             let isChecked = $(this).is(':checked');
-            // Quét các checkbox con trên giao diện
             $('.chk-doc-no').each(function() {
                 if ($(this).is(':checked') !== isChecked) {
                     $(this).prop('checked', isChecked).trigger('change');
@@ -841,7 +899,6 @@ function inBaoCaoDuNo() {
         htmlBangIn += `<tr><td style="text-align: center;">${index + 1}</td>`;
         dsKeyIn.forEach(k => {
             let val = row[k] !== null && row[k] !== undefined ? row[k] : '';
-            // Nếu là cột tiền -> căn phải
             let style = (k === cotTien_global) ? ' style="text-align: right; font-weight: bold;"' : '';
             htmlBangIn += `<td${style}>${val}</td>`;
         });
@@ -979,7 +1036,6 @@ function inThongBaoTienDien() {
 
     document.getElementById('vung-in-thong-bao').innerHTML = htmlInAll;
     
-    // Them class de CSS print biet dang in thong bao
     document.body.classList.add('dang-in-thong-bao');
     window.print();
     setTimeout(() => {
