@@ -101,7 +101,8 @@
             .lien-thong-bao {
                 width: 50%;
                 height: 100%;
-                padding: 5mm 10mm 0 10mm;  /* Kéo lề trên gọn lên một xíu cho cân đối */
+                /* BÍ QUYẾT: Đẩy lề dưới (padding-bottom) lên 38mm để chừa ra một vùng trống an toàn chứa cụm chữ ký, chữ sẽ tự động ngắt không tràn xuống đè nữa */
+                padding: 6mm 10mm 38mm 10mm;  
                 display: block;             
                 position: relative;         
                 font-size: 12px;
