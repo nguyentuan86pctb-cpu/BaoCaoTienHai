@@ -47,12 +47,12 @@
             #vung-in-duno, #vung-in-duno * { visibility: visible; }
             #vung-in-duno { position: absolute; top: 0; left: 0; width: 100%; }
             
-            /* Ẩn giao diện Datatable đi để in Bảng Tàng Hình */
             #bang-duno_wrapper { display: none !important; }
             
-            /* Hiển thị Bảng tàng hình */
             #vung-bang-in-tang-hinh { display: block !important; }
             #vung-bang-in-tang-hinh table { width: 100% !important; border-collapse: collapse !important; margin-bottom: 10px; }
+            
+            /* Đã chỉnh font-size to lên 11px cho bản in A4 theo yêu cầu sếp */
             #vung-bang-in-tang-hinh th, #vung-bang-in-tang-hinh td { border: 1px solid #94a3b8 !important; padding: 4px 5px !important; font-size: 13px !important; word-wrap: break-word !important; }
             #vung-bang-in-tang-hinh th { background-color: #e2e8f0 !important; font-weight: bold !important; text-align: left !important; color: #000 !important; }
 
@@ -64,6 +64,20 @@
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans flex h-screen overflow-hidden">
+
+<div id="banner-nhac-bai" class="hidden fixed top-0 left-0 w-full bg-yellow-300 border-b-4 border-yellow-500 shadow-2xl z-[9999] p-3 md:p-4 justify-between items-center animate-[slideDown_0.3s_ease-out]">
+    <div class="flex-1">
+        <p class="text-[10px] md:text-[12px] font-bold text-yellow-800 uppercase tracking-wider mb-1 flex items-center gap-1">
+            <svg class="w-4 h-4 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+            Đang gọi nhắc nợ:
+        </p>
+        <div id="banner-ten" class="font-black text-[18px] md:text-[22px] text-evnDark leading-tight mb-0.5">NGUYỄN VĂN A</div>
+        <div class="font-bold text-[16px] md:text-[18px] text-red-600">Nợ: <span id="banner-tien">0</span></div>
+    </div>
+    <button onclick="dongBannerNhacBai()" class="bg-yellow-500 hover:bg-yellow-600 text-white w-10 h-10 rounded-full flex justify-center items-center font-black text-lg shadow-md transition-colors shrink-0 border-2 border-white">
+        ✕
+    </button>
+</div>
 
 <nav class="bg-evnDark text-white fixed left-0 top-0 h-full w-[260px] shadow-2xl flex flex-col py-6 z-40 hidden md:flex border-r border-blue-900">
     <div class="px-6 mb-8 flex flex-col gap-1">
@@ -256,6 +270,14 @@
 
 <script>
 // ==========================================
+// HÀM ĐÓNG BANNER NHẮC BÀI
+// ==========================================
+function dongBannerNhacBai() {
+    document.getElementById('banner-nhac-bai').classList.add('hidden');
+    document.getElementById('banner-nhac-bai').classList.remove('flex');
+}
+
+// ==========================================
 // 1. QUẢN LÝ TAB & SIDEBAR
 // ==========================================
 function chuyenTab(tabName) {
@@ -430,7 +452,7 @@ function renderDuLieu() {
 }
 
 // ==========================================
-// 3. LOGIC BÁO CÁO DƯ NỢ (CẢI TIẾN MASTER-DETAIL GỘP CỘT)
+// 3. LOGIC BÁO CÁO DƯ NỢ (MASTER-DETAIL GỘP CỘT & GỌI ĐIỆN)
 // ==========================================
 const STORAGE_KEY = 'evn_duno_ticks_tienhai';
 
@@ -505,10 +527,8 @@ async function taiDuLieuDuNo() {
 
         if (dataTableDuNo) { dataTableDuNo.destroy(); $('#bang-duno').empty(); }
 
-        mangCotHoanChinh = keys; // Giữ nguyên toàn bộ cột để tìm kiếm và xuất
+        mangCotHoanChinh = keys; 
 
-        // BƯỚC 1: Cấu hình bảng Datatables với Giao diện Gộp Cột (Stacked Columns)
-        // Cột ẩn dùng để Datatable có thể search được
         let cotAnSearch = keys.map(k => ({ data: k, visible: false }));
 
         const finalColumns = [
@@ -527,26 +547,30 @@ async function taiDuLieuDuNo() {
                     let ma = cotMaKH && row[cotMaKH] ? row[cotMaKH] : '--';
                     let tram = cotTram && row[cotTram] ? row[cotTram] : '--';
                     if (type === 'display') {
+                        // SIZE CHỮ TÊN KHÁCH HÀNG ĐÃ ĐƯỢC TĂNG LÊN text-[16px] md:text-[18px]
                         return `
                             <div class="text-evnDark font-bold text-[16px] md:text-[18px] leading-snug whitespace-normal max-w-[200px] md:max-w-xs">${ten}</div>
                             <div class="text-[11px] md:text-[12px] text-slate-500 mt-1 whitespace-normal">
                                 Mã: <span class="font-semibold text-slate-700">${ma}</span> <span class="mx-1">|</span> Trạm: <span class="font-semibold text-slate-700">${tram}</span>
                             </div>`;
                     }
-                    return ten; // Để Datatable sort theo Tên
+                    return ten; 
                 }
             },
             {
                 data: null, title: 'THANH TOÁN', orderable: true, searchable: false, className: 'align-top pt-2 pb-2',
                 render: function(data, type, row) {
                     let tien = cotTien_global && row[cotTien_global] ? row[cotTien_global] : '0';
+                    let tenKH = cotTenKH && row[cotTenKH] ? row[cotTenKH] : '--';
                     let sdt = cotSDT && row[cotSDT] ? String(row[cotSDT]).trim() : '';
                     if (sdt.length >= 8 && !sdt.startsWith('0')) sdt = '0' + sdt;
                     
                     if (type === 'display') {
                         let htmlTien = `<div class="text-red-600 font-black text-[14px] md:text-[15px]">${tien}</div>`;
+                        
+                        // Đã gắn thêm Class btn-goi-dien và Data Attribute cho Banner
                         let htmlSdt = sdt 
-                            ? `<a href="tel:${sdt}" class="text-[12px] text-evnBlue font-bold flex items-center gap-1 mt-1 hover:text-evnOrange transition-colors"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>${sdt}</a>` 
+                            ? `<a href="tel:${sdt}" data-ten="${tenKH.replace(/"/g, '&quot;')}" data-tien="${tien}" class="btn-goi-dien text-[12px] text-evnBlue font-bold flex items-center gap-1 mt-1 hover:text-evnOrange transition-colors"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>${sdt}</a>` 
                             : `<div class="text-[11px] text-slate-400 mt-1 italic">Chưa có SĐT</div>`;
                         return htmlTien + htmlSdt;
                     }
@@ -571,7 +595,7 @@ async function taiDuLieuDuNo() {
                 let maKH = cotMaKH ? data[cotMaKH] : null;
                 if (kiemTraDaTick(maKH)) $(row).addClass('da-doc-no');
             },
-            scrollX: false, // Bảng gộp đã siêu gọn, không cần vuốt
+            scrollX: false, 
             autoWidth: false,
             dom: '<"flex flex-col md:flex-row md:justify-between items-center mb-2 gap-2"lf>rt<"flex flex-col md:flex-row md:justify-between items-center mt-2 gap-2"ip>'
         });
@@ -581,6 +605,20 @@ async function taiDuLieuDuNo() {
             let maKH = $(this).data('makh');
             if ($(this).is(':checked')) { $(this).closest('tr').addClass('da-doc-no'); luuTrangThaiTick(maKH, true); } 
             else { $(this).closest('tr').removeClass('da-doc-no'); luuTrangThaiTick(maKH, false); }
+        });
+
+        // BƯỚC 2.5: BẮT SỰ KIỆN GỌI ĐIỆN ĐỂ MỞ BANNER NHẮC BÀI
+        $('#bang-duno tbody').off('click', '.btn-goi-dien').on('click', '.btn-goi-dien', function () {
+            let tenKH = $(this).data('ten');
+            let tienKH = $(this).data('tien') + ' đ';
+            
+            // Cập nhật thông tin lên Banner
+            document.getElementById('banner-ten').innerText = tenKH;
+            document.getElementById('banner-tien').innerText = tienKH;
+            
+            // Hiển thị Banner
+            document.getElementById('banner-nhac-bai').classList.remove('hidden');
+            document.getElementById('banner-nhac-bai').classList.add('flex');
         });
 
         // BƯỚC 3: Sự kiện Xổ chi tiết
