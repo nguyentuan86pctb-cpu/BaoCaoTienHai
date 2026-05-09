@@ -40,27 +40,89 @@
         #bang-duno th, #bang-duno td { padding: 8px 10px !important; }
         #bang-duno thead th { background: linear-gradient(135deg, #0054A6, #002B54) !important; color: #fff !important; font-weight: 700 !important; font-size: 11px !important; }
 
-        /* ===== CSS IN ẤN ĐẶC BIỆT ===== */
+        /* ===== CSS IN AN DAC BIET ===== */
+
+        /* @page mac dinh cho in bang du no (A4 ngang, le 5mm) */
+        @page { size: A4 landscape; margin: 5mm; }
+
         @media print {
             body * { visibility: hidden; }
             body { padding-bottom: 0 !important; }
+
+            /* === IN BANG DU NO === */
             #vung-in-duno, #vung-in-duno * { visibility: visible; }
             #vung-in-duno { position: absolute; top: 0; left: 0; width: 100%; }
-            
             #bang-duno_wrapper { display: none !important; }
-            
             #vung-bang-in-tang-hinh { display: block !important; }
             #vung-bang-in-tang-hinh table { width: 100% !important; border-collapse: collapse !important; margin-bottom: 10px; }
-            
-            /* Đã chỉnh font-size to lên 11px cho bản in A4 theo yêu cầu sếp */
             #vung-bang-in-tang-hinh th, #vung-bang-in-tang-hinh td { border: 1px solid #94a3b8 !important; padding: 4px 5px !important; font-size: 13px !important; word-wrap: break-word !important; }
             #vung-bang-in-tang-hinh th { background-color: #e2e8f0 !important; font-weight: bold !important; text-align: left !important; color: #000 !important; }
-
             #in-header { display: block !important; text-align: center; margin-bottom: 10px; }
             #in-dong-tong { display: block !important; }
-            @page { size: A4 landscape; margin: 5mm; } 
-        }
-        #in-header, #vung-bang-in-tang-hinh { display: none; }
+
+            /* === IN THONG BAO TIEN DIEN === */
+            /* Mac dinh an vung thong bao khi in bang du no */
+            #vung-in-thong-bao { display: none; }
+
+            /* Khi body co class dang-in-thong-bao: chi hien vung thong bao */
+            body.dang-in-thong-bao * { visibility: hidden !important; }
+            body.dang-in-thong-bao #vung-in-thong-bao,
+            body.dang-in-thong-bao #vung-in-thong-bao * { visibility: visible !important; }
+            body.dang-in-thong-bao #vung-in-thong-bao {
+                display: block !important;
+                position: absolute;
+                top: 0; left: 0; width: 100%;
+                background: #fff;
+            }
+            /* An bang du no khi in thong bao */
+            body.dang-in-thong-bao #in-header,
+            body.dang-in-thong-bao #vung-bang-in-tang-hinh { display: none !important; }
+
+            /* Layout 1 trang A4 ngang = 2 lien dat canh nhau */
+            .trang-in-a4 {
+                page-break-after: always;
+                width: 297mm;
+                height: 210mm;
+                display: flex;
+                flex-direction: row;
+                box-sizing: border-box;
+                font-family: 'Times New Roman', serif;
+                color: #000;
+                overflow: hidden;
+            }
+
+            /* Moi lien chiem dung 50% trang */
+            .lien-thong-bao {
+                width: 50%;
+                height: 210mm;
+                padding: 8mm 10mm 0 10mm;  /* padding-bottom=0, chữ ký tự định vị */
+                display: block;             /* block thay flex để không conflict với position:absolute */
+                position: relative;         /* BẮT BUỘC để chữ ký absolute gắn vào đúng liên */
+                font-size: 12px;
+                box-sizing: border-box;
+                overflow: hidden;
+            }
+
+            /* Duong cat giua 2 lien */
+            .duong-cat-doc {
+                border-left: 1px dashed #666;
+                margin: 0;
+                flex-shrink: 0;
+                position: relative;
+                align-self: stretch;
+            }
+            .duong-cat-doc::after {
+                content: "\2702";
+                position: absolute;
+                top: 50%;
+                left: -9px;
+                font-size: 18px;
+                color: #666;
+                background: #fff;
+                padding: 5px 0;
+                transform: translateY(-50%);
+            }
+        } /* Dong @media print */
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans flex h-screen overflow-hidden">
@@ -212,6 +274,10 @@
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
                                 In
                             </button>
+                            <button onclick="inThongBaoTienDien()" class="bg-purple-600 text-white border border-purple-700 font-semibold px-3 py-2 rounded-lg shadow-sm hover:bg-purple-700 transition-all flex items-center gap-1.5 text-xs md:text-sm">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                                In TB Nợ
+                            </button>
                         </div>
                     </div>
 
@@ -263,6 +329,8 @@
         </div>
     </main>
 </div>
+
+<div id="vung-in-thong-bao" class="hidden"></div>
 
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
@@ -531,9 +599,15 @@ async function taiDuLieuDuNo() {
 
         let cotAnSearch = keys.map(k => ({ data: k, visible: false }));
 
+        // BƯỚC 3.1: GẮN CHECKBOX MASTER VÀO TIÊU ĐỀ CỘT ĐỐC
         const finalColumns = [
             {
-                data: null, title: '<span class="text-[10px]">ĐỐC</span>', orderable: false, searchable: false, className: 'text-center w-8 align-top pt-3',
+                data: null, 
+                title: `<div class="flex flex-col items-center justify-center gap-1">
+                            <span class="text-[10px]">ĐỐC</span>
+                            <input type="checkbox" id="chk-master-doc" class="w-4 h-4 cursor-pointer accent-evnOrange" title="Chọn tất cả / Bỏ chọn">
+                        </div>`, 
+                orderable: false, searchable: false, className: 'text-center w-8 md:w-10 align-top pt-3',
                 render: function(data, type, row) {
                     let maKH = cotMaKH ? row[cotMaKH] : null;
                     let isChecked = kiemTraDaTick(maKH) ? 'checked' : '';
@@ -547,7 +621,6 @@ async function taiDuLieuDuNo() {
                     let ma = cotMaKH && row[cotMaKH] ? row[cotMaKH] : '--';
                     let tram = cotTram && row[cotTram] ? row[cotTram] : '--';
                     if (type === 'display') {
-                        // SIZE CHỮ TÊN KHÁCH HÀNG ĐÃ ĐƯỢC TĂNG LÊN text-[16px] md:text-[18px]
                         return `
                             <div class="text-evnDark font-bold text-[16px] md:text-[18px] leading-snug whitespace-normal max-w-[200px] md:max-w-xs">${ten}</div>
                             <div class="text-[11px] md:text-[12px] text-slate-500 mt-1 whitespace-normal">
@@ -563,14 +636,19 @@ async function taiDuLieuDuNo() {
                     let tien = cotTien_global && row[cotTien_global] ? row[cotTien_global] : '0';
                     let tenKH = cotTenKH && row[cotTenKH] ? row[cotTenKH] : '--';
                     let sdt = cotSDT && row[cotSDT] ? String(row[cotSDT]).trim() : '';
-                    if (sdt.length >= 8 && !sdt.startsWith('0')) sdt = '0' + sdt;
+                    
+                    // Logic xử lý SĐT trong bảng
+                    let sdtClean = sdt.replace(/\.0$/, '').trim();
+                    if (sdtClean && sdtClean !== 'NaN' && sdtClean !== 'null') {
+                        if (sdtClean.length >= 8 && !sdtClean.startsWith('0')) sdtClean = '0' + sdtClean;
+                    } else {
+                        sdtClean = '';
+                    }
                     
                     if (type === 'display') {
                         let htmlTien = `<div class="text-red-600 font-black text-[14px] md:text-[15px]">${tien}</div>`;
-                        
-                        // Đã gắn thêm Class btn-goi-dien và Data Attribute cho Banner
-                        let htmlSdt = sdt 
-                            ? `<a href="tel:${sdt}" data-ten="${tenKH.replace(/"/g, '&quot;')}" data-tien="${tien}" class="btn-goi-dien text-[12px] text-evnBlue font-bold flex items-center gap-1 mt-1 hover:text-evnOrange transition-colors"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>${sdt}</a>` 
+                        let htmlSdt = sdtClean 
+                            ? `<a href="tel:${sdtClean}" data-ten="${tenKH.replace(/"/g, '&quot;')}" data-tien="${tien}" class="btn-goi-dien text-[12px] text-evnBlue font-bold flex items-center gap-1 mt-1 hover:text-evnOrange transition-colors"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>${sdtClean}</a>` 
                             : `<div class="text-[11px] text-slate-400 mt-1 italic">Chưa có SĐT</div>`;
                         return htmlTien + htmlSdt;
                     }
@@ -600,7 +678,18 @@ async function taiDuLieuDuNo() {
             dom: '<"flex flex-col md:flex-row md:justify-between items-center mb-2 gap-2"lf>rt<"flex flex-col md:flex-row md:justify-between items-center mt-2 gap-2"ip>'
         });
 
-        // BƯỚC 2: Bắt sự kiện Tick
+        // BƯỚC 3.2: BẮT SỰ KIỆN CHỌN TẤT CẢ / ĐẢO CHỌN TỪ CHECKBOX MASTER
+        $('#bang-duno').off('change', '#chk-master-doc').on('change', '#chk-master-doc', function() {
+            let isChecked = $(this).is(':checked');
+            // Quét các checkbox con trên giao diện
+            $('.chk-doc-no').each(function() {
+                if ($(this).is(':checked') !== isChecked) {
+                    $(this).prop('checked', isChecked).trigger('change');
+                }
+            });
+        });
+
+        // BƯỚC 2: Bắt sự kiện Tick lẻ từng dòng
         $('#bang-duno').off('change', '.chk-doc-no').on('change', '.chk-doc-no', function() {
             let maKH = $(this).data('makh');
             if ($(this).is(':checked')) { $(this).closest('tr').addClass('da-doc-no'); luuTrangThaiTick(maKH, true); } 
@@ -611,12 +700,8 @@ async function taiDuLieuDuNo() {
         $('#bang-duno tbody').off('click', '.btn-goi-dien').on('click', '.btn-goi-dien', function () {
             let tenKH = $(this).data('ten');
             let tienKH = $(this).data('tien') + ' đ';
-            
-            // Cập nhật thông tin lên Banner
             document.getElementById('banner-ten').innerText = tenKH;
             document.getElementById('banner-tien').innerText = tienKH;
-            
-            // Hiển thị Banner
             document.getElementById('banner-nhac-bai').classList.remove('hidden');
             document.getElementById('banner-nhac-bai').classList.add('flex');
         });
@@ -764,6 +849,143 @@ function inBaoCaoDuNo() {
     document.getElementById('in-tong-tien').textContent = new Intl.NumberFormat('vi-VN').format(tongSoTien) + ' đ';
     
     window.print();
+}
+
+// ==========================================
+// TÍNH NĂNG IN THÔNG BÁO TIỀN ĐIỆN HÀNG LOẠT
+// ==========================================
+function taoFormLien(tenLien, ngayIn, data) {
+    return `
+    <div class="lien-thong-bao">
+
+        <!-- Nhãn liên -->
+        <div style="font-weight:bold; font-size:11px; font-style:italic; margin-bottom:4px;">${tenLien}</div>
+
+        <!-- Header 2 cột -->
+        <table style="width:100%; border:none; border-collapse:collapse; margin-bottom:8px;">
+            <tr>
+                <td style="width:42%; vertical-align:top; text-align:center; border:none; padding:0 4px 0 0;">
+                    <div style="font-size:11px; font-weight:bold; line-height:1.4;">Công ty Điện Lực Hưng Yên</div>
+                    <div style="font-size:12.5px; font-weight:bold; text-decoration:underline; line-height:1.4;">ĐIỆN LỰC TIỀN HẢI</div>
+                </td>
+                <td style="width:58%; vertical-align:top; text-align:center; border:none; padding:0 0 0 4px;">
+                    <div style="font-size:11.5px; font-weight:bold; line-height:1.4;">CỘNG HOÀ XÃ HỘI CHỦ NGHĨA VIỆT NAM</div>
+                    <div style="font-size:11.5px; font-weight:bold; text-decoration:underline; font-style:italic; line-height:1.4;">Độc lập - Tự do - Hạnh phúc</div>
+                    <div style="font-size:11px; font-style:italic; text-align:right; margin-top:3px;">Tiền Hải, ${ngayIn}</div>
+                </td>
+            </tr>
+        </table>
+
+        <!-- Tiêu đề -->
+        <div style="text-align:center; font-size:14px; font-weight:bold; margin:10px 0; line-height:1.5;">
+            THÔNG BÁO THANH TOÁN TIỀN ĐIỆN,<br>THÔNG BÁO NGỪNG CẤP ĐIỆN
+        </div>
+
+        <!-- Thông tin khách hàng -->
+        <p style="margin:5px 0; font-size:12px; line-height:1.5;"><u><i>Kính gửi</i></u>: Ông (bà): <b>${data.ten} - ${data.sdt}</b></p>
+        <p style="margin:5px 0; font-size:12px; line-height:1.5;">Địa chỉ: <b>${data.diaChi}</b></p> Số cột: <b>${data.cot}</b>, No: <b>${data.cto}</b>, Trạm:<b>${data.tram}</b
+
+        <!-- Căn cứ pháp lý -->
+        <p style="text-align:justify; margin-top:8px; margin-bottom:0; line-height:1.55; font-size:12px;">
+            &nbsp;&nbsp;&nbsp;&nbsp;- Căn cứ luật điện lực số 61/2024/QH15 đã được Quốc hội nước Cộng hoà xã hội chủ nghĩa Việt Nam thông qua ngày 30/11/2024;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;- Căn cứ Quy định về điều kiện, trình tự ngừng, giảm mức cung cấp điện được ban hành kèm theo Thông tư số 04/2025/TT-BCT ngày 01/02/2025 của Bộ trưởng Bộ Công thương;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;- Căn cứ Hợp đồng mua bán điện đã ký kết giữa hai bên, thông báo thanh toán tiền điện lần nhất và số dư nợ tiền điện tính đến ${ngayIn} là: <b>${data.tien} đồng</b> mà quý khách hàng chưa thanh toán mặc dù đã quá thời hạn thoả thuận.
+        </p>
+
+        <!-- Đoạn thông báo chính -->
+        <p style="text-align:justify; margin-top:8px; margin-bottom:0; line-height:1.55; font-size:12px;">
+            &nbsp;&nbsp;&nbsp;&nbsp;Điện lực Tiền hải xin gửi tới Quý khách hàng giấy thông báo thanh toán tiền điện lần thứ 2 và đề nghị Quý khách hàng thu xếp để thanh toán cho chúng tôi số dư nợ tiền điện trước <b>${ngayIn}</b>. Nếu đến hết giờ làm việc ngày <b>${ngayIn}</b>, Quý khách hàng vẫn chưa thanh toán đầy đủ số tiền điện còn nợ, chúng tôi buộc phải thông báo để quý khách hàng được biết:
+        </p>
+
+        <!-- Danh sách cảnh báo -->
+        <p style="text-align:justify; margin:6px 0; line-height:1.55; font-size:12px; padding-left:8px;">
+            &nbsp;&nbsp;&nbsp;&nbsp;- <b>Điện Lực Tiền Hải sẽ tính lãi chậm trả và phạt vi phạm hợp đồng với mức phạt là 8% giá trị tiền điện phát sinh trong kỳ.</b><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;- Sau ngày <b>${ngayIn}</b>, chúng tôi xin phép được tạm ngừng cấp điện cho Quý khách hàng.<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;- Lý do ngừng cấp điện: Do Quý Khách hàng chưa thanh toán tiền điện đúng thời hạn đã thoả thuận trong Hợp đồng.<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;- Thời hạn dự kiến đóng điện: Sau khi Quý khách đã thanh toán đầy đủ tiền điện; tiền lãi của số tiền chậm trả, phạt vi phạm hợp đồng và chi phí đóng, cắt điện.
+        </p>
+
+        <!-- Lời kết -->
+        <p style="margin-top:8px; line-height:1.55; font-size:12px;">
+            &nbsp;&nbsp;&nbsp;&nbsp;Để nghị Quý khách hàng có kế hoạch chủ động trong thời gian mất điện trên.<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<b>Xin trân trọng cảm ơn!</b>
+        </p>
+
+        <!-- Chữ ký: position absolute ghim đáy, khoảng trắng ký tên đủ rộng -->
+        <div style="position:absolute; bottom:10mm; left:10mm; right:10mm; display:flex; justify-content:space-between; text-align:center;">
+            <div style="width:32%;">
+                <p style="font-weight:bold; margin:0 0 2px 0; font-size:12px;">Người nhận thông báo</p>
+                <p style="font-style:italic; margin:0 0 55px 0; font-size:11px;">(Ký và ghi rõ họ tên)</p>
+            </div>
+            <div style="width:32%;">
+                <p style="font-weight:bold; margin:0 0 2px 0; font-size:12px;">Người gửi thông báo</p>
+                <p style="font-style:italic; margin:0 0 55px 0; font-size:11px;">(ký và ghi rõ họ tên)</p>
+            </div>
+            <div style="width:32%;">
+                <p style="font-weight:bold; margin:0 0 2px 0; font-size:12px;">ĐIỆN LỰC TIỀN HẢI</p>
+                <p style="font-style:italic; margin:0; font-size:11px;">&nbsp;</p>
+                <p style="font-weight:bold; margin:55px 0 0 0; font-size:12px;">Trương Hùng Cường</p>
+            </div>
+        </div>
+
+    </div>
+    `;
+}
+
+function inThongBaoTienDien() {
+    if (!dataTableDuNo) return;
+    
+    let rowsTick = $('.chk-doc-no:checked');
+    if (rowsTick.length === 0) {
+        alert("Sếp ơi, tick chọn ít nhất 1 khách hàng ở cột ĐỐC để in nhé!");
+        return;
+    }
+
+    let htmlInAll = '';
+    let homNay = new Date();
+    let strNgayIn = `ngày <span style="font-weight:bold;">${homNay.getDate().toString().padStart(2,'0')}</span> tháng <span style="font-weight:bold;">${homNay.getMonth() + 1}</span> năm <span style="font-weight:bold;">${homNay.getFullYear()}</span>`;
+
+    rowsTick.each(function() {
+        let tr = $(this).closest('tr');
+        let rowData = dataTableDuNo.row(tr).data();
+        
+        let cleanSo = (val) => val ? String(val).replace(/\.0$/, '').trim() : '';
+        let rawSdt = rowData['Sô điện thoại'] || rowData['Số điện thoại'];
+        let sdtClean = rawSdt ? String(rawSdt).replace(/\.0$/, '').trim() : '';
+        if (sdtClean && sdtClean !== 'NaN' && sdtClean !== 'null') {
+            if (!sdtClean.startsWith('0')) sdtClean = '0' + sdtClean;
+        } else {
+            sdtClean = 'Chưa có SĐT';
+        }
+
+        let pData = {
+            ten: rowData['Tên khách hàng'] || '--',
+            maKH: rowData['Mã khách hàng'] || '--',
+            diaChi: rowData['Địa chỉ khách hàng'] || '--',
+            tram: rowData['Tên Trạm'] || '--',
+            cot: cleanSo(rowData['Sô Cột'] || rowData['Số Cột']) || '--',
+            cto: cleanSo(rowData['Sô CTơ'] || rowData['Số CTơ']) || '--',
+            sdt: sdtClean,
+            tien: rowData['Tổng tiền'] || '0'
+        };
+
+        htmlInAll += `
+        <div class="trang-in-a4">
+            ${taoFormLien('Liên 2: Lưu Điện lực Tiền Hải', strNgayIn, pData)}
+            <div class="duong-cat-doc"></div>
+            ${taoFormLien('Liên 1: Giao Khách Hàng', strNgayIn, pData)}
+        </div>
+        `;
+    });
+
+    document.getElementById('vung-in-thong-bao').innerHTML = htmlInAll;
+    
+    // Them class de CSS print biet dang in thong bao
+    document.body.classList.add('dang-in-thong-bao');
+    window.print();
+    setTimeout(() => {
+        document.body.classList.remove('dang-in-thong-bao');
+    }, 1000);
 }
 
 taiDuLieu();
