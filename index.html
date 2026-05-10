@@ -4,9 +4,8 @@
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>EVNNPC - Điện lực Tiền Hải Dashboard</title>
-    <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=eNcrGr2NZyfikYBypOLvgdAzSOIQhW2U5pZK6R8Q-tX2NCUwIxEapEeSFOU2To_H_2SdDoTOC6pWLAT2f_n88tYJLDALt_vQmbaMfTDOyFx071BGMf9fd4GlQPFfhom2YEvft73P7HNMkuguQhvWZK75nwIoTj9gA4syCBYIjQA5BLaogCDebXPfvfQBUYOJdHnRAWD1h3FgZtu_QFCELneR8LKOByS-JFWQZ9rwcb-b-ApprkyK5VR5VZASW4tLiF1nFhy3M1XDLIgDHVpAHLFIWqowGZ2Jd1XTrLLC82No_UFJKZ--uUAeigEXsnGYAVOT_LfNaD1dOxvfC7FamOGGXLr0y1R_Y5Q_pRlyBnw" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://gc.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9jb250cmlidXRpb24udXNlcmNvbnRlbnQuZ29vZ2xlLmNvbS9kb3dubG9hZD9jPUNneGlZWEprWDNOMGIzSmhaMlVTVEJJSmRHVnRjRjlrWVhSaEdqOEtNREkxTkRZd01ESmtaVFF4WkRsa05qQXdNREEyTlRFMlpqUXpPRE14WkdNME1ERTFObUU0TXpGak1EQmtOakEyTVJJTEVnY1FrdTMzemRnSUdBRSZmaWxlbmFtZT1XZWJfRGFzaGJvYXJkX1RpZW5IYWlfVjNfQ2h1bmdTRFQuaHRtbCZvcGk9MTAzMTM1MDUw"/><script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
-    
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 
     <script>
@@ -24,36 +23,26 @@
         ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
         ::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #a8a8a8; }
-        
         body { padding-bottom: 70px; }
         @media (min-width: 768px) { body { padding-bottom: 0; } }
 
-        /* Datatables cơ bản */
         .dataTables_wrapper .dataTables_filter input { border: 1px solid #cbd5e1; border-radius: 6px; padding: 4px 8px; outline: none; margin-bottom: 10px; margin-left: 8px; }
         .dataTables_wrapper .dataTables_length select { border: 1px solid #cbd5e1; border-radius: 6px; padding: 4px; margin: 0 4px; }
         table.dataTable thead th { border-bottom: 2px solid #0054A6 !important; background-color: #f8fafc; }
         table.dataTable tbody tr:hover { background-color: #eff6ff !important; }
-		/* TÔ MÀU NÂU NHẠT CHO CÁC KHÁCH HÀNG TRÙNG SỐ ĐIỆN THOẠI */
+        
         tr.chung-sdt td { background-color: #f3e6d5 !important; }
         tr.chung-sdt:hover td { background-color: #ebdccc !important; }
-        
-        tr.da-doc-no td { background-color: #dcfce7 !important; transition: background-color 0.2s; }
         tr.da-doc-no td { background-color: #dcfce7 !important; transition: background-color 0.2s; }
 
-        /* Giao diện Bảng Dư nợ Web */
         #bang-duno th, #bang-duno td { padding: 8px 10px !important; }
         #bang-duno thead th { background: linear-gradient(135deg, #0054A6, #002B54) !important; color: #fff !important; font-weight: 700 !important; font-size: 11px !important; }
 
-        /* ===== CSS IN AN DAC BIET ===== */
-
-        /* @page mac dinh cho in bang du no (A4 ngang, le 5mm) */
         @page { size: A4 landscape; margin: 5mm; }
 
         @media print {
             body * { visibility: hidden; }
             body { padding-bottom: 0 !important; }
-
-            /* === IN BANG DU NO === */
             #vung-in-duno, #vung-in-duno * { visibility: visible; }
             #vung-in-duno { position: absolute; top: 0; left: 0; width: 100%; }
             #bang-duno_wrapper { display: none !important; }
@@ -63,72 +52,19 @@
             #vung-bang-in-tang-hinh th { background-color: #e2e8f0 !important; font-weight: bold !important; text-align: left !important; color: #000 !important; }
             #in-header { display: block !important; text-align: center; margin-bottom: 10px; }
             #in-dong-tong { display: block !important; }
-
-            /* === IN THONG BAO TIEN DIEN === */
             #vung-in-thong-bao { display: none; }
             body.dang-in-thong-bao * { visibility: hidden !important; }
-            body.dang-in-thong-bao #vung-in-thong-bao,
-            body.dang-in-thong-bao #vung-in-thong-bao * { visibility: visible !important; }
-            body.dang-in-thong-bao #vung-in-thong-bao {
-                display: block !important;
-                position: absolute;
-                top: 0; left: 0; width: 100%;
-                background: #fff;
-            }
-            body.dang-in-thong-bao #in-header,
-            body.dang-in-thong-bao #vung-bang-in-tang-hinh { display: none !important; }
+            body.dang-in-thong-bao #vung-in-thong-bao, body.dang-in-thong-bao #vung-in-thong-bao * { visibility: visible !important; }
+            body.dang-in-thong-bao #vung-in-thong-bao { display: block !important; position: absolute; top: 0; left: 0; width: 100%; background: #fff; }
+            body.dang-in-thong-bao #in-header, body.dang-in-thong-bao #vung-bang-in-tang-hinh { display: none !important; }
 
-            .trang-in-a4 {
-                page-break-after: always;
-                page-break-inside: avoid;
-                width: 100%;
-                height: 190mm; 
-                display: flex;
-                flex-direction: row;
-                box-sizing: border-box;
-                font-family: 'Times New Roman', serif;
-                color: #000;
-                overflow: hidden;
-            }
-            
-            .trang-in-a4:last-child {
-                page-break-after: auto;
-            }
-
-            .lien-thong-bao {
-                width: 50%;
-                height: 100%;
-                padding: 6mm 10mm 38mm 10mm;  
-                display: block;             
-                position: relative;         
-                font-size: 12px;
-                box-sizing: border-box;
-                overflow: hidden;
-            }
-
-            .duong-cat-doc {
-                border-left: 1px dashed #666;
-                margin: 0;
-                flex-shrink: 0;
-                position: relative;
-                align-self: stretch;
-            }
-            .duong-cat-doc::after {
-                content: "\\2702";
-                position: absolute;
-                top: 50%;
-                left: -9px;
-                font-size: 18px;
-                color: #666;
-                background: #fff;
-                padding: 5px 0;
-                transform: translateY(-50%);
-            }
-        } /* Dong @media print */
-        
-        /* --- ẨN CÁC THÀNH PHẦN IN ẤN TRÊN MÀN HÌNH WEB --- */
+            .trang-in-a4 { page-break-after: always; page-break-inside: avoid; width: 100%; height: 190mm; display: flex; flex-direction: row; box-sizing: border-box; font-family: 'Times New Roman', serif; color: #000; overflow: hidden; }
+            .trang-in-a4:last-child { page-break-after: auto; }
+            .lien-thong-bao { width: 50%; height: 100%; padding: 6mm 10mm 38mm 10mm; display: block; position: relative; font-size: 12px; box-sizing: border-box; overflow: hidden; }
+            .duong-cat-doc { border-left: 1px dashed #666; margin: 0; flex-shrink: 0; position: relative; align-self: stretch; }
+            .duong-cat-doc::after { content: "\2702"; position: absolute; top: 50%; left: -9px; font-size: 18px; color: #666; background: #fff; padding: 5px 0; transform: translateY(-50%); }
+        }
         #in-header, #vung-bang-in-tang-hinh, #in-dong-tong { display: none; }
-        
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans flex h-screen overflow-hidden">
@@ -142,9 +78,7 @@
         <div id="banner-ten" class="font-black text-[18px] md:text-[22px] text-evnDark leading-tight mb-0.5">NGUYỄN VĂN A</div>
         <div class="font-bold text-[16px] md:text-[18px] text-red-600">Nợ: <span id="banner-tien">0</span></div>
     </div>
-    <button onclick="dongBannerNhacBai()" class="bg-yellow-500 hover:bg-yellow-600 text-white w-10 h-10 rounded-full flex justify-center items-center font-black text-lg shadow-md transition-colors shrink-0 border-2 border-white">
-        ✕
-    </button>
+    <button onclick="dongBannerNhacBai()" class="bg-yellow-500 hover:bg-yellow-600 text-white w-10 h-10 rounded-full flex justify-center items-center font-black text-lg shadow-md transition-colors shrink-0 border-2 border-white">✕</button>
 </div>
 
 <nav class="bg-evnDark text-white fixed left-0 top-0 h-full w-[260px] shadow-2xl flex flex-col py-6 z-40 hidden md:flex border-r border-blue-900">
@@ -157,7 +91,6 @@
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
             <span class="font-semibold">Báo cáo mang tải</span>
         </a>
-
         <a id="btn-nav-du-no" onclick="chuyenTab('du-no')" class="cursor-pointer text-slate-400 hover:text-white hover:bg-white/5 rounded-lg flex items-center gap-3 px-4 py-3 border-l-4 border-transparent transition-transform transform hover:translate-x-1" href="javascript:void(0)">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             <span class="font-semibold">Báo cáo Dư nợ</span>
@@ -184,7 +117,6 @@
     <main class="flex-1 overflow-y-auto p-2 md:p-6 bg-slate-50">
         <div class="max-w-[1600px] mx-auto flex flex-col gap-4 md:gap-6">
             
-            <!-- GIỮ NGUYÊN HOÀN TOÀN TAB MANG TẢI -->
             <div id="tab-mang-tai" class="block">
                 <section class="bg-white rounded-xl border border-slate-200 shadow-lg p-3 md:p-6 flex flex-col gap-4">
                     <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 border-b border-slate-100 pb-4">
@@ -254,10 +186,8 @@
                 </section>
             </div>
 
-            <!-- TAB DƯ NỢ CÓ CẬP NHẬT GIAO DIỆN CHUNG SĐT -->
             <div id="tab-du-no" class="hidden">
                 <section class="bg-white rounded-xl border border-slate-200 shadow-lg p-3 md:p-6 flex flex-col gap-4">
-                    
                     <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 border-b border-slate-100 pb-4">
                         <div>
                             <h2 class="text-lg md:text-2xl font-bold text-evnDark flex items-center gap-2 uppercase">
@@ -267,93 +197,50 @@
                             <p id="cap-nhat-luc-duno" class="text-xs md:text-sm text-slate-500 mt-1">Đang tải dữ liệu...</p>
                         </div>
                         <div class="flex flex-wrap items-center gap-2">
-                            <select id="filter-tnv" class="bg-white border border-slate-300 text-slate-700 font-semibold px-3 py-2 rounded-lg shadow-sm focus:border-evnBlue outline-none text-xs md:text-sm flex-1 md:flex-none">
-                                <option value="">-- Chọn Thu ngân viên --</option>
-                            </select>
-                            <button onclick="taiDuLieuDuNo()" class="bg-white text-slate-700 border border-slate-300 font-semibold px-3 py-2 rounded-lg shadow-sm hover:bg-slate-50 hover:text-evnBlue transition-all flex items-center gap-1.5 text-xs md:text-sm">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-                                Làm mới
-                            </button>
-                            <button onclick="xuatExcelTheoDieuKien()" class="bg-green-600 text-white border border-green-700 font-semibold px-3 py-2 rounded-lg shadow-sm hover:bg-green-700 transition-all flex items-center gap-1.5 text-xs md:text-sm">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                                Xuất Excel
-                            </button>
-                            <button onclick="inBaoCaoDuNo()" class="bg-evnBlue text-white border border-evnDark font-semibold px-3 py-2 rounded-lg shadow-sm hover:bg-evnDark transition-all flex items-center gap-1.5 text-xs md:text-sm">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
-                                In
-                            </button>
-                            <button onclick="inThongBaoTienDien()" class="bg-purple-600 text-white border border-purple-700 font-semibold px-3 py-2 rounded-lg shadow-sm hover:bg-purple-700 transition-all flex items-center gap-1.5 text-xs md:text-sm">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
-                                In TB Nợ
-                            </button>
+                            <select id="filter-tnv" class="bg-white border border-slate-300 text-slate-700 font-semibold px-3 py-2 rounded-lg shadow-sm focus:border-evnBlue outline-none text-xs md:text-sm flex-1 md:flex-none"><option value="">-- Chọn Thu ngân viên --</option></select>
+                            <button onclick="taiDuLieuDuNo()" class="bg-white text-slate-700 border border-slate-300 font-semibold px-3 py-2 rounded-lg shadow-sm hover:bg-slate-50 hover:text-evnBlue transition-all flex items-center gap-1.5 text-xs md:text-sm"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg> Làm mới</button>
+                            <button onclick="xuatExcelTheoDieuKien()" class="bg-green-600 text-white border border-green-700 font-semibold px-3 py-2 rounded-lg shadow-sm hover:bg-green-700 transition-all flex items-center gap-1.5 text-xs md:text-sm"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg> Xuất Excel</button>
+                            <button onclick="inBaoCaoDuNo()" class="bg-evnBlue text-white border border-evnDark font-semibold px-3 py-2 rounded-lg shadow-sm hover:bg-evnDark transition-all flex items-center gap-1.5 text-xs md:text-sm"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg> In</button>
+                            <button onclick="inThongBaoTienDien()" class="bg-purple-600 text-white border border-purple-700 font-semibold px-3 py-2 rounded-lg shadow-sm hover:bg-purple-700 transition-all flex items-center gap-1.5 text-xs md:text-sm"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg> In TB Nợ</button>
                         </div>
                     </div>
 
                     <div class="flex flex-wrap items-center gap-2 border-b border-slate-100 pb-3">
                         <span class="font-bold text-slate-700 text-xs uppercase w-full md:w-28 mb-1 md:mb-0">LỌC DƯ NỢ ≥:</span>
                         <div class="flex flex-wrap gap-1.5">
-                            <button onclick="locTheoSoTien(0, this)"    class="nut-loc-tien px-3 py-1.5 rounded border text-xs font-bold shadow-sm bg-evnBlue text-white border-evnBlue">Tất cả</button>
-                            <button onclick="locTheoSoTien(500000, this)"    class="nut-loc-tien px-3 py-1.5 rounded border text-xs font-bold shadow-sm bg-white text-slate-600 border-slate-300 hover:border-evnOrange">≥ 500k</button>
-                            <button onclick="locTheoSoTien(1000000, this)"   class="nut-loc-tien px-3 py-1.5 rounded border text-xs font-bold shadow-sm bg-white text-slate-600 border-slate-300 hover:border-evnOrange">≥ 1 Tr</button>
-                            <button onclick="locTheoSoTien(2000000, this)"   class="nut-loc-tien px-3 py-1.5 rounded border text-xs font-bold shadow-sm bg-white text-slate-600 border-slate-300 hover:border-evnOrange">≥ 2 Tr</button>
-                            <button onclick="locTheoSoTien(3000000, this)"   class="nut-loc-tien px-3 py-1.5 rounded border text-xs font-bold shadow-sm bg-white text-slate-600 border-slate-300 hover:border-evnOrange">≥ 3 Tr</button>
+                            <button onclick="locTheoSoTien(0, this)" class="nut-loc-tien px-3 py-1.5 rounded border text-xs font-bold shadow-sm bg-evnBlue text-white border-evnBlue">Tất cả</button>
+                            <button onclick="locTheoSoTien(500000, this)" class="nut-loc-tien px-3 py-1.5 rounded border text-xs font-bold shadow-sm bg-white text-slate-600 border-slate-300 hover:border-evnOrange">≥ 500k</button>
+                            <button onclick="locTheoSoTien(1000000, this)" class="nut-loc-tien px-3 py-1.5 rounded border text-xs font-bold shadow-sm bg-white text-slate-600 border-slate-300 hover:border-evnOrange">≥ 1 Tr</button>
+                            <button onclick="locTheoSoTien(2000000, this)" class="nut-loc-tien px-3 py-1.5 rounded border text-xs font-bold shadow-sm bg-white text-slate-600 border-slate-300 hover:border-evnOrange">≥ 2 Tr</button>
+                            <button onclick="locTheoSoTien(3000000, this)" class="nut-loc-tien px-3 py-1.5 rounded border text-xs font-bold shadow-sm bg-white text-slate-600 border-slate-300 hover:border-evnOrange">≥ 3 Tr</button>
                         </div>
                     </div>
 
                     <div class="flex flex-wrap items-center gap-3 border-b border-slate-100 pb-3 mt-1">
                         <span class="font-bold text-slate-700 text-xs uppercase w-full md:w-28 mb-1 md:mb-0">SẮP XẾP:</span>
                         <div class="flex flex-wrap items-center gap-4 bg-blue-50/50 border border-blue-200 px-4 py-2 rounded-lg shadow-sm">
-                            <label class="flex items-center gap-2 cursor-pointer font-bold text-evnDark hover:text-evnBlue transition-colors text-xs md:text-sm" title="Gộp các khách hàng cùng một Trạm lại với nhau">
-                                <input type="checkbox" id="sort-tram" class="w-4 h-4 accent-evnBlue cursor-pointer">
-                                Gộp theo Trạm
-                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer font-bold text-evnDark hover:text-evnBlue transition-colors text-xs md:text-sm"><input type="checkbox" id="sort-tram" class="w-4 h-4 accent-evnBlue cursor-pointer"> Gộp theo Trạm</label>
                             <div class="w-px h-5 bg-blue-300 hidden md:block"></div>
-                            <label class="flex items-center gap-2 cursor-pointer font-bold text-evnDark hover:text-evnBlue transition-colors text-xs md:text-sm" title="Sắp xếp đúng thứ tự Cột (VD: 1.2 đứng trước 1.10) trong từng Trạm">
-                                <input type="checkbox" id="sort-cot" class="w-4 h-4 accent-evnBlue cursor-pointer">
-                                Thứ tự Cột
-                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer font-bold text-evnDark hover:text-evnBlue transition-colors text-xs md:text-sm"><input type="checkbox" id="sort-cot" class="w-4 h-4 accent-evnBlue cursor-pointer"> Thứ tự Cột</label>
                             <div class="w-px h-5 bg-blue-300 hidden md:block"></div>
-                            <label class="flex items-center gap-2 cursor-pointer font-bold text-evnDark hover:text-evnBlue transition-colors text-xs md:text-sm" title="Gộp các khách hàng dùng chung một Số điện thoại lại với nhau">
-                                <input type="checkbox" id="sort-sdt" class="w-4 h-4 accent-evnBlue cursor-pointer">
-                                Chung SĐT
-                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer font-bold text-evnDark hover:text-evnBlue transition-colors text-xs md:text-sm"><input type="checkbox" id="sort-sdt" class="w-4 h-4 accent-evnBlue cursor-pointer"> Chung SĐT</label>
                         </div>
                     </div>
 
                     <div id="thong-ke-duno" class="hidden bg-gradient-to-r from-orange-50 to-orange-100 border border-orange-200 px-4 md:px-6 py-4 rounded-xl shadow-sm flex justify-around items-center gap-2">
-                        <div class="text-center">
-                            <p class="text-slate-600 font-bold text-[10px] md:text-xs uppercase mb-1">Số hóa đơn</p>
-                            <span id="tong-hoa-don" class="font-black text-evnOrangeDark text-xl md:text-2xl">0</span>
-                        </div>
+                        <div class="text-center"><p class="text-slate-600 font-bold text-[10px] md:text-xs uppercase mb-1">Số hóa đơn</p><span id="tong-hoa-don" class="font-black text-evnOrangeDark text-xl md:text-2xl">0</span></div>
                         <div class="w-px h-8 bg-orange-200"></div>
-                        <div class="text-center">
-                            <p class="text-slate-600 font-bold text-[10px] md:text-xs uppercase mb-1">Tổng dư nợ (VNĐ)</p>
-                            <span id="tong-tien-no" class="font-black text-red-600 text-xl md:text-2xl">0</span>
-                        </div>
+                        <div class="text-center"><p class="text-slate-600 font-bold text-[10px] md:text-xs uppercase mb-1">Tổng dư nợ (VNĐ)</p><span id="tong-tien-no" class="font-black text-red-600 text-xl md:text-2xl">0</span></div>
                     </div>
 
                     <div id="vung-in-duno" class="border border-slate-200 rounded-xl shadow-sm bg-white p-2">
-                        <div id="in-header">
-                            <div class="font-black text-lg uppercase">ĐIỆN LỰC TIỀN HẢI — EVNNPC</div>
-                            <div class="font-bold text-base uppercase mt-1">BÁO CÁO DƯ NỢ KHÁCH HÀNG</div>
-                            <div id="in-subtitle" class="text-sm mt-1 text-gray-800 font-bold"></div>
-                            <div id="in-ngay" class="text-xs text-gray-500 italic mt-1"></div>
-                        </div>
-                        
-                        <div class="overflow-x-auto w-full">
-                            <table id="bang-duno" class="w-full text-left border-collapse stripe hover row-border cursor-default" style="width:100%"></table>
-                        </div>
-
+                        <div id="in-header"><div class="font-black text-lg uppercase">ĐIỆN LỰC TIỀN HẢI — EVNNPC</div><div class="font-bold text-base uppercase mt-1">BÁO CÁO DƯ NỢ KHÁCH HÀNG</div><div id="in-subtitle" class="text-sm mt-1 text-gray-800 font-bold"></div><div id="in-ngay" class="text-xs text-gray-500 italic mt-1"></div></div>
+                        <div class="overflow-x-auto w-full"><table id="bang-duno" class="w-full text-left border-collapse stripe hover row-border cursor-default" style="width:100%"></table></div>
                         <div id="vung-bang-in-tang-hinh"></div>
-
-                        <div id="in-dong-tong" style="display:none; text-align:right; padding:6px 10px; border-top:2px solid #0054A6; font-size:11px; font-weight:900; background:#fff3cd; margin-top:2px;">
-                            <span style="margin-right:20px;">Tổng số hóa đơn: <span id="in-tong-hoa-don" style="color:#E55D00;">0</span></span>
-                            <span>Tổng dư nợ: <span id="in-tong-tien" style="color:#c0392b;">0 đ</span></span>
-                        </div>
+                        <div id="in-dong-tong" style="display:none; text-align:right; padding:6px 10px; border-top:2px solid #0054A6; font-size:11px; font-weight:900; background:#fff3cd; margin-top:2px;"><span style="margin-right:20px;">Tổng số hóa đơn: <span id="in-tong-hoa-don" style="color:#E55D00;">0</span></span><span>Tổng dư nợ: <span id="in-tong-tien" style="color:#c0392b;">0 đ</span></span></div>
                     </div>
                 </section>
             </div>
-
         </div>
     </main>
 </div>
@@ -365,259 +252,140 @@
 <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
 
 <script>
-// ==========================================
-// HÀM ĐÓNG BANNER NHẮC BÀI
-// ==========================================
 function dongBannerNhacBai() {
     document.getElementById('banner-nhac-bai').classList.add('hidden');
     document.getElementById('banner-nhac-bai').classList.remove('flex');
 }
 
-// ==========================================
-// 1. QUẢN LÝ TAB & SIDEBAR
-// ==========================================
 function chuyenTab(tabName) {
-    document.getElementById('tab-mang-tai').classList.add('hidden');
-    document.getElementById('tab-mang-tai').classList.remove('block');
-    document.getElementById('tab-du-no').classList.add('hidden');
-    document.getElementById('tab-du-no').classList.remove('block');
-    
-    document.getElementById('tab-' + tabName).classList.remove('hidden');
-    document.getElementById('tab-' + tabName).classList.add('block');
+    document.getElementById('tab-mang-tai').classList.add('hidden'); document.getElementById('tab-mang-tai').classList.remove('block');
+    document.getElementById('tab-du-no').classList.add('hidden'); document.getElementById('tab-du-no').classList.remove('block');
+    document.getElementById('tab-' + tabName).classList.remove('hidden'); document.getElementById('tab-' + tabName).classList.add('block');
     
     const classInactive = "cursor-pointer text-slate-400 hover:text-white hover:bg-white/5 rounded-lg flex items-center gap-3 px-4 py-3 border-l-4 border-transparent transition-transform transform hover:translate-x-1";
     const classActive = "cursor-pointer bg-gradient-to-r from-evnBlue to-[#004080] text-white rounded-lg shadow-md flex items-center gap-3 px-4 py-3 border-l-4 border-evnOrange transition-transform transform hover:translate-x-1";
-    
     document.getElementById('btn-nav-mang-tai').className = (tabName === 'mang-tai' ? classActive : classInactive);
     document.getElementById('btn-nav-du-no').className = (tabName === 'du-no' ? classActive : classInactive);
 
     const botInactive = "flex-1 py-3 flex flex-col items-center justify-center text-slate-500 border-t-2 border-transparent transition-all";
     const botActive = "flex-1 py-3 flex flex-col items-center justify-center text-evnBlue border-t-2 border-evnBlue bg-blue-50/50 transition-all";
-    
-    const btnBotMangTai = document.getElementById('btn-bot-mang-tai');
-    const btnBotDuNo = document.getElementById('btn-bot-du-no');
-    
+    const btnBotMangTai = document.getElementById('btn-bot-mang-tai'); const btnBotDuNo = document.getElementById('btn-bot-du-no');
     if (btnBotMangTai) btnBotMangTai.className = (tabName === 'mang-tai' ? botActive : botInactive);
     if (btnBotDuNo) btnBotDuNo.className = (tabName === 'du-no' ? botActive : botInactive);
 
     if (tabName === 'du-no' && dataTableDuNo === null) taiDuLieuDuNo();
 }
 
-// ==========================================
-// 2. LOGIC BÁO CÁO MANG TẢI (GIỮ NGUYÊN)
-// ==========================================
 const SO_DONG_MOI_TRANG = 15;
-let duLieuToanBoGoc = {}; 
-let danhSachNgayLoc = []; 
-let duLieuCuaMocHienTai = []; 
-let trangHienTai = 1;
+let duLieuToanBoGoc = {}; let danhSachNgayLoc = []; let duLieuCuaMocHienTai = []; let trangHienTai = 1;
 
-function taoChuoiNgay(dateObj) {
-    let d = dateObj.getDate().toString().padStart(2, '0');
-    let m = (dateObj.getMonth() + 1).toString().padStart(2, '0');
-    let y = dateObj.getFullYear();
-    return `${d}/${m}/${y}`;
-}
+function taoChuoiNgay(dateObj) { return `${dateObj.getDate().toString().padStart(2, '0')}/${(dateObj.getMonth() + 1).toString().padStart(2, '0')}/${dateObj.getFullYear()}`; }
 
 async function taiDuLieu() {
     try {
         const res = await fetch(`https://raw.githubusercontent.com/nguyentuan86pctb-cpu/BaoCaoTienHai/main/data.json?t=${Date.now()}`);
         const json = await res.json();
-        
-        duLieuToanBoGoc = json.du_lieu || {};
-        const cacNgay = Object.keys(duLieuToanBoGoc).sort();
-        const ngayMoiNhat = cacNgay[cacNgay.length - 1];
-
-        const svgCheck = `<svg class="w-4 h-4 text-green-600 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
-        document.getElementById('cap-nhat-luc').innerHTML = `${svgCheck} Dữ liệu ngày: <span class="font-bold text-evnDark ml-1">${ngayMoiNhat || '--'}</span> <span class="hidden md:inline mx-2">—</span> Cập nhật: <span class="font-medium text-slate-600">${json.cap_nhat_luc || '--'}</span>`;
-        
+        duLieuToanBoGoc = json.du_lieu || {}; const cacNgay = Object.keys(duLieuToanBoGoc).sort(); const ngayMoiNhat = cacNgay[cacNgay.length - 1];
+        document.getElementById('cap-nhat-luc').innerHTML = `<svg class="w-4 h-4 text-green-600 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Dữ liệu ngày: <span class="font-bold text-evnDark ml-1">${ngayMoiNhat || '--'}</span> <span class="hidden md:inline mx-2">—</span> Cập nhật: <span class="font-medium text-slate-600">${json.cap_nhat_luc || '--'}</span>`;
         locTheoNgay('hom-nay', document.querySelector(".nut-loc-ngay"));
-    } catch (err) {
-        document.getElementById('bang-du-lieu-desktop').innerHTML = `<tr><td colspan="12" class="text-center text-red-600 py-10 font-bold bg-red-50">Lỗi kết nối: ${err.message}</td></tr>`;
-    }
+    } catch (err) { document.getElementById('bang-du-lieu-desktop').innerHTML = `<tr><td colspan="12" class="text-center text-red-600 py-10 font-bold bg-red-50">Lỗi kết nối: ${err.message}</td></tr>`; }
 }
 
 function locTheoNgay(loai, btnElement = null) {
-    if (btnElement) {
-        document.querySelectorAll('.nut-loc-ngay').forEach(btn => btn.className = "nut-loc-ngay px-3 md:px-4 py-1.5 rounded border text-xs md:text-sm font-bold shadow-sm bg-white text-slate-600 border-slate-300");
-        btnElement.className = "nut-loc-ngay px-3 md:px-4 py-1.5 rounded border text-xs md:text-sm font-bold shadow-sm bg-evnBlue text-white border-evnBlue";
-    }
-
-    let homNay = new Date();
-    danhSachNgayLoc = [];
+    if (btnElement) { document.querySelectorAll('.nut-loc-ngay').forEach(btn => btn.className = "nut-loc-ngay px-3 md:px-4 py-1.5 rounded border text-xs md:text-sm font-bold shadow-sm bg-white text-slate-600 border-slate-300"); btnElement.className = "nut-loc-ngay px-3 md:px-4 py-1.5 rounded border text-xs md:text-sm font-bold shadow-sm bg-evnBlue text-white border-evnBlue"; }
+    let homNay = new Date(); danhSachNgayLoc = [];
     if (loai === 'hom-nay') danhSachNgayLoc.push(taoChuoiNgay(homNay));
     else if (loai === 'hom-qua') { let d = new Date(); d.setDate(d.getDate() - 1); danhSachNgayLoc.push(taoChuoiNgay(d)); }
     else if (loai === '7-ngay') { for (let i = 0; i < 7; i++) { let d = new Date(); d.setDate(d.getDate() - i); danhSachNgayLoc.push(taoChuoiNgay(d)); } }
     else if (loai === 'tat-ca') danhSachNgayLoc = Object.keys(duLieuToanBoGoc);
-    
     taoNutChonGio();
 }
 
 function locKhoangNgay() {
-    let tu = document.getElementById('tu-ngay').value;
-    let den = document.getElementById('den-ngay').value;
+    let tu = document.getElementById('tu-ngay').value; let den = document.getElementById('den-ngay').value;
     if(!tu || !den) { alert("Sếp ơi, chọn đủ Từ ngày và Đến ngày đã!"); return; }
-
     document.querySelectorAll('.nut-loc-ngay').forEach(btn => btn.className = "nut-loc-ngay px-3 md:px-4 py-1.5 rounded border text-xs md:text-sm font-bold shadow-sm bg-white text-slate-600 border-slate-300");
-    danhSachNgayLoc = [];
-    for (let dt = new Date(tu); dt <= new Date(den); dt.setDate(dt.getDate() + 1)) { danhSachNgayLoc.push(taoChuoiNgay(new Date(dt))); }
+    danhSachNgayLoc = []; for (let dt = new Date(tu); dt <= new Date(den); dt.setDate(dt.getDate() + 1)) { danhSachNgayLoc.push(taoChuoiNgay(new Date(dt))); }
     taoNutChonGio();
 }
 
 function taoNutChonGio() {
-    const vungChon = document.getElementById('vung-chon-gio');
-    let cacMocGio = new Set();
+    const vungChon = document.getElementById('vung-chon-gio'); let cacMocGio = new Set();
     danhSachNgayLoc.forEach(ngay => { if (duLieuToanBoGoc[ngay]) Object.keys(duLieuToanBoGoc[ngay]).forEach(gio => cacMocGio.add(gio)); });
     let mangMocGio = Array.from(cacMocGio).sort();
-
-    if (mangMocGio.length === 0) {
-        vungChon.innerHTML = '<span class="text-slate-500 italic px-2">Khoảng thời gian này chưa có báo cáo sếp ạ...</span>';
-        duLieuCuaMocHienTai = [];
-        renderDuLieu();
-        return;
-    }
-
-    let html = '';
-    const mocMacDinh = mangMocGio[mangMocGio.length - 1];
-    mangMocGio.forEach(gio => {
-        html += `<button onclick="chonMocGio('${gio}')" id="btn-gio-${gio}" class="nut-gio px-3 md:px-4 py-1.5 rounded border text-xs md:text-sm font-bold shadow-sm transition-all ${gio === mocMacDinh ? 'bg-evnOrange text-white border-evnOrange' : 'bg-white text-slate-600 border-slate-300 hover:border-evnOrange hover:text-evnOrange'}">${gio}</button>`;
-    });
-    vungChon.innerHTML = html;
-    chonMocGio(mocMacDinh); 
+    if (mangMocGio.length === 0) { vungChon.innerHTML = '<span class="text-slate-500 italic px-2">Khoảng thời gian này chưa có báo cáo sếp ạ...</span>'; duLieuCuaMocHienTai = []; renderDuLieu(); return; }
+    let html = ''; const mocMacDinh = mangMocGio[mangMocGio.length - 1];
+    mangMocGio.forEach(gio => { html += `<button onclick="chonMocGio('${gio}')" id="btn-gio-${gio}" class="nut-gio px-3 md:px-4 py-1.5 rounded border text-xs md:text-sm font-bold shadow-sm transition-all ${gio === mocMacDinh ? 'bg-evnOrange text-white border-evnOrange' : 'bg-white text-slate-600 border-slate-300 hover:border-evnOrange hover:text-evnOrange'}">${gio}</button>`; });
+    vungChon.innerHTML = html; chonMocGio(mocMacDinh); 
 }
 
 function chonMocGio(gio) {
     document.querySelectorAll('.nut-gio').forEach(btn => btn.className = "nut-gio px-3 md:px-4 py-1.5 rounded border text-xs md:text-sm font-bold shadow-sm bg-white text-slate-600 border-slate-300");
-    const btnActive = document.getElementById(`btn-gio-${gio}`);
-    if (btnActive) btnActive.className = "nut-gio px-3 md:px-4 py-1.5 rounded border text-xs md:text-sm font-bold shadow-sm bg-evnOrange text-white border-evnOrange";
-
-    duLieuCuaMocHienTai = [];
-    danhSachNgayLoc.forEach(ngay => { if(duLieuToanBoGoc[ngay] && duLieuToanBoGoc[ngay][gio]) duLieuCuaMocHienTai = duLieuCuaMocHienTai.concat(duLieuToanBoGoc[ngay][gio]); });
-    trangHienTai = 1;
-    renderDuLieu();
+    const btnActive = document.getElementById(`btn-gio-${gio}`); if (btnActive) btnActive.className = "nut-gio px-3 md:px-4 py-1.5 rounded border text-xs md:text-sm font-bold shadow-sm bg-evnOrange text-white border-evnOrange";
+    duLieuCuaMocHienTai = []; danhSachNgayLoc.forEach(ngay => { if(duLieuToanBoGoc[ngay] && duLieuToanBoGoc[ngay][gio]) duLieuCuaMocHienTai = duLieuCuaMocHienTai.concat(duLieuToanBoGoc[ngay][gio]); });
+    trangHienTai = 1; renderDuLieu();
 }
 
 function renderDuLieu() {
     const tbody = document.getElementById('bang-du-lieu-desktop');
-    if (duLieuCuaMocHienTai.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="12" class="text-center text-slate-500 py-10 font-medium bg-slate-50">Hết dữ liệu rồi sếp!</td></tr>`;
-        document.getElementById('phan-trang-info').textContent = `--`;
-        document.getElementById('phan-trang-nut').innerHTML = '';
-        return;
-    }
-
-    const batDau = (trangHienTai - 1) * SO_DONG_MOI_TRANG;
-    const duLieuTrang = duLieuCuaMocHienTai.slice(batDau, batDau + SO_DONG_MOI_TRANG);
-    let html = '';
-
+    if (duLieuCuaMocHienTai.length === 0) { tbody.innerHTML = `<tr><td colspan="12" class="text-center text-slate-500 py-10 font-medium bg-slate-50">Hết dữ liệu rồi sếp!</td></tr>`; document.getElementById('phan-trang-info').textContent = `--`; document.getElementById('phan-trang-nut').innerHTML = ''; return; }
+    const batDau = (trangHienTai - 1) * SO_DONG_MOI_TRANG; const duLieuTrang = duLieuCuaMocHienTai.slice(batDau, batDau + SO_DONG_MOI_TRANG); let html = '';
     duLieuTrang.forEach((row, idx) => {
-        const mtVal = parseFloat(row.i_MANG_TAI || 0);
-        const lpVal = parseFloat(row.i_LECH_PHA || 0);
+        const mtVal = parseFloat(row.i_MANG_TAI || 0); const lpVal = parseFloat(row.i_LECH_PHA || 0);
         const styleMT = mtVal >= 200 ? `<span class="bg-red-100 text-red-700 border border-red-300 px-2 py-0.5 rounded shadow-sm font-bold">${mtVal.toFixed(2)}</span>` : mtVal.toFixed(2);
         const styleLP = lpVal >= 50 ? `<span class="bg-red-100 text-red-700 border border-red-300 px-2 py-0.5 rounded shadow-sm font-bold">${lpVal.toFixed(2)}</span>` : lpVal.toFixed(2);
-
-        html += `<tr class="hover:bg-blue-50 transition-colors ${idx % 2 === 0 ? 'bg-white' : 'bg-slate-50'}">
-            <td class="px-3 py-3 border-r border-slate-200 text-center text-slate-500">${row.stt ?? ''}</td>
-            <td class="px-4 py-3 border-r border-slate-200 font-bold text-evnDark">${row.teN_KHANG ?? ''}</td>
-            <td class="px-4 py-3 border-r border-slate-200 text-right font-black text-evnOrangeDark">${row.conG_SUAT ?? '0'}</td>
-            <td class="px-4 py-3 border-r border-slate-200 text-slate-600">${row.thoI_GIAN ?? ''}</td>
-            <td class="px-4 py-3 border-r border-slate-200 text-right">${styleMT}</td>
-            <td class="px-4 py-3 border-r border-slate-200 text-right">${styleLP}</td>
-            <td class="px-3 py-3 border-r border-slate-200 text-right text-slate-600">${row.donG_DIEN_A ?? ''}</td>
-            <td class="px-3 py-3 border-r border-slate-200 text-right text-slate-600">${row.donG_DIEN_B ?? ''}</td>
-            <td class="px-3 py-3 border-r border-slate-200 text-right text-slate-600">${row.donG_DIEN_C ?? ''}</td>
-            <td class="px-3 py-3 border-r border-slate-200 text-right text-slate-600">${row.daP_A ?? ''}</td>
-            <td class="px-3 py-3 border-r border-slate-200 text-right text-slate-600">${row.daP_B ?? ''}</td>
-            <td class="px-3 py-3 text-right text-slate-600">${row.daP_C ?? ''}</td>
-        </tr>`;
+        html += `<tr class="hover:bg-blue-50 transition-colors ${idx % 2 === 0 ? 'bg-white' : 'bg-slate-50'}"><td class="px-3 py-3 border-r border-slate-200 text-center text-slate-500">${row.stt ?? ''}</td><td class="px-4 py-3 border-r border-slate-200 font-bold text-evnDark">${row.teN_KHANG ?? ''}</td><td class="px-4 py-3 border-r border-slate-200 text-right font-black text-evnOrangeDark">${row.conG_SUAT ?? '0'}</td><td class="px-4 py-3 border-r border-slate-200 text-slate-600">${row.thoI_GIAN ?? ''}</td><td class="px-4 py-3 border-r border-slate-200 text-right">${styleMT}</td><td class="px-4 py-3 border-r border-slate-200 text-right">${styleLP}</td><td class="px-3 py-3 border-r border-slate-200 text-right text-slate-600">${row.donG_DIEN_A ?? ''}</td><td class="px-3 py-3 border-r border-slate-200 text-right text-slate-600">${row.donG_DIEN_B ?? ''}</td><td class="px-3 py-3 border-r border-slate-200 text-right text-slate-600">${row.donG_DIEN_C ?? ''}</td><td class="px-3 py-3 border-r border-slate-200 text-right text-slate-600">${row.daP_A ?? ''}</td><td class="px-3 py-3 border-r border-slate-200 text-right text-slate-600">${row.daP_B ?? ''}</td><td class="px-3 py-3 text-right text-slate-600">${row.daP_C ?? ''}</td></tr>`;
     });
-    
-    tbody.innerHTML = html;
-    document.getElementById('phan-trang-info').textContent = `Đang xem: ${batDau + 1} - ${Math.min(batDau + SO_DONG_MOI_TRANG, duLieuCuaMocHienTai.length)} / Tổng ${duLieuCuaMocHienTai.length} trạm`;
-    
-    const divNut = document.getElementById('phan-trang-nut');
-    divNut.innerHTML = '';
-    const tongTrang = Math.ceil(duLieuCuaMocHienTai.length / SO_DONG_MOI_TRANG);
+    tbody.innerHTML = html; document.getElementById('phan-trang-info').textContent = `Đang xem: ${batDau + 1} - ${Math.min(batDau + SO_DONG_MOI_TRANG, duLieuCuaMocHienTai.length)} / Tổng ${duLieuCuaMocHienTai.length} trạm`;
+    const divNut = document.getElementById('phan-trang-nut'); divNut.innerHTML = ''; const tongTrang = Math.ceil(duLieuCuaMocHienTai.length / SO_DONG_MOI_TRANG);
     for (let i = 1; i <= tongTrang; i++) {
-        const btn = document.createElement('button');
-        btn.textContent = i;
-        btn.className = `w-8 h-8 rounded-md border font-semibold shadow-sm transition-all ${i === trangHienTai ? 'bg-evnBlue text-white border-evnBlue' : 'bg-white text-slate-600 border-slate-300 hover:border-evnBlue'}`;
-        btn.onclick = () => { trangHienTai = i; renderDuLieu(); };
-        divNut.appendChild(btn);
+        const btn = document.createElement('button'); btn.textContent = i; btn.className = `w-8 h-8 rounded-md border font-semibold shadow-sm transition-all ${i === trangHienTai ? 'bg-evnBlue text-white border-evnBlue' : 'bg-white text-slate-600 border-slate-300 hover:border-evnBlue'}`;
+        btn.onclick = () => { trangHienTai = i; renderDuLieu(); }; divNut.appendChild(btn);
     }
 }
 
 // ==========================================
-// 3. LOGIC BÁO CÁO DƯ NỢ (MASTER-DETAIL GỘP CỘT & GỌI ĐIỆN)
+// 3. LOGIC BÁO CÁO DƯ NỢ (TỐI ƯU SIÊU TỐC)
 // ==========================================
 const STORAGE_KEY = 'evn_duno_ticks_tienhai';
+let danhSachTickCache = new Set(); 
 
-function layDanhSachTick() {
+function khoiTaoCacheTick() {
     let homNay = new Date().toLocaleDateString('vi-VN');
     let data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
-    if (data.ngay !== homNay) {
-        data = { ngay: homNay, dsMaKH: [] };
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-    }
-    return data.dsMaKH || [];
-}
-
-function kiemTraDaTick(maKH) {
-    if (!maKH) return false;
-    let ds = layDanhSachTick();
-    return ds.includes(String(maKH));
+    if (data.ngay !== homNay) { data = { ngay: homNay, dsMaKH: [] }; localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
+    danhSachTickCache = new Set(data.dsMaKH || []);
 }
 
 function luuTrangThaiTick(maKH, isTick) {
     if (!maKH) return;
+    let maStr = String(maKH);
+    if (isTick) danhSachTickCache.add(maStr); else danhSachTickCache.delete(maStr);
+    
     let data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
-    let ds = data.dsMaKH || [];
-    maKH = String(maKH);
-    if (isTick && !ds.includes(maKH)) ds.push(maKH);
-    else if (!isTick) ds = ds.filter(k => k !== maKH);
-    data.dsMaKH = ds;
+    data.dsMaKH = Array.from(danhSachTickCache);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 }
 
-// KHAI BÁO BIẾN TOÀN CỤC CHUẨN XÁC ĐỂ XỬ LÝ SẮP XẾP
 let dataTableDuNo = null;  
-let cotTNV_global = null;  
-let cotTien_global = null; 
-let cotTram_global = null; // Biến lưu tên cột Trạm
-let cotCot_global = null;  // Biến lưu tên cột Cột
-let cotSDT_global = null;  // Biến lưu tên cột SĐT
-let nguongLocTien = 0;     
-let mangCotHoanChinh = []; 
+let cotTNV_global = null, cotTien_global = null, cotTram_global = null, cotCot_global = null, cotSDT_global = null;
+let nguongLocTien = 0; let mangCotHoanChinh = []; 
 
-// THUẬT TOÁN SẮP XẾP THÔNG MINH CHO CỘT (Natural Sort)
-// Tránh lỗi kinh điển: 1.10 bị xếp trước 1.2
-$.fn.dataTable.ext.type.order['natural-asc'] = function (a, b) {
-    return String(a).localeCompare(String(b), undefined, {numeric: true, sensitivity: 'base'});
-};
-$.fn.dataTable.ext.type.order['natural-desc'] = function (a, b) {
-    return String(b).localeCompare(String(a), undefined, {numeric: true, sensitivity: 'base'});
-};
+$.fn.dataTable.ext.type.order['natural-asc'] = function (a, b) { return String(a).localeCompare(String(b), undefined, {numeric: true, sensitivity: 'base'}); };
+$.fn.dataTable.ext.type.order['natural-desc'] = function (a, b) { return String(b).localeCompare(String(a), undefined, {numeric: true, sensitivity: 'base'}); };
 
-const COT_CAN_AN = [
-    'địa chỉ', 'dia chi', 'thu ngân', 'thu ngan', 'tnv', 'thu ngân viên',
-    'kỳ', 'tháng', 'năm', 'kỳ tháng năm', 'ky thang nam', 'loại hóa đơn', 'loai hoa don',
-    'ngày phát hành', 'ngay phat hanh'
-];
-
-function kiemTraAnCot(tenCot) {
-    return COT_CAN_AN.some(an => tenCot.toLowerCase().trim().includes(an));
-}
+const COT_CAN_AN = ['địa chỉ', 'dia chi', 'thu ngân', 'thu ngan', 'tnv', 'thu ngân viên', 'kỳ', 'tháng', 'năm', 'kỳ tháng năm', 'ky thang nam', 'loại hóa đơn', 'loai hoa don', 'ngày phát hành', 'ngay phat hanh'];
+function kiemTraAnCot(tenCot) { return COT_CAN_AN.some(an => tenCot.toLowerCase().trim().includes(an)); }
 
 async function taiDuLieuDuNo() {
     try {
         const res = await fetch(`https://raw.githubusercontent.com/nguyentuan86pctb-cpu/BaoCaoTienHai/main/data_duno.json?t=${Date.now()}`);
         if (!res.ok) throw new Error("Chưa có data_duno.json trên Github sếp ơi!");
         const json = await res.json();
-        
-        const records = json.du_lieu || [];
-        if (records.length === 0) return;
-
+        const records = json.du_lieu || []; if (records.length === 0) return;
         document.getElementById('cap-nhat-luc-duno').innerHTML = `<svg class="w-4 h-4 text-green-600 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Cập nhật lúc: <span class="font-bold text-evnDark ml-1">${json.cap_nhat_luc || '--'}</span>`;
+
+        khoiTaoCacheTick(); 
 
         const keys = Object.keys(records[0]);
         cotTNV_global  = keys.find(k => k.toLowerCase().includes('thu ngân') || k.toLowerCase().includes('tnv') || k.toLowerCase().includes('thu ngan'));
@@ -628,60 +396,44 @@ async function taiDuLieuDuNo() {
 
         let cotMaKH    = keys.find(k => k.toLowerCase().includes('mã kh') || k.toLowerCase().includes('ma kh'));
         let cotTenKH   = keys.find(k => k.toLowerCase().includes('tên kh') || k.toLowerCase().includes('ten kh'));
-        let cotTram    = cotTram_global;
-        let cotSDT     = cotSDT_global;
 
         if (cotTNV_global) {
             const listTNV = [...new Set(records.map(r => r[cotTNV_global]))].filter(Boolean).sort();
-            const select = document.getElementById('filter-tnv');
-            select.innerHTML = '<option value="">-- Tất cả Thu ngân viên --</option>';
+            const select = document.getElementById('filter-tnv'); select.innerHTML = '<option value="">-- Tất cả Thu ngân viên --</option>';
             listTNV.forEach(t => select.innerHTML += `<option value="${t}">${t}</option>`);
         }
 
-        // Reset nút Sắp xếp trên giao diện
-        $('#sort-tram').prop('checked', false);
-        $('#sort-cot').prop('checked', false);
-        $('#sort-sdt').prop('checked', false);
-
+        $('#sort-tram').prop('checked', false); $('#sort-cot').prop('checked', false); $('#sort-sdt').prop('checked', false);
         if (dataTableDuNo) { dataTableDuNo.destroy(); $('#bang-duno').empty(); }
-
         mangCotHoanChinh = keys; 
 
-        // GẮN THUẬT TOÁN SẮP XẾP THÔNG MINH CHO CỘT VÀ TRẠM VÀ SĐT
         let cotAnSearch = keys.map(k => {
-            if (k === cotCot_global || k === cotTram_global || k === cotSDT_global) {
-                return { data: k, visible: false, type: 'natural' };
-            }
+            if (k === cotCot_global || k === cotTram_global) return { data: k, visible: false, type: 'natural' };
             return { data: k, visible: false };
         });
 
         const finalColumns = [
             {
-                data: null, 
-                title: `<div class="flex flex-col items-center justify-center gap-1">
-                            <span class="text-[10px]">ĐỐC</span>
-                            <input type="checkbox" id="chk-master-doc" class="w-4 h-4 cursor-pointer accent-evnOrange" title="Chọn tất cả / Bỏ chọn">
-                        </div>`, 
+                data: null, title: `<div class="flex flex-col items-center justify-center gap-1"><span class="text-[10px]">ĐỐC</span><input type="checkbox" id="chk-master-doc" class="w-4 h-4 cursor-pointer accent-evnOrange" title="Chọn tất cả / Bỏ chọn"></div>`, 
                 orderable: false, searchable: false, className: 'text-center w-8 md:w-10 align-top pt-3',
                 render: function(data, type, row) {
                     let maKH = cotMaKH ? row[cotMaKH] : null;
-                    let isChecked = kiemTraDaTick(maKH) ? 'checked' : '';
-                    return `<input type="checkbox" data-makh="${maKH}" class="chk-doc-no w-4 h-4 cursor-pointer accent-green-600" ${isChecked}>`;
+                    if (type === 'display') {
+                        let isChecked = danhSachTickCache.has(String(maKH)) ? 'checked' : '';
+                        return `<input type="checkbox" data-makh="${maKH}" class="chk-doc-no w-4 h-4 cursor-pointer accent-green-600" ${isChecked}>`;
+                    }
+                    return maKH;
                 }
             },
             {
                 data: null, title: 'KHÁCH HÀNG', orderable: true, searchable: false, className: 'align-top pt-2 pb-2',
                 render: function(data, type, row) {
                     let ten = cotTenKH && row[cotTenKH] ? row[cotTenKH] : '--';
-                    let ma = cotMaKH && row[cotMaKH] ? row[cotMaKH] : '--';
-                    let tram = cotTram && row[cotTram] ? row[cotTram] : '--';
-                    let cot = cotCot_global && row[cotCot_global] ? String(row[cotCot_global]).replace(/\.0$/, '').trim() : '--';
                     if (type === 'display') {
-                        return `
-                            <div class="text-evnDark font-bold text-[16px] md:text-[18px] leading-snug whitespace-normal max-w-[200px] md:max-w-xs">${ten}</div>
-                            <div class="text-[11px] md:text-[12px] text-slate-500 mt-1 whitespace-normal">
-                                Mã: <span class="font-semibold text-slate-700">${ma}</span> <span class="mx-1">|</span> Trạm: <span class="font-semibold text-evnBlue">${tram}</span> <span class="mx-1">|</span> Cột: <span class="font-semibold text-slate-700">${cot}</span>
-                            </div>`;
+                        let ma = cotMaKH && row[cotMaKH] ? row[cotMaKH] : '--';
+                        let tram = cotTram_global && row[cotTram_global] ? row[cotTram_global] : '--';
+                        let cot = cotCot_global && row[cotCot_global] ? String(row[cotCot_global]).replace(/\.0$/, '').trim() : '--';
+                        return `<div class="text-evnDark font-bold text-[16px] md:text-[18px] leading-snug whitespace-normal max-w-[200px] md:max-w-xs">${ten}</div><div class="text-[11px] md:text-[12px] text-slate-500 mt-1 whitespace-normal">Mã: <span class="font-semibold text-slate-700">${ma}</span> <span class="mx-1">|</span> Trạm: <span class="font-semibold text-evnBlue">${tram}</span> <span class="mx-1">|</span> Cột: <span class="font-semibold text-slate-700">${cot}</span></div>`;
                     }
                     return ten; 
                 }
@@ -690,184 +442,102 @@ async function taiDuLieuDuNo() {
                 data: null, title: 'THANH TOÁN', orderable: true, searchable: false, className: 'align-top pt-2 pb-2',
                 render: function(data, type, row) {
                     let tien = cotTien_global && row[cotTien_global] ? row[cotTien_global] : '0';
-                    let tenKH = cotTenKH && row[cotTenKH] ? row[cotTenKH] : '--';
-                    let sdt = cotSDT && row[cotSDT] ? String(row[cotSDT]).trim() : '';
-                    
-                    let sdtClean = sdt.replace(/\.0$/, '').trim();
-                    if (sdtClean && sdtClean !== 'NaN' && sdtClean !== 'null') {
-                        if (sdtClean.length >= 8 && !sdtClean.startsWith('0')) sdtClean = '0' + sdtClean;
-                    } else {
-                        sdtClean = '';
-                    }
-                    
                     if (type === 'display') {
+                        let tenKH = cotTenKH && row[cotTenKH] ? row[cotTenKH] : '--';
+                        let sdt = cotSDT_global && row[cotSDT_global] ? String(row[cotSDT_global]).trim() : '';
+                        let sdtClean = sdt.replace(/\.0$/, '').trim();
+                        if (sdtClean && sdtClean !== 'NaN' && sdtClean !== 'null') {
+                            if (sdtClean.length >= 8 && !sdtClean.startsWith('0')) sdtClean = '0' + sdtClean;
+                        } else { sdtClean = ''; }
+                        
                         let htmlTien = `<div class="text-red-600 font-black text-[14px] md:text-[15px]">${tien}</div>`;
                         let htmlSdt = sdtClean 
                             ? `<a href="tel:${sdtClean}" data-ten="${tenKH.replace(/"/g, '&quot;')}" data-tien="${tien}" class="btn-goi-dien text-[12px] text-evnBlue font-bold flex items-center gap-1 mt-1 hover:text-evnOrange transition-colors"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>${sdtClean}</a>` 
                             : `<div class="text-[11px] text-slate-400 mt-1 italic">Chưa có SĐT</div>`;
                         return htmlTien + htmlSdt;
                     }
-                    if (type === 'sort') { return parseFloat(String(tien).replace(/\./g, '').replace(/,/g, '')) || 0; }
+                    if (type === 'sort' || type === 'type') return parseFloat(String(tien).replace(/\./g, '').replace(/,/g, '')) || 0; 
                     return tien;
                 }
             },
             {
                 data: null, title: 'CHI TIẾT', orderable: false, searchable: false, className: 'text-center w-16 align-top pt-3',
-                render: function() {
-                    return `<button class="btn-mo-rong bg-white border border-evnBlue text-evnBlue px-2 py-1 rounded text-[10px] font-bold hover:bg-evnBlue hover:text-white transition-colors w-full flex justify-center items-center gap-1 shadow-sm"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>XEM</button>`;
-                }
+                render: function() { return `<button class="btn-mo-rong bg-white border border-evnBlue text-evnBlue px-2 py-1 rounded text-[10px] font-bold hover:bg-evnBlue hover:text-white transition-colors w-full flex justify-center items-center gap-1 shadow-sm"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>XEM</button>`; }
             },
             ...cotAnSearch
         ];
 
         dataTableDuNo = $('#bang-duno').DataTable({
-            data: records, columns: finalColumns,
-            pageLength: 50, lengthMenu: [[50, 100, 200, 500], [50, 100, 200, 1000]],
+            data: records, columns: finalColumns, pageLength: 50, lengthMenu: [[50, 100, 200, 500], [50, 100, 200, 1000]],
             language: { search: "Tìm kiếm:", lengthMenu: "Hiện _MENU_ dòng", info: "Dòng _START_–_END_ / Tổng _TOTAL_", zeroRecords: "Không tìm thấy dữ liệu phù hợp", paginate: { next: "Sau »", previous: "« Trước" } },
-            createdRow: function(row, data) {
-                let maKH = cotMaKH ? data[cotMaKH] : null;
-                if (kiemTraDaTick(maKH)) $(row).addClass('da-doc-no');
-            },
-            scrollX: false, 
-            autoWidth: false,
-            dom: '<"flex flex-col md:flex-row md:justify-between items-center mb-2 gap-2"lf>rt<"flex flex-col md:flex-row md:justify-between items-center mt-2 gap-2"ip>'
+            createdRow: function(row, data) { let maKH = cotMaKH ? data[cotMaKH] : null; if (danhSachTickCache.has(String(maKH))) $(row).addClass('da-doc-no'); },
+            scrollX: false, autoWidth: false, dom: '<"flex flex-col md:flex-row md:justify-between items-center mb-2 gap-2"lf>rt<"flex flex-col md:flex-row md:justify-between items-center mt-2 gap-2"ip>'
         });
 
-        // BẮT SỰ KIỆN SẮP XẾP VÀ GỘP NHÓM
         $('#sort-tram').off('change').on('change', function() {
-            if ($(this).is(':checked')) {
-                $('#sort-cot').prop('checked', false); 
-                $('#sort-sdt').prop('checked', false); 
-                if (dataTableDuNo && cotTram_global) {
-                    let colTramIdx = 4 + mangCotHoanChinh.indexOf(cotTram_global);
-                    dataTableDuNo.order([[colTramIdx, 'asc']]).draw();
-                }
-            } else {
-                 if (dataTableDuNo) dataTableDuNo.order([[1, 'asc']]).draw(); 
-            }
+            if ($(this).is(':checked')) { $('#sort-cot').prop('checked', false); $('#sort-sdt').prop('checked', false); if (dataTableDuNo && cotTram_global) { dataTableDuNo.order([[4 + mangCotHoanChinh.indexOf(cotTram_global), 'asc']]).draw(); } } 
+            else { if (dataTableDuNo) dataTableDuNo.order([[1, 'asc']]).draw(); }
         });
 
         $('#sort-cot').off('change').on('change', function() {
-            if ($(this).is(':checked')) {
-                $('#sort-tram').prop('checked', true); 
-                $('#sort-sdt').prop('checked', false); 
-                if (dataTableDuNo && cotTram_global && cotCot_global) {
-                    let colTramIdx = 4 + mangCotHoanChinh.indexOf(cotTram_global);
-                    let colCotIdx = 4 + mangCotHoanChinh.indexOf(cotCot_global);
-                    dataTableDuNo.order([[colTramIdx, 'asc'], [colCotIdx, 'asc']]).draw();
-                }
-            } else {
-                if (dataTableDuNo && cotTram_global) {
-                    let colTramIdx = 4 + mangCotHoanChinh.indexOf(cotTram_global);
-                    dataTableDuNo.order([[colTramIdx, 'asc']]).draw();
-                }
-            }
+            if ($(this).is(':checked')) { $('#sort-tram').prop('checked', true); $('#sort-sdt').prop('checked', false); if (dataTableDuNo && cotTram_global && cotCot_global) { dataTableDuNo.order([[4 + mangCotHoanChinh.indexOf(cotTram_global), 'asc'], [4 + mangCotHoanChinh.indexOf(cotCot_global), 'asc']]).draw(); } } 
+            else { if (dataTableDuNo && cotTram_global) { dataTableDuNo.order([[4 + mangCotHoanChinh.indexOf(cotTram_global), 'asc']]).draw(); } }
         });
 
-        // BẮT SỰ KIỆN GỘP CHUNG SĐT
         $('#sort-sdt').off('change').on('change', function() {
-            if ($(this).is(':checked')) {
-                $('#sort-tram').prop('checked', false);
-                $('#sort-cot').prop('checked', false);
-                if (dataTableDuNo && cotSDT_global) {
-                    let colSdtIdx = 4 + mangCotHoanChinh.indexOf(cotSDT_global);
-                    dataTableDuNo.order([[colSdtIdx, 'desc']]).draw(); 
-                }
-            } else {
-                if (dataTableDuNo) dataTableDuNo.order([[1, 'asc']]).draw();
-            }
+            if ($(this).is(':checked')) { $('#sort-tram').prop('checked', false); $('#sort-cot').prop('checked', false); if (dataTableDuNo && cotSDT_global) { dataTableDuNo.order([[4 + mangCotHoanChinh.indexOf(cotSDT_global), 'desc']]).draw(); } } 
+            else { if (dataTableDuNo) dataTableDuNo.order([[1, 'asc']]).draw(); }
         });
 
-        // THUẬT TOÁN TÔ MÀU NÂU NHẠT CHO CHUNG SĐT
         function capNhatMauSDT() {
             $('#bang-duno tbody tr').removeClass('chung-sdt');
             if ($('#sort-sdt').is(':checked') && cotSDT_global) {
                 let dsSDT_Count = {};
                 dataTableDuNo.rows({ search: 'applied' }).every(function() {
-                    let data = this.data();
-                    let sdt = data[cotSDT_global];
-                    if (sdt) {
-                        let sdtClean = String(sdt).replace(/\.0$/, '').trim();
-                        if (sdtClean && sdtClean !== 'NaN' && sdtClean !== 'null') {
-                            if (sdtClean.length >= 8 && !sdtClean.startsWith('0')) sdtClean = '0' + sdtClean;
-                            dsSDT_Count[sdtClean] = (dsSDT_Count[sdtClean] || 0) + 1;
-                        }
-                    }
+                    let sdt = this.data()[cotSDT_global];
+                    if (sdt) { let c = String(sdt).replace(/\.0$/, '').trim(); if (c && c !== 'NaN' && c !== 'null') { if (c.length >= 8 && !c.startsWith('0')) c = '0' + c; dsSDT_Count[c] = (dsSDT_Count[c] || 0) + 1; } }
                 });
-
                 dataTableDuNo.rows({ page: 'current' }).every(function() {
-                    let data = this.data();
-                    let sdt = data[cotSDT_global];
-                    if (sdt) {
-                        let sdtClean = String(sdt).replace(/\.0$/, '').trim();
-                        if (sdtClean && sdtClean !== 'NaN' && sdtClean !== 'null') {
-                            if (sdtClean.length >= 8 && !sdtClean.startsWith('0')) sdtClean = '0' + sdtClean;
-                            if (dsSDT_Count[sdtClean] > 1) {
-                                $(this.node()).addClass('chung-sdt');
-                            }
-                        }
-                    }
+                    let sdt = this.data()[cotSDT_global];
+                    if (sdt) { let c = String(sdt).replace(/\.0$/, '').trim(); if (c && c !== 'NaN' && c !== 'null') { if (c.length >= 8 && !c.startsWith('0')) c = '0' + c; if (dsSDT_Count[c] > 1) $(this.node()).addClass('chung-sdt'); } }
                 });
             }
         }
 
-        // BƯỚC 3.2: BẮT SỰ KIỆN CHỌN TẤT CẢ / ĐẢO CHỌN TỪ CHECKBOX MASTER
         $('#bang-duno').off('change', '#chk-master-doc').on('change', '#chk-master-doc', function() {
             let isChecked = $(this).is(':checked');
-            $('.chk-doc-no').each(function() {
-                if ($(this).is(':checked') !== isChecked) {
-                    $(this).prop('checked', isChecked).trigger('change');
-                }
-            });
+            $('.chk-doc-no').each(function() { if ($(this).is(':checked') !== isChecked) $(this).prop('checked', isChecked).trigger('change'); });
         });
 
-        // BƯỚC 2: Bắt sự kiện Tick lẻ từng dòng
         $('#bang-duno').off('change', '.chk-doc-no').on('change', '.chk-doc-no', function() {
             let maKH = $(this).data('makh');
             if ($(this).is(':checked')) { $(this).closest('tr').addClass('da-doc-no'); luuTrangThaiTick(maKH, true); } 
             else { $(this).closest('tr').removeClass('da-doc-no'); luuTrangThaiTick(maKH, false); }
         });
 
-        // BƯỚC 2.5: BẮT SỰ KIỆN GỌI ĐIỆN ĐỂ MỞ BANNER NHẮC BÀI
         $('#bang-duno tbody').off('click', '.btn-goi-dien').on('click', '.btn-goi-dien', function () {
-            let tenKH = $(this).data('ten');
-            let tienKH = $(this).data('tien') + ' đ';
-            document.getElementById('banner-ten').innerText = tenKH;
-            document.getElementById('banner-tien').innerText = tienKH;
-            document.getElementById('banner-nhac-bai').classList.remove('hidden');
-            document.getElementById('banner-nhac-bai').classList.add('flex');
+            document.getElementById('banner-ten').innerText = $(this).data('ten'); document.getElementById('banner-tien').innerText = $(this).data('tien') + ' đ';
+            document.getElementById('banner-nhac-bai').classList.remove('hidden'); document.getElementById('banner-nhac-bai').classList.add('flex');
         });
 
-        // BƯỚC 3: Sự kiện Xổ chi tiết
         $('#bang-duno tbody').off('click', '.btn-mo-rong').on('click', '.btn-mo-rong', function () {
-            let tr = $(this).closest('tr');
-            let row = dataTableDuNo.row(tr);
-
+            let tr = $(this).closest('tr'); let row = dataTableDuNo.row(tr);
             if (row.child.isShown()) {
-                row.child.hide();
-                tr.removeClass('bg-blue-50/50');
+                row.child.hide(); tr.removeClass('bg-blue-50/50');
                 $(this).html(`<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg> XEM`);
                 $(this).removeClass('bg-evnBlue text-white').addClass('bg-white text-evnBlue');
             } else {
-                let data = row.data();
-                let cacCotDaCoTruocMat = [cotTenKH, cotMaKH, cotTram, cotTien_global, cotSDT];
+                let data = row.data(); let cacCotDaCoTruocMat = [cotTenKH, cotMaKH, cotTram_global, cotTien_global, cotSDT_global];
                 let dsCotHienChiTiet = keys.filter(k => !cacCotDaCoTruocMat.includes(k) && !kiemTraAnCot(k)); 
-                
                 let detailHtml = '<div class="p-3 bg-gradient-to-r from-blue-50 to-slate-50 border-y border-blue-200 shadow-inner grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2 text-sm">';
-                dsCotHienChiTiet.forEach(k => {
-                    let val = data[k] !== null && data[k] !== undefined && data[k] !== '' ? data[k] : '--';
-                    detailHtml += `<div class="flex justify-between items-center border-b border-blue-100/50 pb-1"><span class="font-bold text-slate-500 uppercase">${k}:</span><span class="text-evnDark font-semibold text-right">${val}</span></div>`;
-                });
+                dsCotHienChiTiet.forEach(k => { let val = data[k] !== null && data[k] !== undefined && data[k] !== '' ? data[k] : '--'; detailHtml += `<div class="flex justify-between items-center border-b border-blue-100/50 pb-1"><span class="font-bold text-slate-500 uppercase">${k}:</span><span class="text-evnDark font-semibold text-right">${val}</span></div>`; });
                 detailHtml += '</div>';
-
-                row.child(detailHtml).show();
-                tr.addClass('bg-blue-50/50');
+                row.child(detailHtml).show(); tr.addClass('bg-blue-50/50');
                 $(this).html(`<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg> ĐÓNG`);
                 $(this).removeClass('bg-white text-evnBlue').addClass('bg-evnBlue text-white');
             }
         });
 
-        // BƯỚC 4: Lọc dữ liệu
         $.fn.dataTable.ext.search.length = 0;
         $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
             if (settings.nTable.id !== 'bang-duno') return true;
@@ -878,242 +548,68 @@ async function taiDuLieuDuNo() {
         });
 
         function capNhatThongKe() {
-            let filtered = dataTableDuNo.rows({ search: 'applied' }).data();
-            let sum = 0;
+            let filtered = dataTableDuNo.rows({ search: 'applied' }).data(); let sum = 0;
             filtered.each(function(v) { if (cotTien_global && v[cotTien_global]) sum += parseFloat(String(v[cotTien_global]).replace(/\./g, '').replace(/,/g, '')) || 0; });
-            $('#thong-ke-duno').removeClass('hidden');
-            $('#tong-hoa-don').text(new Intl.NumberFormat('vi-VN').format(filtered.length));
-            $('#tong-tien-no').text(new Intl.NumberFormat('vi-VN').format(sum) + ' đ');
+            $('#thong-ke-duno').removeClass('hidden'); $('#tong-hoa-don').text(new Intl.NumberFormat('vi-VN').format(filtered.length)); $('#tong-tien-no').text(new Intl.NumberFormat('vi-VN').format(sum) + ' đ');
         }
 
-        dataTableDuNo.on('draw', capNhatThongKe);
-        dataTableDuNo.on('draw', capNhatMauSDT);
-        capNhatThongKe();
-        capNhatMauSDT();
+        dataTableDuNo.on('draw', capNhatThongKe); dataTableDuNo.on('draw', capNhatMauSDT); capNhatThongKe(); capNhatMauSDT();
 
         $('#filter-tnv').off('change').on('change', function() {
-            if (cotTNV_global) {
-                const val = $(this).val();
-                let idxCotTNV = finalColumns.findIndex(c => c.data === cotTNV_global);
-                if(idxCotTNV > -1) {
-                    dataTableDuNo.column(idxCotTNV).search(val ? '^' + $.fn.dataTable.util.escapeRegex(val) + '$' : '', true, false).draw();
-                }
-            }
+            if (cotTNV_global) { const val = $(this).val(); let idxCotTNV = finalColumns.findIndex(c => c.data === cotTNV_global); if(idxCotTNV > -1) { dataTableDuNo.column(idxCotTNV).search(val ? '^' + $.fn.dataTable.util.escapeRegex(val) + '$' : '', true, false).draw(); } }
         });
-
-    } catch (err) {
-        document.getElementById('cap-nhat-luc-duno').innerHTML = `<span class="text-red-600 font-bold">Lỗi: ${err.message}</span>`;
-    }
+    } catch (err) { document.getElementById('cap-nhat-luc-duno').innerHTML = `<span class="text-red-600 font-bold">Lỗi: ${err.message}</span>`; }
 }
 
-function locTheoSoTien(nguong, btn) {
-    nguongLocTien = nguong;
-    document.querySelectorAll('.nut-loc-tien').forEach(b => { b.className = 'nut-loc-tien px-3 py-1.5 rounded border text-xs font-bold shadow-sm bg-white text-slate-600 border-slate-300 hover:border-evnOrange'; });
-    btn.className = 'nut-loc-tien px-3 py-1.5 rounded border text-xs font-bold shadow-sm bg-evnOrange text-white border-evnOrange';
-    if (dataTableDuNo) dataTableDuNo.draw();
-}
-
+function locTheoSoTien(nguong, btn) { nguongLocTien = nguong; document.querySelectorAll('.nut-loc-tien').forEach(b => { b.className = 'nut-loc-tien px-3 py-1.5 rounded border text-xs font-bold shadow-sm bg-white text-slate-600 border-slate-300 hover:border-evnOrange'; }); btn.className = 'nut-loc-tien px-3 py-1.5 rounded border text-xs font-bold shadow-sm bg-evnOrange text-white border-evnOrange'; if (dataTableDuNo) dataTableDuNo.draw(); }
 function xuatExcelTheoDieuKien() {
     if (!dataTableDuNo) { alert('Chưa có dữ liệu sếp ơi!'); return; }
-
-    const tenTNV = $('#filter-tnv').val() || 'TatCa';
-    const tenFile = `DuNo_${tenTNV.replace(/\s+/g, '_')}_${new Date().toLocaleDateString('vi-VN').replace(/\//g, '-')}.xlsx`;
-
-    const rows = dataTableDuNo.rows({ search: 'applied' }).data().toArray();
-    if (rows.length === 0) { alert('Không có dữ liệu để xuất!'); return; }
-
-    const dsKeyXuat = mangCotHoanChinh.filter(k => !kiemTraAnCot(k)); 
-    const duLieuXuat = [];
-    duLieuXuat.push(dsKeyXuat.map(k => k.toUpperCase())); 
+    const tenTNV = $('#filter-tnv').val() || 'TatCa'; const tenFile = `DuNo_${tenTNV.replace(/\s+/g, '_')}_${new Date().toLocaleDateString('vi-VN').replace(/\//g, '-')}.xlsx`;
+    const rows = dataTableDuNo.rows({ search: 'applied' }).data().toArray(); if (rows.length === 0) { alert('Không có dữ liệu để xuất!'); return; }
+    const dsKeyXuat = mangCotHoanChinh.filter(k => !kiemTraAnCot(k)); const duLieuXuat = []; duLieuXuat.push(dsKeyXuat.map(k => k.toUpperCase())); 
     rows.forEach(row => { duLieuXuat.push(dsKeyXuat.map(k => row[k] ?? '')); });
-
-    const wb = XLSX.utils.book_new();
-    const ws = XLSX.utils.aoa_to_sheet(duLieuXuat);
-    XLSX.utils.book_append_sheet(wb, ws, 'DuNo');
-    XLSX.writeFile(wb, tenFile);
+    const wb = XLSX.utils.book_new(); const ws = XLSX.utils.aoa_to_sheet(duLieuXuat); XLSX.utils.book_append_sheet(wb, ws, 'DuNo'); XLSX.writeFile(wb, tenFile);
 }
 
-// ==========================================
-// THUẬT TOÁN TẠO BẢNG TÀNG HÌNH ĐỂ IN FULL CỘT
-// ==========================================
 function inBaoCaoDuNo() {
     if (!dataTableDuNo) { alert('Chưa có dữ liệu sếp ơi!'); return; }
-
-    const tenTNV = $('#filter-tnv option:selected').text();
-    const subtitle = (tenTNV && tenTNV !== '-- Tất cả Thu ngân viên --') ? `Thu ngân viên: ${tenTNV}` : 'Tất cả Thu ngân viên';
-    
-    // 1. Cập nhật Tiêu đề In
-    document.getElementById('in-subtitle').textContent = subtitle;
-    document.getElementById('in-ngay').textContent = `Ngày in: ${new Date().toLocaleDateString('vi-VN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`;
-
-    // 2. Lấy toàn bộ dữ liệu đang lọc
-    const allFilteredRows = dataTableDuNo.rows({ search: 'applied' }).data().toArray();
-    if (allFilteredRows.length === 0) { alert('Không có dữ liệu để in!'); return; }
-
-    let tongSoTien = 0;
-    
-    // 3. Tự động sinh ra 1 cái Bảng HTML mới chứa toàn bộ các cột (trừ cột rác)
-    const dsKeyIn = mangCotHoanChinh.filter(k => !kiemTraAnCot(k));
-    
-    let htmlBangIn = `<table><thead><tr>`;
-    htmlBangIn += `<th style="width: 25px; text-align: center;">STT</th>`;
-    dsKeyIn.forEach(k => { htmlBangIn += `<th>${k.toUpperCase()}</th>`; });
-    htmlBangIn += `</tr></thead><tbody>`;
-
+    const tenTNV = $('#filter-tnv option:selected').text(); const subtitle = (tenTNV && tenTNV !== '-- Tất cả Thu ngân viên --') ? `Thu ngân viên: ${tenTNV}` : 'Tất cả Thu ngân viên';
+    document.getElementById('in-subtitle').textContent = subtitle; document.getElementById('in-ngay').textContent = `Ngày in: ${new Date().toLocaleDateString('vi-VN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`;
+    const allFilteredRows = dataTableDuNo.rows({ search: 'applied' }).data().toArray(); if (allFilteredRows.length === 0) { alert('Không có dữ liệu để in!'); return; }
+    let tongSoTien = 0; const dsKeyIn = mangCotHoanChinh.filter(k => !kiemTraAnCot(k));
+    let htmlBangIn = `<table><thead><tr><th style="width: 25px; text-align: center;">STT</th>`; dsKeyIn.forEach(k => { htmlBangIn += `<th>${k.toUpperCase()}</th>`; }); htmlBangIn += `</tr></thead><tbody>`;
     allFilteredRows.forEach((row, index) => {
-        if (cotTien_global && row[cotTien_global]) {
-            tongSoTien += parseFloat(String(row[cotTien_global]).replace(/\./g, '').replace(/,/g, '')) || 0;
-        }
-        
+        if (cotTien_global && row[cotTien_global]) tongSoTien += parseFloat(String(row[cotTien_global]).replace(/\./g, '').replace(/,/g, '')) || 0;
         htmlBangIn += `<tr><td style="text-align: center;">${index + 1}</td>`;
-        dsKeyIn.forEach(k => {
-            let val = row[k] !== null && row[k] !== undefined ? row[k] : '';
-            let style = (k === cotTien_global) ? ' style="text-align: right; font-weight: bold;"' : '';
-            htmlBangIn += `<td${style}>${val}</td>`;
-        });
+        dsKeyIn.forEach(k => { let val = row[k] !== null && row[k] !== undefined ? row[k] : ''; let style = (k === cotTien_global) ? ' style="text-align: right; font-weight: bold;"' : ''; htmlBangIn += `<td${style}>${val}</td>`; });
         htmlBangIn += `</tr>`;
     });
     htmlBangIn += `</tbody></table>`;
-
-    // 4. Bắn HTML này vào thẻ DIV tàng hình và gọi lệnh In
     document.getElementById('vung-bang-in-tang-hinh').innerHTML = htmlBangIn;
-
-    document.getElementById('in-tong-hoa-don').textContent = new Intl.NumberFormat('vi-VN').format(allFilteredRows.length);
-    document.getElementById('in-tong-tien').textContent = new Intl.NumberFormat('vi-VN').format(tongSoTien) + ' đ';
-    
+    document.getElementById('in-tong-hoa-don').textContent = new Intl.NumberFormat('vi-VN').format(allFilteredRows.length); document.getElementById('in-tong-tien').textContent = new Intl.NumberFormat('vi-VN').format(tongSoTien) + ' đ';
     window.print();
 }
 
-// ==========================================
-// TÍNH NĂNG IN THÔNG BÁO TIỀN ĐIỆN HÀNG LOẠT
-// ==========================================
 function taoFormLien(tenLien, ngayIn, data) {
-    return `
-    <div class="lien-thong-bao">
-
-        <div style="font-weight:bold; font-size:11px; font-style:italic; margin-bottom:4px;">${tenLien}</div>
-
-        <table style="width:100%; border:none; border-collapse:collapse; margin-bottom:6px;">
-            <tr>
-                <td style="width:42%; vertical-align:top; text-align:center; border:none; padding:0 4px 0 0;">
-                    <div style="font-size:11px; font-weight:bold; line-height:1.3;">Công ty Điện Lực Hưng Yên</div>
-                    <div style="font-size:12.5px; font-weight:bold; text-decoration:underline; line-height:1.3;">ĐIỆN LỰC TIỀN HẢI</div>
-                </td>
-                <td style="width:58%; vertical-align:top; text-align:center; border:none; padding:0 0 0 4px;">
-                    <div style="font-size:11.5px; font-weight:bold; line-height:1.3;">CỘNG HOÀ XÃ HỘI CHỦ NGHĨA VIỆT NAM</div>
-                    <div style="font-size:11.5px; font-weight:bold; text-decoration:underline; font-style:italic; line-height:1.3;">Độc lập - Tự do - Hạnh phúc</div>
-                    <div style="font-size:11px; font-style:italic; text-align:right; margin-top:2px;">Tiền Hải, ${ngayIn}</div>
-                </td>
-            </tr>
-        </table>
-
-        <div style="text-align:center; font-size:14px; font-weight:bold; margin:8px 0; line-height:1.4;">
-            THÔNG BÁO THANH TOÁN TIỀN ĐIỆN,<br>THÔNG BÁO NGỪNG CẤP ĐIỆN
-        </div>
-
-        <p style="margin:4px 0; font-size:12px; line-height:1.4;"><u><i>Kính gửi</i></u>: Ông (bà): <b>${data.ten} - ${data.sdt}</b></p>
-        <p style="margin:4px 0; font-size:12px; line-height:1.4;">Địa chỉ: <b>${data.diaChi}</b></p> 
-        <p style="margin:4px 0; font-size:12px; line-height:1.4;">Số cột: <b>${data.cot}</b>, No: <b>${data.cto}</b>, Trạm: <b>${data.tram}</b></p>
-
-        <p style="text-align:justify; margin-top:6px; margin-bottom:0; line-height:1.4; font-size:12px;">
-            &nbsp;&nbsp;&nbsp;&nbsp;- Căn cứ luật điện lực số 61/2024/QH15 đã được Quốc hội nước Cộng hoà xã hội chủ nghĩa Việt Nam thông qua ngày 30/11/2024;<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;- Căn cứ Quy định về điều kiện, trình tự ngừng, giảm mức cung cấp điện được ban hành kèm theo Thông tư số 04/2025/TT-BCT ngày 01/02/2025 của Bộ trưởng Bộ Công thương;<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;- Căn cứ Hợp đồng mua bán điện đã ký kết giữa hai bên, thông báo thanh toán tiền điện lần nhất và số dư nợ tiền điện tính đến ${ngayIn} là: <b>${data.tien} đồng</b> mà quý khách hàng chưa thanh toán mặc dù đã quá thời hạn thoả thuận.
-        </p>
-
-        <p style="text-align:justify; margin-top:6px; margin-bottom:0; line-height:1.4; font-size:12px;">
-            &nbsp;&nbsp;&nbsp;&nbsp;Điện lực Tiền hải xin gửi tới Quý khách hàng giấy thông báo thanh toán tiền điện lần thứ 2 và đề nghị Quý khách hàng thu xếp để thanh toán cho chúng tôi số dư nợ tiền điện trước <b>${ngayIn}</b>. Nếu đến hết giờ làm việc ngày <b>${ngayIn}</b>, Quý khách hàng vẫn chưa thanh toán đầy đủ số tiền điện còn nợ, chúng tôi buộc phải thông báo để quý khách hàng được biết:
-        </p>
-
-        <p style="text-align:justify; margin:4px 0; line-height:1.4; font-size:12px; padding-left:8px;">
-            &nbsp;&nbsp;&nbsp;&nbsp;- <b>Điện Lực Tiền Hải sẽ tính lãi chậm trả và phạt vi phạm hợp đồng với mức phạt là 8% giá trị tiền điện phát sinh trong kỳ.</b><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;- Sau ngày <b>........ tháng ${new Date().getMonth() + 1} năm ${new Date().getFullYear()}</b>, chúng tôi xin phép được tạm ngừng cấp điện cho Quý khách hàng.<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;- Lý do ngừng cấp điện: Do Quý Khách hàng chưa thanh toán tiền điện đúng thời hạn đã thoả thuận trong Hợp đồng.<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;- Thời hạn dự kiến đóng điện: Sau khi Quý khách đã thanh toán đầy đủ tiền điện; tiền lãi của số tiền chậm trả, phạt vi phạm hợp đồng và chi phí đóng, cắt điện.
-        </p>
-
-        <p style="margin-top:6px; line-height:1.4; font-size:12px;">
-            &nbsp;&nbsp;&nbsp;&nbsp;Đề nghị Quý khách hàng có kế hoạch chủ động trong thời gian mất điện trên.<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;<b>Xin trân trọng cảm ơn!</b>
-        </p>
-
-        <div style="position:absolute; bottom:5mm; left:10mm; right:10mm; display:flex; justify-content:space-between; text-align:center;">
-            <div style="width:32%;">
-                <p style="font-weight:bold; margin:0 0 2px 0; font-size:12px;">Người nhận thông báo</p>
-                <p style="font-style:italic; margin:0 0 55px 0; font-size:11px;">(Ký và ghi rõ họ tên)</p>
-            </div>
-            <div style="width:32%;">
-                <p style="font-weight:bold; margin:0 0 2px 0; font-size:12px;">Người gửi thông báo</p>
-                <p style="font-style:italic; margin:0 0 55px 0; font-size:11px;">(ký và ghi rõ họ tên)</p>
-            </div>
-            <div style="width:32%;">
-                <p style="font-weight:bold; margin:0 0 2px 0; font-size:12px;">ĐIỆN LỰC TIỀN HẢI</p>
-                <p style="font-style:italic; margin:0; font-size:11px;">&nbsp;</p>
-                <p style="font-weight:bold; margin:55px 0 0 0; font-size:12px;">Trương Hùng Cường</p>
-            </div>
-        </div>
-
-    </div>
-    `
+    return `<div class="lien-thong-bao"><div style="font-weight:bold; font-size:11px; font-style:italic; margin-bottom:4px;">${tenLien}</div><table style="width:100%; border:none; border-collapse:collapse; margin-bottom:6px;"><tr><td style="width:42%; vertical-align:top; text-align:center; border:none; padding:0 4px 0 0;"><div style="font-size:11px; font-weight:bold; line-height:1.3;">Công ty Điện Lực Hưng Yên</div><div style="font-size:12.5px; font-weight:bold; text-decoration:underline; line-height:1.3;">ĐIỆN LỰC TIỀN HẢI</div></td><td style="width:58%; vertical-align:top; text-align:center; border:none; padding:0 0 0 4px;"><div style="font-size:11.5px; font-weight:bold; line-height:1.3;">CỘNG HOÀ XÃ HỘI CHỦ NGHĨA VIỆT NAM</div><div style="font-size:11.5px; font-weight:bold; text-decoration:underline; font-style:italic; line-height:1.3;">Độc lập - Tự do - Hạnh phúc</div><div style="font-size:11px; font-style:italic; text-align:right; margin-top:2px;">Tiền Hải, ${ngayIn}</div></td></tr></table><div style="text-align:center; font-size:14px; font-weight:bold; margin:8px 0; line-height:1.4;">THÔNG BÁO THANH TOÁN TIỀN ĐIỆN,<br>THÔNG BÁO NGỪNG CẤP ĐIỆN</div><p style="margin:4px 0; font-size:12px; line-height:1.4;"><u><i>Kính gửi</i></u>: Ông (bà): <b>${data.ten} - ${data.sdt}</b></p><p style="margin:4px 0; font-size:12px; line-height:1.4;">Địa chỉ: <b>${data.diaChi}</b></p><p style="margin:4px 0; font-size:12px; line-height:1.4;">Số cột: <b>${data.cot}</b>, No: <b>${data.cto}</b>, Trạm: <b>${data.tram}</b></p><p style="text-align:justify; margin-top:6px; margin-bottom:0; line-height:1.4; font-size:12px;">&nbsp;&nbsp;&nbsp;&nbsp;- Căn cứ luật điện lực số 61/2024/QH15 đã được Quốc hội nước Cộng hoà xã hội chủ nghĩa Việt Nam thông qua ngày 30/11/2024;<br>&nbsp;&nbsp;&nbsp;&nbsp;- Căn cứ Quy định về điều kiện, trình tự ngừng, giảm mức cung cấp điện được ban hành kèm theo Thông tư số 04/2025/TT-BCT ngày 01/02/2025 của Bộ trưởng Bộ Công thương;<br>&nbsp;&nbsp;&nbsp;&nbsp;- Căn cứ Hợp đồng mua bán điện đã ký kết giữa hai bên, thông báo thanh toán tiền điện lần nhất và số dư nợ tiền điện tính đến ${ngayIn} là: <b>${data.tien} đồng</b> mà quý khách hàng chưa thanh toán mặc dù đã quá thời hạn thoả thuận.</p><p style="text-align:justify; margin-top:6px; margin-bottom:0; line-height:1.4; font-size:12px;">&nbsp;&nbsp;&nbsp;&nbsp;Điện lực Tiền hải xin gửi tới Quý khách hàng giấy thông báo thanh toán tiền điện lần thứ 2 và đề nghị Quý khách hàng thu xếp để thanh toán cho chúng tôi số dư nợ tiền điện trước <b>${ngayIn}</b>. Nếu đến hết giờ làm việc ngày <b>${ngayIn}</b>, Quý khách hàng vẫn chưa thanh toán đầy đủ số tiền điện còn nợ, chúng tôi buộc phải thông báo để quý khách hàng được biết:</p><p style="text-align:justify; margin:4px 0; line-height:1.4; font-size:12px; padding-left:8px;">&nbsp;&nbsp;&nbsp;&nbsp;- <b>Điện Lực Tiền Hải sẽ tính lãi chậm trả và phạt vi phạm hợp đồng với mức phạt là 8% giá trị tiền điện phát sinh trong kỳ.</b><br>&nbsp;&nbsp;&nbsp;&nbsp;- Sau ngày <b>........ tháng ${new Date().getMonth() + 1} năm ${new Date().getFullYear()}</b>, chúng tôi xin phép được tạm ngừng cấp điện cho Quý khách hàng.<br>&nbsp;&nbsp;&nbsp;&nbsp;- Lý do ngừng cấp điện: Do Quý Khách hàng chưa thanh toán tiền điện đúng thời hạn đã thoả thuận trong Hợp đồng.<br>&nbsp;&nbsp;&nbsp;&nbsp;- Thời hạn dự kiến đóng điện: Sau khi Quý khách đã thanh toán đầy đủ tiền điện; tiền lãi của số tiền chậm trả, phạt vi phạm hợp đồng và chi phí đóng, cắt điện.</p><p style="margin-top:6px; line-height:1.4; font-size:12px;">&nbsp;&nbsp;&nbsp;&nbsp;Đề nghị Quý khách hàng có kế hoạch chủ động trong thời gian mất điện trên.<br>&nbsp;&nbsp;&nbsp;&nbsp;<b>Xin trân trọng cảm ơn!</b></p><div style="position:absolute; bottom:5mm; left:10mm; right:10mm; display:flex; justify-content:space-between; text-align:center;"><div style="width:32%;"><p style="font-weight:bold; margin:0 0 2px 0; font-size:12px;">Người nhận thông báo</p><p style="font-style:italic; margin:0 0 55px 0; font-size:11px;">(Ký và ghi rõ họ tên)</p></div><div style="width:32%;"><p style="font-weight:bold; margin:0 0 2px 0; font-size:12px;">Người gửi thông báo</p><p style="font-style:italic; margin:0 0 55px 0; font-size:11px;">(ký và ghi rõ họ tên)</p></div><div style="width:32%;"><p style="font-weight:bold; margin:0 0 2px 0; font-size:12px;">ĐIỆN LỰC TIỀN HẢI</p><p style="font-style:italic; margin:0; font-size:11px;">&nbsp;</p><p style="font-weight:bold; margin:55px 0 0 0; font-size:12px;">Trương Hùng Cường</p></div></div></div>`;
 }
 
 function inThongBaoTienDien() {
     if (!dataTableDuNo) return;
-    
-    let rowsTick = $('.chk-doc-no:checked');
-    if (rowsTick.length === 0) {
-        alert("Sếp ơi, tick chọn ít nhất 1 khách hàng ở cột ĐỐC để in nhé!");
-        return;
-    }
-
-    let htmlInAll = '';
-    let homNay = new Date();
-    let strNgayIn = `ngày <span style="font-weight:bold;">${homNay.getDate().toString().padStart(2,'0')}</span> tháng <span style="font-weight:bold;">${homNay.getMonth() + 1}</span> năm <span style="font-weight:bold;">${homNay.getFullYear()}</span>`;
-
+    let rowsTick = $('.chk-doc-no:checked'); if (rowsTick.length === 0) { alert("Sếp ơi, tick chọn ít nhất 1 khách hàng ở cột ĐỐC để in nhé!"); return; }
+    let htmlInAll = ''; let homNay = new Date(); let strNgayIn = `ngày <span style="font-weight:bold;">${homNay.getDate().toString().padStart(2,'0')}</span> tháng <span style="font-weight:bold;">${homNay.getMonth() + 1}</span> năm <span style="font-weight:bold;">${homNay.getFullYear()}</span>`;
     rowsTick.each(function() {
-        let tr = $(this).closest('tr');
-        let rowData = dataTableDuNo.row(tr).data();
-        
+        let tr = $(this).closest('tr'); let rowData = dataTableDuNo.row(tr).data();
         let cleanSo = (val) => val ? String(val).replace(/\.0$/, '').trim() : '';
-        let rawSdt = rowData['Sô điện thoại'] || rowData['Số điện thoại'];
-        let sdtClean = rawSdt ? String(rawSdt).replace(/\.0$/, '').trim() : '';
-        if (sdtClean && sdtClean !== 'NaN' && sdtClean !== 'null') {
-            if (!sdtClean.startsWith('0')) sdtClean = '0' + sdtClean;
-        } else {
-            sdtClean = 'Chưa có SĐT';
-        }
-
-        let pData = {
-            ten: rowData['Tên khách hàng'] || '--',
-            maKH: rowData['Mã khách hàng'] || '--',
-            diaChi: rowData['Địa chỉ khách hàng'] || '--',
-            tram: rowData['Tên Trạm'] || '--',
-            cot: cleanSo(rowData['Sô Cột'] || rowData['Số Cột']) || '--',
-            cto: cleanSo(rowData['Sô CTơ'] || rowData['Số CTơ']) || '--',
-            sdt: sdtClean,
-            tien: rowData['Tổng tiền'] || '0'
-        };
-
-        htmlInAll += `
-        <div class="trang-in-a4">
-            ${taoFormLien('Liên 2: Lưu Điện lực Tiền Hải', strNgayIn, pData)}
-            <div class="duong-cat-doc"></div>
-            ${taoFormLien('Liên 1: Giao Khách Hàng', strNgayIn, pData)}
-        </div>
-        `;
+        let rawSdt = rowData['Sô điện thoại'] || rowData['Số điện thoại']; let sdtClean = rawSdt ? String(rawSdt).replace(/\.0$/, '').trim() : '';
+        if (sdtClean && sdtClean !== 'NaN' && sdtClean !== 'null') { if (!sdtClean.startsWith('0')) sdtClean = '0' + sdtClean; } else { sdtClean = 'Chưa có SĐT'; }
+        let pData = { ten: rowData['Tên khách hàng'] || '--', maKH: rowData['Mã khách hàng'] || '--', diaChi: rowData['Địa chỉ khách hàng'] || '--', tram: rowData['Tên Trạm'] || '--', cot: cleanSo(rowData['Sô Cột'] || rowData['Số Cột']) || '--', cto: cleanSo(rowData['Sô CTơ'] || rowData['Số CTơ']) || '--', sdt: sdtClean, tien: rowData['Tổng tiền'] || '0' };
+        htmlInAll += `<div class="trang-in-a4">${taoFormLien('Liên 2: Lưu Điện lực Tiền Hải', strNgayIn, pData)}<div class="duong-cat-doc"></div>${taoFormLien('Liên 1: Giao Khách Hàng', strNgayIn, pData)}</div>`;
     });
-
-    document.getElementById('vung-in-thong-bao').innerHTML = htmlInAll;
-    
-    document.body.classList.add('dang-in-thong-bao');
-    window.print();
-    setTimeout(() => {
-        document.body.classList.remove('dang-in-thong-bao');
-    }, 1000);
+    document.getElementById('vung-in-thong-bao').innerHTML = htmlInAll; document.body.classList.add('dang-in-thong-bao'); window.print(); setTimeout(() => { document.body.classList.remove('dang-in-thong-bao'); }, 1000);
 }
 
-taiDuLieu();
-setInterval(taiDuLieu, 60000);
+taiDuLieu(); setInterval(taiDuLieu, 60000);
 </script>
 </body>
 </html>
