@@ -1,5 +1,5 @@
 {
-  "cap_nhat_luc": "11/05/2026 20:45:21",
+  "cap_nhat_luc": "11/05/2026 21:15:17",
   "du_lieu": {
     "07/05/2026": {
       "15h30": [
@@ -703,6 +703,22 @@
         }
       ],
       "20h45": [
+        {
+          "stt": 1,
+          "teN_KHANG": "Nam Chính 5",
+          "thoI_GIAN": "2026-11-05 19:00:00",
+          "i_MANG_TAI": 105.65,
+          "i_LECH_PHA": 68.12,
+          "donG_DIEN_A": 206,
+          "donG_DIEN_B": 154,
+          "donG_DIEN_C": 305,
+          "daP_A": 236.8,
+          "daP_B": 228.5,
+          "daP_C": 211.6,
+          "conG_SUAT": 200
+        }
+      ],
+      "21h15": [
         {
           "stt": 1,
           "teN_KHANG": "Nam Chính 5",
