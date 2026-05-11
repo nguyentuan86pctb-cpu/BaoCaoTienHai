@@ -390,10 +390,24 @@ async function taiDuLieuDuNo() {
         const res = await fetch(`https://raw.githubusercontent.com/nguyentuan86pctb-cpu/BaoCaoTienHai/main/data_duno.json?t=${Date.now()}`);
         if (!res.ok) throw new Error("Chưa có data_duno.json trên Github sếp ơi!");
         const json = await res.json();
-        const records = json.du_lieu || []; if (records.length === 0) return;
+        
+        // --- ĐOẠN MỚI THÊM: LỌC BỎ RÁC VÀ PHẦN KÝ TÊN ---
+        let rawRecords = json.du_lieu || [];
+        const records = rawRecords.filter(r => {
+            let maKH = String(r['Mã khách hàng'] || '').trim();
+            let tenKH = String(r['Tên khách hàng'] || '').trim();
+            // Điều kiện lọc: Bắt buộc phải có Mã KH, và Tên KH không được chứa các từ khóa ký tên
+            if (!maKH) return false; 
+            if (tenKH.includes('Ký, họ tên') || tenKH.includes('Thu ngân viên') || tenKH.includes('Phòng kinh doanh') || tenKH.includes('Kế toán')) return false;
+            return true;
+        });
+
+        if (records.length === 0) return;
+        // -------------------------------------------------
+
         document.getElementById('cap-nhat-luc-duno').innerHTML = `<svg class="w-4 h-4 text-green-600 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Cập nhật lúc: <span class="font-bold text-evnDark ml-1">${json.cap_nhat_luc || '--'}</span>`;
 
-        khoiTaoCacheTick(); 
+        khoiTaoCacheTick();
 
         const keys = Object.keys(records[0]);
         cotTNV_global  = keys.find(k => k.toLowerCase().includes('thu ngân') || k.toLowerCase().includes('tnv') || k.toLowerCase().includes('thu ngan'));
@@ -652,11 +666,35 @@ Yêu cầu cập nhật thông tin Khách hàng:
 function locTheoSoTien(nguong, btn) { nguongLocTien = nguong; document.querySelectorAll('.nut-loc-tien').forEach(b => { b.className = 'nut-loc-tien px-3 py-1.5 rounded border text-xs font-bold shadow-sm bg-white text-slate-600 border-slate-300 hover:border-evnOrange'; }); btn.className = 'nut-loc-tien px-3 py-1.5 rounded border text-xs font-bold shadow-sm bg-evnOrange text-white border-evnOrange'; if (dataTableDuNo) dataTableDuNo.draw(); }
 function xuatExcelTheoDieuKien() {
     if (!dataTableDuNo) { alert('Chưa có dữ liệu sếp ơi!'); return; }
-    const tenTNV = $('#filter-tnv').val() || 'TatCa'; const tenFile = `DuNo_${tenTNV.replace(/\\s+/g, '_')}_${new Date().toLocaleDateString('vi-VN').replace(/\\//g, '-')}.xlsx`;
-    const rows = dataTableDuNo.rows({ search: 'applied' }).data().toArray(); if (rows.length === 0) { alert('Không có dữ liệu để xuất!'); return; }
-    const dsKeyXuat = mangCotHoanChinh.filter(k => !kiemTraAnCot(k)); const duLieuXuat = []; duLieuXuat.push(dsKeyXuat.map(k => k.toUpperCase())); 
-    rows.forEach(row => { duLieuXuat.push(dsKeyXuat.map(k => row[k] ?? '')); });
-    const wb = XLSX.utils.book_new(); const ws = XLSX.utils.aoa_to_sheet(duLieuXuat); XLSX.utils.book_append_sheet(wb, ws, 'DuNo'); XLSX.writeFile(wb, tenFile);
+    
+    // Sửa lỗi Regex tạo tên file
+    const tenTNV = $('#filter-tnv').val() || 'TatCa'; 
+    const tenFile = `DuNo_${tenTNV.replace(/\s+/g, '_')}_${new Date().toLocaleDateString('vi-VN').replace(/\//g, '-')}.xlsx`;
+    
+    const rows = dataTableDuNo.rows({ search: 'applied' }).data().toArray(); 
+    if (rows.length === 0) { alert('Không có dữ liệu để xuất!'); return; }
+    
+    const dsKeyXuat = mangCotHoanChinh.filter(k => !kiemTraAnCot(k)); 
+    const duLieuXuat = []; 
+    duLieuXuat.push(dsKeyXuat.map(k => k.toUpperCase())); 
+    
+    // Đổ dữ liệu an toàn
+    rows.forEach(row => { 
+        duLieuXuat.push(dsKeyXuat.map(k => {
+            let val = row[k];
+            return (val !== null && val !== undefined) ? val : '';
+        })); 
+    });
+    
+    try {
+        const wb = XLSX.utils.book_new(); 
+        const ws = XLSX.utils.aoa_to_sheet(duLieuXuat); 
+        XLSX.utils.book_append_sheet(wb, ws, 'DuNo'); 
+        XLSX.writeFile(wb, tenFile);
+    } catch (error) {
+        console.error("Lỗi Excel: ", error);
+        alert("Sếp ơi, quá trình xuất Excel bị lỗi. Sếp thử tải lại trang (F5) nhé!");
+    }
 }
 
 function inBaoCaoDuNo() {
