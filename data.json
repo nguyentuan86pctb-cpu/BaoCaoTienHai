@@ -1,5 +1,5 @@
 {
-  "cap_nhat_luc": "13/05/2026 21:15:23",
+  "cap_nhat_luc": "13/05/2026 21:45:23",
   "du_lieu": {
     "07/05/2026": {
       "15h30": [
@@ -1095,6 +1095,92 @@
         }
       ],
       "21h15": [
+        {
+          "stt": 3,
+          "teN_KHANG": "Nam Hưng 3",
+          "thoI_GIAN": "2026-05-13 17:30:00",
+          "i_MANG_TAI": 112.49,
+          "i_LECH_PHA": 109.3,
+          "donG_DIEN_A": 292.25,
+          "donG_DIEN_B": 116.35,
+          "donG_DIEN_C": 105.1,
+          "daP_A": 224.3,
+          "daP_B": 225.9,
+          "daP_C": 225.3,
+          "conG_SUAT": 180
+        },
+        {
+          "stt": 2,
+          "teN_KHANG": "Nam Hưng 3",
+          "thoI_GIAN": "2026-05-13 10:00:00",
+          "i_MANG_TAI": 109.98,
+          "i_LECH_PHA": 62.23,
+          "donG_DIEN_A": 285.75,
+          "donG_DIEN_B": 156.0,
+          "donG_DIEN_C": 183.75,
+          "daP_A": 217.5,
+          "daP_B": 219.3,
+          "daP_C": 218.5,
+          "conG_SUAT": 180
+        },
+        {
+          "stt": 1,
+          "teN_KHANG": "Nam Hưng 3",
+          "thoI_GIAN": "2026-05-13 09:30:00",
+          "i_MANG_TAI": 106.04,
+          "i_LECH_PHA": 51.1,
+          "donG_DIEN_A": 275.5,
+          "donG_DIEN_B": 193.05,
+          "donG_DIEN_C": 167.2,
+          "daP_A": 218.4,
+          "daP_B": 218.8,
+          "daP_C": 218.6,
+          "conG_SUAT": 180
+        }
+      ],
+      "21h45": [
+        {
+          "stt": 5,
+          "teN_KHANG": "Đông Minh 8 (Thanh Lâm 2)",
+          "thoI_GIAN": "2026-05-13 20:30:00",
+          "i_MANG_TAI": 102.07,
+          "i_LECH_PHA": 101.28,
+          "donG_DIEN_A": 123.36,
+          "donG_DIEN_B": 100.2,
+          "donG_DIEN_C": 265.2,
+          "daP_A": 227.7,
+          "daP_B": 226.9,
+          "daP_C": 222.8,
+          "conG_SUAT": 180
+        },
+        {
+          "stt": 6,
+          "teN_KHANG": "Nam Chính 5",
+          "thoI_GIAN": "2026-05-13 20:30:00",
+          "i_MANG_TAI": 100.28,
+          "i_LECH_PHA": 47.58,
+          "donG_DIEN_A": 224.5,
+          "donG_DIEN_B": 179.5,
+          "donG_DIEN_C": 289.5,
+          "daP_A": 232.5,
+          "daP_B": 227.6,
+          "daP_C": 214.6,
+          "conG_SUAT": 200
+        },
+        {
+          "stt": 4,
+          "teN_KHANG": "Đông Minh 8 (Thanh Lâm 2)",
+          "thoI_GIAN": "2026-05-13 20:00:00",
+          "i_MANG_TAI": 119.7,
+          "i_LECH_PHA": 128.35,
+          "donG_DIEN_A": 126.36,
+          "donG_DIEN_B": 86.76,
+          "donG_DIEN_C": 310.98,
+          "daP_A": 227.6,
+          "daP_B": 227.6,
+          "daP_C": 222.9,
+          "conG_SUAT": 180
+        },
         {
           "stt": 3,
           "teN_KHANG": "Nam Hưng 3",
