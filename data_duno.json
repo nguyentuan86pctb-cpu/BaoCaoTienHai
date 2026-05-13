@@ -1,6 +1,6 @@
 {
-  "cap_nhat_luc": "13/05/2026 12:34:07",
-  "tong_so_kh": 1036,
+  "cap_nhat_luc": "13/05/2026 13:04:06",
+  "tong_so_kh": 1028,
   "du_lieu": [
     {
       "Mã Sổ GCS": 3310,
@@ -484,38 +484,6 @@
     },
     {
       "Mã Sổ GCS": 3110,
-      "ID hóa đơn": 1762850793.0,
-      "Mã khách hàng": "PA09030314347",
-      "Tên khách hàng": "Lê Văn Thiệu",
-      "Địa chỉ khách hàng": " Xã Ái Quốc, Tỉnh Hưng Yên, Việt Nam",
-      "Kỳ-tháng/năm": "1-4/2026",
-      "Loại hóa đơn": "TD",
-      "Ngày phát hành": "02-05-2026 00:00:00",
-      "Tổng tiền": "98.565",
-      "Số điện thoại": 363264229.0,
-      "Thu ngân viên": "BĐ tư gia xã Tây Phong",
-      "Số CTơ": 2310285637.0,
-      "Số Cột": "1.14",
-      "Tên Trạm": "Tây Phong 7"
-    },
-    {
-      "Mã Sổ GCS": 3110,
-      "ID hóa đơn": 1762850799.0,
-      "Mã khách hàng": "PA09030365987",
-      "Tên khách hàng": "Trần Đình Hoá",
-      "Địa chỉ khách hàng": " Xã Ái Quốc, Tỉnh Hưng Yên, Việt Nam",
-      "Kỳ-tháng/năm": "1-4/2026",
-      "Loại hóa đơn": "TD",
-      "Ngày phát hành": "02-05-2026 00:00:00",
-      "Tổng tiền": "258.962",
-      "Số điện thoại": 947209256.0,
-      "Thu ngân viên": "BĐ tư gia xã Tây Phong",
-      "Số CTơ": 2310602109.0,
-      "Số Cột": "1.10",
-      "Tên Trạm": "Tây Phong 7"
-    },
-    {
-      "Mã Sổ GCS": 3110,
       "ID hóa đơn": 1762850820.0,
       "Mã khách hàng": "PA09030399076",
       "Tên khách hàng": "Đoàn Thị Thu Loan",
@@ -596,22 +564,6 @@
     },
     {
       "Mã Sổ GCS": 3110,
-      "ID hóa đơn": 1762850920.0,
-      "Mã khách hàng": "PA09030314349",
-      "Tên khách hàng": "Lê Quang Huy",
-      "Địa chỉ khách hàng": " Xã Ái Quốc, Tỉnh Hưng Yên, Việt Nam",
-      "Kỳ-tháng/năm": "1-4/2026",
-      "Loại hóa đơn": "TD",
-      "Ngày phát hành": "02-05-2026 00:00:00",
-      "Tổng tiền": "113.778",
-      "Số điện thoại": 363264229.0,
-      "Thu ngân viên": "BĐ tư gia xã Tây Phong",
-      "Số CTơ": 2310602219.0,
-      "Số Cột": "1.13",
-      "Tên Trạm": "Tây Phong 7"
-    },
-    {
-      "Mã Sổ GCS": 3110,
       "ID hóa đơn": 1762851155.0,
       "Mã khách hàng": "PA09030314544",
       "Tên khách hàng": "Tô Văn Bình",
@@ -625,22 +577,6 @@
       "Số CTơ": 2210526976.0,
       "Số Cột": "1.2/1.1",
       "Tên Trạm": "Tây Phong 1"
-    },
-    {
-      "Mã Sổ GCS": 3110,
-      "ID hóa đơn": 1762851168.0,
-      "Mã khách hàng": "PA09030341809",
-      "Tên khách hàng": "Trần Duy Phái",
-      "Địa chỉ khách hàng": " Xã Ái Quốc, Tỉnh Hưng Yên, Việt Nam",
-      "Kỳ-tháng/năm": "1-4/2026",
-      "Loại hóa đơn": "TD",
-      "Ngày phát hành": "02-05-2026 00:00:00",
-      "Tổng tiền": "328.363",
-      "Số điện thoại": 947209256.0,
-      "Thu ngân viên": "BĐ tư gia xã Tây Phong",
-      "Số CTơ": 2310602621.0,
-      "Số Cột": "1.12",
-      "Tên Trạm": "Tây Phong 7"
     },
     {
       "Mã Sổ GCS": 3110,
@@ -673,22 +609,6 @@
       "Số CTơ": 2310518583.0,
       "Số Cột": "1.11",
       "Tên Trạm": "Tây Phong 1"
-    },
-    {
-      "Mã Sổ GCS": 3110,
-      "ID hóa đơn": 1762851323.0,
-      "Mã khách hàng": "PA09030314343",
-      "Tên khách hàng": "Lê  Văn Quân",
-      "Địa chỉ khách hàng": " Xã Ái Quốc, Tỉnh Hưng Yên, Việt Nam",
-      "Kỳ-tháng/năm": "1-4/2026",
-      "Loại hóa đơn": "TD",
-      "Ngày phát hành": "02-05-2026 00:00:00",
-      "Tổng tiền": "400.334",
-      "Số điện thoại": 368870168.0,
-      "Thu ngân viên": "BĐ tư gia xã Tây Phong",
-      "Số CTơ": 2310285955.0,
-      "Số Cột": "1.15",
-      "Tên Trạm": "Tây Phong 7"
     },
     {
       "Mã Sổ GCS": 3110,
@@ -768,22 +688,6 @@
       "Thu ngân viên": "BĐ tư gia xã Tây Phong",
       "Số CTơ": 2310288855.0,
       "Số Cột": "1.10",
-      "Tên Trạm": "Tây Phong 7"
-    },
-    {
-      "Mã Sổ GCS": 3110,
-      "ID hóa đơn": 1762851584.0,
-      "Mã khách hàng": "PA09030399921",
-      "Tên khách hàng": "Nhà thờ họ ông Lê Văn Thiệu",
-      "Địa chỉ khách hàng": " Xã Ái Quốc, Tỉnh Hưng Yên, Việt Nam",
-      "Kỳ-tháng/năm": "1-4/2026",
-      "Loại hóa đơn": "TD",
-      "Ngày phát hành": "02-05-2026 00:00:00",
-      "Tổng tiền": "278.873",
-      "Số điện thoại": 353005658.0,
-      "Thu ngân viên": "BĐ tư gia xã Tây Phong",
-      "Số CTơ": 2310285891.0,
-      "Số Cột": "1.10/1.3",
       "Tên Trạm": "Tây Phong 7"
     },
     {
@@ -1208,7 +1112,7 @@
       "Mã khách hàng": "",
       "Tên khách hàng": "",
       "Địa chỉ khách hàng": "",
-      "Kỳ-tháng/năm": "Số hóa đơn: 45 HĐ",
+      "Kỳ-tháng/năm": "Số hóa đơn: 39 HĐ",
       "Loại hóa đơn": "",
       "Ngày phát hành": "",
       "Tổng tiền": "0",
@@ -1889,22 +1793,6 @@
       "Số CTơ": "",
       "Số Cột": "",
       "Tên Trạm": ""
-    },
-    {
-      "Mã Sổ GCS": 3080,
-      "ID hóa đơn": 1762778803.0,
-      "Mã khách hàng": "PA09030313632",
-      "Tên khách hàng": "Nguyễn Văn Long",
-      "Địa chỉ khách hàng": " Xã Hưng Phú, Tỉnh Hưng Yên, Việt Nam",
-      "Kỳ-tháng/năm": "1-4/2026",
-      "Loại hóa đơn": "TD",
-      "Ngày phát hành": "02-05-2026 00:00:00",
-      "Tổng tiền": "271.814",
-      "Số điện thoại": 971021099.0,
-      "Thu ngân viên": "BĐ tư gia xã Nam Hưng",
-      "Số CTơ": 2210897754.0,
-      "Số Cột": "(1.2.3).3",
-      "Tên Trạm": "Nam Hưng 8"
     },
     {
       "Mã Sổ GCS": 3080,
@@ -2696,7 +2584,7 @@
       "Mã khách hàng": "",
       "Tên khách hàng": "",
       "Địa chỉ khách hàng": "",
-      "Kỳ-tháng/năm": "Số hóa đơn: 50 HĐ",
+      "Kỳ-tháng/năm": "Số hóa đơn: 49 HĐ",
       "Loại hóa đơn": "",
       "Ngày phát hành": "",
       "Tổng tiền": "0",
@@ -3728,22 +3616,6 @@
       "Thu ngân viên": "BĐ tư gia xã Nam Thanh",
       "Số CTơ": 2410261421.0,
       "Số Cột": "2.11",
-      "Tên Trạm": "Nam Thắng 12"
-    },
-    {
-      "Mã Sổ GCS": 3401,
-      "ID hóa đơn": 1762820611.0,
-      "Mã khách hàng": "PA09030382926",
-      "Tên khách hàng": "Nhà thờ họ ông Nguyễn Thùy",
-      "Địa chỉ khách hàng": " Xã Nam Cường, Tỉnh Hưng Yên, Việt Nam",
-      "Kỳ-tháng/năm": "1-4/2026",
-      "Loại hóa đơn": "TD",
-      "Ngày phát hành": "02-05-2026 00:00:00",
-      "Tổng tiền": "115.396",
-      "Số điện thoại": 972569455.0,
-      "Thu ngân viên": "BĐ tư gia xã Nam Thanh",
-      "Số CTơ": 2410281519.0,
-      "Số Cột": "1.5",
       "Tên Trạm": "Nam Thắng 12"
     },
     {
@@ -5416,7 +5288,7 @@
       "Mã khách hàng": "",
       "Tên khách hàng": "",
       "Địa chỉ khách hàng": "",
-      "Kỳ-tháng/năm": "Số hóa đơn: 120 HĐ",
+      "Kỳ-tháng/năm": "Số hóa đơn: 119 HĐ",
       "Loại hóa đơn": "",
       "Ngày phát hành": "",
       "Tổng tiền": "0",
