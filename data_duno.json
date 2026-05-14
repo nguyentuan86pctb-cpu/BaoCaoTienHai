@@ -1,6 +1,6 @@
 {
-  "cap_nhat_luc": "14/05/2026 23:04:08",
-  "tong_so_kh": 167,
+  "cap_nhat_luc": "14/05/2026 23:34:11",
+  "tong_so_kh": 166,
   "du_lieu": [
     {
       "Mã Sổ GCS": 3310,
@@ -931,28 +931,12 @@
       "Tên Trạm": ""
     },
     {
-      "Mã Sổ GCS": "03216B",
-      "ID hóa đơn": 1762802150.0,
-      "Mã khách hàng": "PA09030339351",
-      "Tên khách hàng": "Trần Thị Rừng",
-      "Địa chỉ khách hàng": " Xã Tây Tiền Hải, Tỉnh Hưng Yên, Việt Nam",
-      "Kỳ-tháng/năm": "1-4/2026",
-      "Loại hóa đơn": "TD",
-      "Ngày phát hành": "02-05-2026 00:00:00",
-      "Tổng tiền": "66.424",
-      "Số điện thoại": 972659014.0,
-      "Thu ngân viên": "BĐ tư gia Bắc Hải",
-      "Số CTơ": 2310444898.0,
-      "Số Cột": 2.8,
-      "Tên Trạm": "Bắc Hải 7"
-    },
-    {
       "Mã Sổ GCS": "",
       "ID hóa đơn": "",
       "Mã khách hàng": "",
       "Tên khách hàng": "",
       "Địa chỉ khách hàng": "",
-      "Kỳ-tháng/năm": "Số hóa đơn: 1 HĐ",
+      "Kỳ-tháng/năm": "Số hóa đơn: 0 HĐ",
       "Loại hóa đơn": "",
       "Ngày phát hành": "",
       "Tổng tiền": "0",
