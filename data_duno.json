@@ -1,6 +1,6 @@
 {
-  "cap_nhat_luc": "14/05/2026 18:34:06",
-  "tong_so_kh": 197,
+  "cap_nhat_luc": "14/05/2026 19:04:07",
+  "tong_so_kh": 195,
   "du_lieu": [
     {
       "Mã Sổ GCS": 3310,
@@ -132,22 +132,6 @@
     },
     {
       "Mã Sổ GCS": 3110,
-      "ID hóa đơn": 1762851155.0,
-      "Mã khách hàng": "PA09030314544",
-      "Tên khách hàng": "Tô Văn Bình",
-      "Địa chỉ khách hàng": " Xã Ái Quốc, Tỉnh Hưng Yên, Việt Nam",
-      "Kỳ-tháng/năm": "1-4/2026",
-      "Loại hóa đơn": "TD",
-      "Ngày phát hành": "02-05-2026 00:00:00",
-      "Tổng tiền": "12.856",
-      "Số điện thoại": 385452458.0,
-      "Thu ngân viên": "BĐ tư gia xã Tây Phong",
-      "Số CTơ": 2210526976.0,
-      "Số Cột": "1.2/1.1",
-      "Tên Trạm": "Tây Phong 1"
-    },
-    {
-      "Mã Sổ GCS": 3110,
       "ID hóa đơn": 1762851451.0,
       "Mã khách hàng": "PA09030314340",
       "Tên khách hàng": "Lê Văn Trịnh",
@@ -184,7 +168,7 @@
       "Mã khách hàng": "",
       "Tên khách hàng": "",
       "Địa chỉ khách hàng": "",
-      "Kỳ-tháng/năm": "Số hóa đơn: 3 HĐ",
+      "Kỳ-tháng/năm": "Số hóa đơn: 2 HĐ",
       "Loại hóa đơn": "",
       "Ngày phát hành": "",
       "Tổng tiền": "0",
@@ -2595,22 +2579,6 @@
       "Tên Trạm": "Nam Chính 3"
     },
     {
-      "Mã Sổ GCS": "03143",
-      "ID hóa đơn": 1762769666.0,
-      "Mã khách hàng": "PA09030344815",
-      "Tên khách hàng": "Phạm Văn Sơn",
-      "Địa chỉ khách hàng": " Xã Nam Cường, Tỉnh Hưng Yên, Việt Nam",
-      "Kỳ-tháng/năm": "1-4/2026",
-      "Loại hóa đơn": "TD",
-      "Ngày phát hành": "02-05-2026 00:00:00",
-      "Tổng tiền": "536.395",
-      "Số điện thoại": 986037073.0,
-      "Thu ngân viên": "Tư gia xã Nam Chính",
-      "Số CTơ": 2310598756.0,
-      "Số Cột": "1.19",
-      "Tên Trạm": "Nam Chính 3"
-    },
-    {
       "Mã Sổ GCS": "03145A",
       "ID hóa đơn": 1762773015.0,
       "Mã khách hàng": "PA09030391523",
@@ -2664,7 +2632,7 @@
       "Mã khách hàng": "",
       "Tên khách hàng": "",
       "Địa chỉ khách hàng": "",
-      "Kỳ-tháng/năm": "Số hóa đơn: 5 HĐ",
+      "Kỳ-tháng/năm": "Số hóa đơn: 4 HĐ",
       "Loại hóa đơn": "",
       "Ngày phát hành": "",
       "Tổng tiền": "0",
