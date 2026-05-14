@@ -1,6 +1,6 @@
 {
-  "cap_nhat_luc": "14/05/2026 15:34:07",
-  "tong_so_kh": 244,
+  "cap_nhat_luc": "14/05/2026 16:04:05",
+  "tong_so_kh": 236,
   "du_lieu": [
     {
       "Mã Sổ GCS": 3310,
@@ -1108,22 +1108,6 @@
     },
     {
       "Mã Sổ GCS": 3409,
-      "ID hóa đơn": 1762827019.0,
-      "Mã khách hàng": "PA09030383794",
-      "Tên khách hàng": "Đào Văn Trị",
-      "Địa chỉ khách hàng": "   Xã Nam Cường, Tỉnh Hưng Yên, Việt Nam",
-      "Kỳ-tháng/năm": "1-4/2026",
-      "Loại hóa đơn": "TD",
-      "Ngày phát hành": "02-05-2026 00:00:00",
-      "Tổng tiền": "206.766",
-      "Số điện thoại": 359919564.0,
-      "Thu ngân viên": "BĐ tư gia xã Nam Thanh",
-      "Số CTơ": 2410270216.0,
-      "Số Cột": "2.8/1.3/1.3",
-      "Tên Trạm": "Nam Thanh 7"
-    },
-    {
-      "Mã Sổ GCS": 3409,
       "ID hóa đơn": 1762828393.0,
       "Mã khách hàng": "PA09030384810",
       "Tên khách hàng": "Trần Văn Thắng",
@@ -1144,7 +1128,7 @@
       "Mã khách hàng": "",
       "Tên khách hàng": "",
       "Địa chỉ khách hàng": "",
-      "Kỳ-tháng/năm": "Số hóa đơn: 26 HĐ",
+      "Kỳ-tháng/năm": "Số hóa đơn: 25 HĐ",
       "Loại hóa đơn": "",
       "Ngày phát hành": "",
       "Tổng tiền": "0",
@@ -2339,23 +2323,7 @@
       "Tên Trạm": ""
     },
     {
-      "Mã Sổ GCS": "03100A",
-      "ID hóa đơn": 1762849925.0,
-      "Mã khách hàng": "PA09030315936",
-      "Tên khách hàng": "ĐINH TIÊN HOÀNG",
-      "Địa chỉ khách hàng": " Xã Tiền Hải, Tỉnh Hưng Yên, Việt Nam",
-      "Kỳ-tháng/năm": "1-4/2026",
-      "Loại hóa đơn": "TD",
-      "Ngày phát hành": "02-05-2026 00:00:00",
-      "Tổng tiền": "74.995",
-      "Số điện thoại": 357982192.0,
-      "Thu ngân viên": "Tư gia xã An Ninh",
-      "Số CTơ": 2111391185.0,
-      "Số Cột": "2.9/1.3",
-      "Tên Trạm": "An Ninh 8"
-    },
-    {
-      "Mã Sổ GCS": "03101",
+      "Mã Sổ GCS": 3101,
       "ID hóa đơn": 1762801826.0,
       "Mã khách hàng": "PA09030402698",
       "Tên khách hàng": "UỶ BAN NHÂN DÂN XÃ TIỀN HẢI",
@@ -2371,7 +2339,7 @@
       "Tên Trạm": "An Ninh 6"
     },
     {
-      "Mã Sổ GCS": "03101",
+      "Mã Sổ GCS": 3101,
       "ID hóa đơn": 1762801821.0,
       "Mã khách hàng": "PA09030400508",
       "Tên khách hàng": "Lương Thị Oanh",
@@ -2387,7 +2355,7 @@
       "Tên Trạm": "An Ninh 6"
     },
     {
-      "Mã Sổ GCS": "03106",
+      "Mã Sổ GCS": 3106,
       "ID hóa đơn": 1762772606.0,
       "Mã khách hàng": "PA09030402663",
       "Tên khách hàng": "UỶ BAN NHÂN DÂN XÃ TIỀN HẢI",
@@ -2408,7 +2376,7 @@
       "Mã khách hàng": "",
       "Tên khách hàng": "",
       "Địa chỉ khách hàng": "",
-      "Kỳ-tháng/năm": "Số hóa đơn: 4 HĐ",
+      "Kỳ-tháng/năm": "Số hóa đơn: 3 HĐ",
       "Loại hóa đơn": "",
       "Ngày phát hành": "",
       "Tổng tiền": "0",
@@ -2595,38 +2563,6 @@
       "Tên Trạm": "Nam Trung 15"
     },
     {
-      "Mã Sổ GCS": "03414",
-      "ID hóa đơn": 1762849894.0,
-      "Mã khách hàng": "PA09030386707",
-      "Tên khách hàng": "Nguyễn Phúc Ánh",
-      "Địa chỉ khách hàng": "   Xã Hưng Phú, Tỉnh Hưng Yên, Việt Nam",
-      "Kỳ-tháng/năm": "1-4/2026",
-      "Loại hóa đơn": "TD",
-      "Ngày phát hành": "02-05-2026 00:00:00",
-      "Tổng tiền": "34.284",
-      "Số điện thoại": 346033921.0,
-      "Thu ngân viên": "Tư gia xã Nam Trung",
-      "Số CTơ": 2011011369.0,
-      "Số Cột": "1.3/1.7",
-      "Tên Trạm": "Nam Trung 10"
-    },
-    {
-      "Mã Sổ GCS": "03414",
-      "ID hóa đơn": 1762847760.0,
-      "Mã khách hàng": "PA09030386708",
-      "Tên khách hàng": "Nguyễn Văn Dương",
-      "Địa chỉ khách hàng": "   Xã Hưng Phú, Tỉnh Hưng Yên, Việt Nam",
-      "Kỳ-tháng/năm": "1-4/2026",
-      "Loại hóa đơn": "TD",
-      "Ngày phát hành": "02-05-2026 00:00:00",
-      "Tổng tiền": "323.222",
-      "Số điện thoại": 335838363.0,
-      "Thu ngân viên": "Tư gia xã Nam Trung",
-      "Số CTơ": 2011111468.0,
-      "Số Cột": "1.3/1.7",
-      "Tên Trạm": "Nam Trung 10"
-    },
-    {
       "Mã Sổ GCS": "03416",
       "ID hóa đơn": 1762840870.0,
       "Mã khách hàng": "PA09030388353",
@@ -2640,22 +2576,6 @@
       "Thu ngân viên": "Tư gia xã Nam Trung",
       "Số CTơ": 2011012671.0,
       "Số Cột": "2.1/1.1",
-      "Tên Trạm": "Nam Trung 6 (Độc Lập)"
-    },
-    {
-      "Mã Sổ GCS": "03416",
-      "ID hóa đơn": 1762840655.0,
-      "Mã khách hàng": "PA09030388501",
-      "Tên khách hàng": "Nguyễn Thị Vui",
-      "Địa chỉ khách hàng": "   Xã Hưng Phú, Tỉnh Hưng Yên, Việt Nam",
-      "Kỳ-tháng/năm": "1-4/2026",
-      "Loại hóa đơn": "TD",
-      "Ngày phát hành": "02-05-2026 00:00:00",
-      "Tổng tiền": "446.602",
-      "Số điện thoại": 847683566.0,
-      "Thu ngân viên": "Tư gia xã Nam Trung",
-      "Số CTơ": 2011080120.0,
-      "Số Cột": "3.8/1.1",
       "Tên Trạm": "Nam Trung 6 (Độc Lập)"
     },
     {
@@ -2696,7 +2616,7 @@
       "Mã khách hàng": "",
       "Tên khách hàng": "",
       "Địa chỉ khách hàng": "",
-      "Kỳ-tháng/năm": "Số hóa đơn: 10 HĐ",
+      "Kỳ-tháng/năm": "Số hóa đơn: 7 HĐ",
       "Loại hóa đơn": "",
       "Ngày phát hành": "",
       "Tổng tiền": "0",
@@ -3251,22 +3171,6 @@
       "Tên Trạm": ""
     },
     {
-      "Mã Sổ GCS": "03142",
-      "ID hóa đơn": 1762766915.0,
-      "Mã khách hàng": "PA09030325093",
-      "Tên khách hàng": "Trần  Văn Thơi",
-      "Địa chỉ khách hàng": " Xã Nam Cường, Tỉnh Hưng Yên, Việt Nam",
-      "Kỳ-tháng/năm": "1-4/2026",
-      "Loại hóa đơn": "TD",
-      "Ngày phát hành": "02-05-2026 00:00:00",
-      "Tổng tiền": "14.999",
-      "Số điện thoại": 379304922.0,
-      "Thu ngân viên": "Tư gia xã Nam Chính",
-      "Số CTơ": 2310275512.0,
-      "Số Cột": "2.9",
-      "Tên Trạm": "Nam Chính 2"
-    },
-    {
       "Mã Sổ GCS": "03143",
       "ID hóa đơn": 1762769868.0,
       "Mã khách hàng": "PA09030325414",
@@ -3296,38 +3200,6 @@
       "Thu ngân viên": "Tư gia xã Nam Chính",
       "Số CTơ": 2310289173.0,
       "Số Cột": "3.3",
-      "Tên Trạm": "Nam Chính 3"
-    },
-    {
-      "Mã Sổ GCS": "03143",
-      "ID hóa đơn": 1762769908.0,
-      "Mã khách hàng": "PA09030325574",
-      "Tên khách hàng": "Ngô Văn Cư",
-      "Địa chỉ khách hàng": " Xã Nam Cường, Tỉnh Hưng Yên, Việt Nam",
-      "Kỳ-tháng/năm": "1-4/2026",
-      "Loại hóa đơn": "TD",
-      "Ngày phát hành": "02-05-2026 00:00:00",
-      "Tổng tiền": "6.428",
-      "Số điện thoại": 842320415.0,
-      "Thu ngân viên": "Tư gia xã Nam Chính",
-      "Số CTơ": 2310277779.0,
-      "Số Cột": "3.15",
-      "Tên Trạm": "Nam Chính 3"
-    },
-    {
-      "Mã Sổ GCS": "03143",
-      "ID hóa đơn": 1762769646.0,
-      "Mã khách hàng": "PA09030325610",
-      "Tên khách hàng": "Đào Văn Nhưng",
-      "Địa chỉ khách hàng": " Xã Nam Cường, Tỉnh Hưng Yên, Việt Nam",
-      "Kỳ-tháng/năm": "1-4/2026",
-      "Loại hóa đơn": "TD",
-      "Ngày phát hành": "02-05-2026 00:00:00",
-      "Tổng tiền": "94.280",
-      "Số điện thoại": 337251381.0,
-      "Thu ngân viên": "Tư gia xã Nam Chính",
-      "Số CTơ": 2310598459.0,
-      "Số Cột": "3.16",
       "Tên Trạm": "Nam Chính 3"
     },
     {
@@ -3400,7 +3272,7 @@
       "Mã khách hàng": "",
       "Tên khách hàng": "",
       "Địa chỉ khách hàng": "",
-      "Kỳ-tháng/năm": "Số hóa đơn: 9 HĐ",
+      "Kỳ-tháng/năm": "Số hóa đơn: 6 HĐ",
       "Loại hóa đơn": "",
       "Ngày phát hành": "",
       "Tổng tiền": "0",
