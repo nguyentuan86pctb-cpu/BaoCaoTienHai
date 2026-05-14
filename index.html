@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>EVNNPC - Điện lực Tiền Hải Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { evnBlue: "#0054A6", evnDark: "#002B54", evnOrange: "#F37021", evnOrangeDark: "#E55D00", },
+                    fontFamily: { sans: ['Public Sans', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a8a8a8; }
+        body { padding-bottom: 70px; }
+        @media (min-width: 768px) { body { padding-bottom: 0; } }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans flex h-screen overflow-hidden">
+
+<nav class="bg-evnDark text-white fixed left-0 top-0 h-full w-[260px] shadow-2xl flex flex-col py-6 z-40 hidden md:flex border-r border-blue-900">
+    <div class="px-6 mb-8 flex flex-col gap-1">
+        <span class="text-2xl font-black tracking-tight text-white drop-shadow-md">EVNNPC</span>
+        <span class="text-evnOrange font-bold text-xs uppercase tracking-widest">Điện lực Tiền Hải</span>
+    </div>
+    <div class="flex-1 overflow-y-auto flex flex-col gap-2 px-3">
+        <a class="cursor-pointer bg-gradient-to-r from-evnBlue to-[#004080] text-white rounded-lg shadow-md flex items-center gap-3 px-4 py-3 border-l-4 border-evnOrange transition-transform transform hover:translate-x-1" href="javascript:void(0)">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+            <span class="font-semibold">Báo cáo mang tải</span>
+        </a>
+    </div>
+</nav>
+
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-slate-200 flex shadow-[0_-5px_10px_rgba(0,0,0,0.05)] z-50">
+    <a class="flex-1 py-3 flex flex-col items-center justify-center text-evnBlue border-t-2 border-evnBlue bg-blue-50/50 transition-all">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+        <span class="text-[10px] font-bold mt-1 uppercase">Mang tải</span>
+    </a>
+</nav>
+
+<div class="flex-1 flex flex-col md:ml-[260px] h-full w-full overflow-hidden">
+    <header class="bg-white border-b border-slate-200 shadow-sm flex justify-center items-center h-14 md:h-16 px-4 sticky top-0 z-50">
+        <h1 class="text-lg md:text-2xl font-black text-evnBlue drop-shadow-sm tracking-tight text-center uppercase">TỔNG HỢP BÁO CÁO ĐIỆN LỰC TIỀN HẢI</h1>
+    </header>
+
+    <main class="flex-1 overflow-y-auto p-2 md:p-6 bg-slate-50">
+        <div class="max-w-[1600px] mx-auto flex flex-col gap-4 md:gap-6">
+            
+            <div id="tab-mang-tai" class="block">
+                <section class="bg-white rounded-xl border border-slate-200 shadow-lg p-3 md:p-6 flex flex-col gap-4">
+                    <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 border-b border-slate-100 pb-4">
+                        <div>
+                            <h2 class="text-lg md:text-2xl font-bold text-evnDark flex items-center gap-2 uppercase">
+                                <svg class="w-6 h-6 text-evnOrange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                                BÁO CÁO MANG TẢI TBA
+                            </h2>
+                            <p id="cap-nhat-luc" class="text-xs md:text-sm text-slate-500 mt-1 flex items-center gap-1">Đang tải dữ liệu...</p>
+                        </div>
+                        <button onclick="taiDuLieu()" class="bg-white text-slate-700 border border-slate-300 font-semibold px-4 py-2 rounded-lg shadow-sm hover:bg-slate-50 hover:text-evnBlue transition-all flex justify-center items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                            Làm mới
+                        </button>
+                    </div>
+
+                    <div class="flex flex-col gap-3 border-b border-slate-100 pb-4 mb-2">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <span class="font-bold text-slate-700 text-xs md:text-sm uppercase w-full md:w-32 mb-1 md:mb-0">XEM THEO NGÀY:</span>
+                            <button onclick="locTheoNgay('hom-nay', this)" class="nut-loc-ngay px-3 md:px-4 py-1.5 rounded border text-xs md:text-sm font-bold shadow-sm bg-evnBlue text-white border-evnBlue">Hôm nay</button>
+                            <button onclick="locTheoNgay('hom-qua', this)" class="nut-loc-ngay px-3 md:px-4 py-1.5 rounded border text-xs md:text-sm font-bold shadow-sm bg-white text-slate-600 border-slate-300">Hôm qua</button>
+                            <button onclick="locTheoNgay('7-ngay', this)" class="nut-loc-ngay px-3 md:px-4 py-1.5 rounded border text-xs md:text-sm font-bold shadow-sm bg-white text-slate-600 border-slate-300">7 ngày qua</button>
+                            <button onclick="locTheoNgay('tat-ca', this)" class="nut-loc-ngay px-3 md:px-4 py-1.5 rounded border text-xs md:text-sm font-bold shadow-sm bg-white text-slate-600 border-slate-300">Tất cả</button>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-2 mt-2 md:mt-0">
+                            <span class="font-bold text-slate-700 text-xs md:text-sm uppercase w-full md:w-32 mb-1 md:mb-0">KHOẢNG NGÀY:</span>
+                            <input type="date" id="tu-ngay" class="border border-slate-300 rounded px-2 py-1.5 text-xs md:text-sm focus:border-evnBlue outline-none">
+                            <span class="text-slate-500">›</span>
+                            <input type="date" id="den-ngay" class="border border-slate-300 rounded px-2 py-1.5 text-xs md:text-sm focus:border-evnBlue outline-none">
+                            <button onclick="locKhoangNgay()" class="bg-evnOrange text-white px-3 md:px-4 py-1.5 rounded text-xs md:text-sm font-bold shadow-sm hover:bg-evnOrangeDark transition-colors w-full md:w-auto mt-2 md:mt-0">Áp dụng</button>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row md:items-center gap-2 border-b border-slate-100 pb-3">
+                        <span class="font-bold text-slate-700 text-xs md:text-sm uppercase w-32 shrink-0 mb-1 md:mb-0">CHỌN MỐC:</span>
+                        <div id="vung-chon-gio" class="flex flex-wrap gap-2"></div>
+                    </div>
+
+                    <div class="border border-slate-200 rounded-xl overflow-hidden shadow-sm bg-white mt-2">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse whitespace-nowrap">
+                                <thead class="bg-gradient-to-r from-evnBlue to-evnDark text-white font-semibold text-sm">
+                                    <tr>
+                                        <th class="px-3 py-3 border-r border-blue-800 text-center">STT</th>
+                                        <th class="px-4 py-3 border-r border-blue-800 uppercase">Tên khách hàng</th>
+                                        <th class="px-4 py-3 border-r border-blue-800 text-right uppercase text-yellow-300 drop-shadow-md">Công suất (kW)</th>
+                                        <th class="px-4 py-3 border-r border-blue-800 uppercase">Thời gian</th>
+                                        <th class="px-4 py-3 border-r border-blue-800 text-right uppercase">Mang tải (%)</th>
+                                        <th class="px-4 py-3 border-r border-blue-800 text-right uppercase">Lệch pha (%)</th>
+                                        <th class="px-3 py-3 border-r border-blue-800 text-right">I_A (A)</th>
+                                        <th class="px-3 py-3 border-r border-blue-800 text-right">I_B (A)</th>
+                                        <th class="px-3 py-3 border-r border-blue-800 text-right">I_C (A)</th>
+                                        <th class="px-3 py-3 border-r border-blue-800 text-right">U_A (V)</th>
+                                        <th class="px-3 py-3 border-r border-blue-800 text-right">U_B (V)</th>
+                                        <th class="px-3 py-3 text-right">U_C (V)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bang-du-lieu-desktop" class="text-sm divide-y divide-slate-200"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-slate-50 px-3 md:px-5 py-3 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center text-sm gap-2">
+                        <span id="phan-trang-info" class="font-medium text-slate-600 text-center w-full md:w-auto">--</span>
+                        <div id="phan-trang-nut" class="flex flex-wrap justify-center gap-1.5 w-full md:w-auto"></div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+const SO_DONG_MOI_TRANG = 15;
+let duLieuToanBoGoc = {}; let danhSachNgayLoc = []; let duLieuCuaMocHienTai = []; let trangHienTai = 1;
+
+function taoChuoiNgay(dateObj) { return `${dateObj.getDate().toString().padStart(2, '0')}/${(dateObj.getMonth() + 1).toString().padStart(2, '0')}/${dateObj.getFullYear()}`; }
+
+async function taiDuLieu() {
+    try {
+        const res = await fetch(`https://raw.githubusercontent.com/nguyentuan86pctb-cpu/BaoCaoTienHai/main/data.json?t=${Date.now()}`);
+        const json = await res.json();
+        duLieuToanBoGoc = json.du_lieu || {}; const cacNgay = Object.keys(duLieuToanBoGoc).sort(); const ngayMoiNhat = cacNgay[cacNgay.length - 1];
+        document.getElementById('cap-nhat-luc').innerHTML = `<svg class="w-4 h-4 text-green-600 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Dữ liệu ngày: <span class="font-bold text-evnDark ml-1">${ngayMoiNhat || '--'}</span> <span class="hidden md:inline mx-2">—</span> Cập nhật: <span class="font-medium text-slate-600">${json.cap_nhat_luc || '--'}</span>`;
+        locTheoNgay('hom-nay', document.querySelector(".nut-loc-ngay"));
+    } catch (err) { document.getElementById('bang-du-lieu-desktop').innerHTML = `<tr><td colspan="12" class="text-center text-red-600 py-10 font-bold bg-red-50">Lỗi kết nối: ${err.message}</td></tr>`; }
+}
+
+function locTheoNgay(loai, btnElement = null) {
+    if (btnElement) { document.querySelectorAll('.nut-loc-ngay').forEach(btn => btn.className = "nut-loc-ngay px-3 md:px-4 py-1.5 rounded border text-xs md:text-sm font-bold shadow-sm bg-white text-slate-600 border-slate-300"); btnElement.className = "nut-loc-ngay px-3 md:px-4 py-1.5 rounded border text-xs md:text-sm font-bold shadow-sm bg-evnBlue text-white border-evnBlue"; }
+    let homNay = new Date(); danhSachNgayLoc = [];
+    if (loai === 'hom-nay') danhSachNgayLoc.push(taoChuoiNgay(homNay));
+    else if (loai === 'hom-qua') { let d = new Date(); d.setDate(d.getDate() - 1); danhSachNgayLoc.push(taoChuoiNgay(d)); }
+    else if (loai === '7-ngay') { for (let i = 0; i < 7; i++) { let d = new Date(); d.setDate(d.getDate() - i); danhSachNgayLoc.push(taoChuoiNgay(d)); } }
+    else if (loai === 'tat-ca') danhSachNgayLoc = Object.keys(duLieuToanBoGoc);
+    taoNutChonGio();
+}
+
+function locKhoangNgay() {
+    let tu = document.getElementById('tu-ngay').value; let den = document.getElementById('den-ngay').value;
+    if(!tu || !den) { alert("Sếp ơi, chọn đủ Từ ngày và Đến ngày đã!"); return; }
+    document.querySelectorAll('.nut-loc-ngay').forEach(btn => btn.className = "nut-loc-ngay px-3 md:px-4 py-1.5 rounded border text-xs md:text-sm font-bold shadow-sm bg-white text-slate-600 border-slate-300");
+    danhSachNgayLoc = []; for (let dt = new Date(tu); dt <= new Date(den); dt.setDate(dt.getDate() + 1)) { danhSachNgayLoc.push(taoChuoiNgay(new Date(dt))); }
+    taoNutChonGio();
+}
+
+function taoNutChonGio() {
+    const vungChon = document.getElementById('vung-chon-gio'); let cacMocGio = new Set();
+    danhSachNgayLoc.forEach(ngay => { if (duLieuToanBoGoc[ngay]) Object.keys(duLieuToanBoGoc[ngay]).forEach(gio => cacMocGio.add(gio)); });
+    let mangMocGio = Array.from(cacMocGio).sort();
+    if (mangMocGio.length === 0) { vungChon.innerHTML = '<span class="text-slate-500 italic px-2">Khoảng thời gian này chưa có báo cáo sếp ạ...</span>'; duLieuCuaMocHienTai = []; renderDuLieu(); return; }
+    let html = ''; const mocMacDinh = mangMocGio[mangMocGio.length - 1];
+    mangMocGio.forEach(gio => { html += `<button onclick="chonMocGio('${gio}')" id="btn-gio-${gio}" class="nut-gio px-3 md:px-4 py-1.5 rounded border text-xs md:text-sm font-bold shadow-sm transition-all ${gio === mocMacDinh ? 'bg-evnOrange text-white border-evnOrange' : 'bg-white text-slate-600 border-slate-300 hover:border-evnOrange hover:text-evnOrange'}">${gio}</button>`; });
+    vungChon.innerHTML = html; chonMocGio(mocMacDinh); 
+}
+
+function chonMocGio(gio) {
+    document.querySelectorAll('.nut-gio').forEach(btn => btn.className = "nut-gio px-3 md:px-4 py-1.5 rounded border text-xs md:text-sm font-bold shadow-sm bg-white text-slate-600 border-slate-300");
+    const btnActive = document.getElementById(`btn-gio-${gio}`); if (btnActive) btnActive.className = "nut-gio px-3 md:px-4 py-1.5 rounded border text-xs md:text-sm font-bold shadow-sm bg-evnOrange text-white border-evnOrange";
+    duLieuCuaMocHienTai = []; danhSachNgayLoc.forEach(ngay => { if(duLieuToanBoGoc[ngay] && duLieuToanBoGoc[ngay][gio]) duLieuCuaMocHienTai = duLieuCuaMocHienTai.concat(duLieuToanBoGoc[ngay][gio]); });
+    trangHienTai = 1; renderDuLieu();
+}
+
+function renderDuLieu() {
+    const tbody = document.getElementById('bang-du-lieu-desktop');
+    if (duLieuCuaMocHienTai.length === 0) { tbody.innerHTML = `<tr><td colspan="12" class="text-center text-slate-500 py-10 font-medium bg-slate-50">Hết dữ liệu rồi sếp!</td></tr>`; document.getElementById('phan-trang-info').textContent = `--`; document.getElementById('phan-trang-nut').innerHTML = ''; return; }
+    const batDau = (trangHienTai - 1) * SO_DONG_MOI_TRANG; const duLieuTrang = duLieuCuaMocHienTai.slice(batDau, batDau + SO_DONG_MOI_TRANG); let html = '';
+    duLieuTrang.forEach((row, idx) => {
+        const mtVal = parseFloat(row.i_MANG_TAI || 0); const lpVal = parseFloat(row.i_LECH_PHA || 0);
+        const styleMT = mtVal >= 200 ? `<span class="bg-red-100 text-red-700 border border-red-300 px-2 py-0.5 rounded shadow-sm font-bold">${mtVal.toFixed(2)}</span>` : mtVal.toFixed(2);
+        const styleLP = lpVal >= 50 ? `<span class="bg-red-100 text-red-700 border border-red-300 px-2 py-0.5 rounded shadow-sm font-bold">${lpVal.toFixed(2)}</span>` : lpVal.toFixed(2);
+        html += `<tr class="hover:bg-blue-50 transition-colors ${idx % 2 === 0 ? 'bg-white' : 'bg-slate-50'}"><td class="px-3 py-3 border-r border-slate-200 text-center text-slate-500">${row.stt ?? ''}</td><td class="px-4 py-3 border-r border-slate-200 font-bold text-evnDark">${row.teN_KHANG ?? ''}</td><td class="px-4 py-3 border-r border-slate-200 text-right font-black text-evnOrangeDark">${row.conG_SUAT ?? '0'}</td><td class="px-4 py-3 border-r border-slate-200 text-slate-600">${row.thoI_GIAN ?? ''}</td><td class="px-4 py-3 border-r border-slate-200 text-right">${styleMT}</td><td class="px-4 py-3 border-r border-slate-200 text-right">${styleLP}</td><td class="px-3 py-3 border-r border-slate-200 text-right text-slate-600">${row.donG_DIEN_A ?? ''}</td><td class="px-3 py-3 border-r border-slate-200 text-right text-slate-600">${row.donG_DIEN_B ?? ''}</td><td class="px-3 py-3 border-r border-slate-200 text-right text-slate-600">${row.donG_DIEN_C ?? ''}</td><td class="px-3 py-3 border-r border-slate-200 text-right text-slate-600">${row.daP_A ?? ''}</td><td class="px-3 py-3 border-r border-slate-200 text-right text-slate-600">${row.daP_B ?? ''}</td><td class="px-3 py-3 text-right text-slate-600">${row.daP_C ?? ''}</td></tr>`;
+    });
+    tbody.innerHTML = html; document.getElementById('phan-trang-info').textContent = `Đang xem: ${batDau + 1} - ${Math.min(batDau + SO_DONG_MOI_TRANG, duLieuCuaMocHienTai.length)} / Tổng ${duLieuCuaMocHienTai.length} trạm`;
+    const divNut = document.getElementById('phan-trang-nut'); divNut.innerHTML = ''; const tongTrang = Math.ceil(duLieuCuaMocHienTai.length / SO_DONG_MOI_TRANG);
+    for (let i = 1; i <= tongTrang; i++) {
+        const btn = document.createElement('button'); btn.textContent = i; btn.className = `w-8 h-8 rounded-md border font-semibold shadow-sm transition-all ${i === trangHienTai ? 'bg-evnBlue text-white border-evnBlue' : 'bg-white text-slate-600 border-slate-300 hover:border-evnBlue'}`;
+        btn.onclick = () => { trangHienTai = i; renderDuLieu(); }; divNut.appendChild(btn);
+    }
+}
+
+taiDuLieu(); setInterval(taiDuLieu, 60000);
+</script>
+</body>
+</html>
