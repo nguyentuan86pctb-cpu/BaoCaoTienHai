@@ -3,9 +3,13 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>EVNNPC - Điện lực Tiền Hải Dashboard</title>
+    <title>EVNNPC - Điện lực Tiền Hải Dashboard (V2.1)</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 
     <script>
         tailwind.config = {
@@ -18,10 +22,32 @@
         }
     </script>
     <style>
+        /* Tùy chỉnh thanh cuộn */
         ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #a8a8a8; }
+        
+        /* Chỉnh lại giao diện bảng DataTables cho chuyên nghiệp */
+        .dataTables_wrapper .dataTables_filter { margin-bottom: 15px; }
+        .dataTables_wrapper .dataTables_filter input {
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 4px 10px;
+            outline: none;
+            margin-left: 8px;
+        }
+        table.dataTable thead th { background: linear-gradient(to right, #0054A6, #002B54); color: white; border: none; }
+        table.dataTable tbody tr:hover { background-color: #eff6ff !important; }
+        
+        /* Khắc phục triệt để lỗi lệch cột và ghim tiêu đề chuẩn */
+        table.dataTable { width: 100% !important; margin-top: 0 !important; }
+        #bang-du-lieu-thong-minh thead th {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15); /* Thêm bóng đổ cho đẹp */
+        }
+        
         body { padding-bottom: 70px; }
         @media (min-width: 768px) { body { padding-bottom: 0; } }
     </style>
@@ -41,19 +67,12 @@
     </div>
 </nav>
 
-<nav class="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-slate-200 flex shadow-[0_-5px_10px_rgba(0,0,0,0.05)] z-50">
-    <a class="flex-1 py-3 flex flex-col items-center justify-center text-evnBlue border-t-2 border-evnBlue bg-blue-50/50 transition-all">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-        <span class="text-[10px] font-bold mt-1 uppercase">Mang tải</span>
-    </a>
-</nav>
-
 <div class="flex-1 flex flex-col md:ml-[260px] h-full w-full overflow-hidden">
     <header class="bg-white border-b border-slate-200 shadow-sm flex justify-center items-center h-14 md:h-16 px-4 sticky top-0 z-50">
         <h1 class="text-lg md:text-2xl font-black text-evnBlue drop-shadow-sm tracking-tight text-center uppercase">TỔNG HỢP BÁO CÁO ĐIỆN LỰC TIỀN HẢI</h1>
     </header>
 
-    <main class="flex-1 overflow-y-auto p-2 md:p-6 bg-slate-50">
+    <main class="flex-1 p-2 md:p-6 bg-slate-50 overflow-y-auto">
         <div class="max-w-[1600px] mx-auto flex flex-col gap-4 md:gap-6">
             
             <div id="tab-mang-tai" class="block">
@@ -74,53 +93,48 @@
 
                     <div class="flex flex-col gap-3 border-b border-slate-100 pb-4 mb-2">
                         <div class="flex flex-wrap items-center gap-2">
-                            <span class="font-bold text-slate-700 text-xs md:text-sm uppercase w-full md:w-32 mb-1 md:mb-0">XEM THEO NGÀY:</span>
-                            <button onclick="locTheoNgay('hom-nay', this)" class="nut-loc-ngay px-3 md:px-4 py-1.5 rounded border text-xs md:text-sm font-bold shadow-sm bg-evnBlue text-white border-evnBlue">Hôm nay</button>
-                            <button onclick="locTheoNgay('hom-qua', this)" class="nut-loc-ngay px-3 md:px-4 py-1.5 rounded border text-xs md:text-sm font-bold shadow-sm bg-white text-slate-600 border-slate-300">Hôm qua</button>
-                            <button onclick="locTheoNgay('7-ngay', this)" class="nut-loc-ngay px-3 md:px-4 py-1.5 rounded border text-xs md:text-sm font-bold shadow-sm bg-white text-slate-600 border-slate-300">7 ngày qua</button>
-                            <button onclick="locTheoNgay('tat-ca', this)" class="nut-loc-ngay px-3 md:px-4 py-1.5 rounded border text-xs md:text-sm font-bold shadow-sm bg-white text-slate-600 border-slate-300">Tất cả</button>
+                            <span class="font-bold text-slate-700 text-xs md:text-sm uppercase w-full md:w-32">XEM NHANH:</span>
+                            <button onclick="locTheoNgay('hom-nay', this)" class="nut-loc-ngay px-3 py-1.5 rounded border text-xs md:text-sm font-bold bg-evnBlue text-white border-evnBlue">Hôm nay</button>
+                            <button onclick="locTheoNgay('hom-qua', this)" class="nut-loc-ngay px-3 py-1.5 rounded border text-xs md:text-sm font-bold bg-white text-slate-600 border-slate-300">Hôm qua</button>
+                            <button onclick="locTheoNgay('tat-ca', this)" class="nut-loc-ngay px-3 py-1.5 rounded border text-xs md:text-sm font-bold bg-white text-slate-600 border-slate-300">Tất cả</button>
                         </div>
-                        <div class="flex flex-wrap items-center gap-2 mt-2 md:mt-0">
-                            <span class="font-bold text-slate-700 text-xs md:text-sm uppercase w-full md:w-32 mb-1 md:mb-0">KHOẢNG NGÀY:</span>
-                            <input type="date" id="tu-ngay" class="border border-slate-300 rounded px-2 py-1.5 text-xs md:text-sm focus:border-evnBlue outline-none">
-                            <span class="text-slate-500">›</span>
-                            <input type="date" id="den-ngay" class="border border-slate-300 rounded px-2 py-1.5 text-xs md:text-sm focus:border-evnBlue outline-none">
-                            <button onclick="locKhoangNgay()" class="bg-evnOrange text-white px-3 md:px-4 py-1.5 rounded text-xs md:text-sm font-bold shadow-sm hover:bg-evnOrangeDark transition-colors w-full md:w-auto mt-2 md:mt-0">Áp dụng</button>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <span class="font-bold text-slate-700 text-xs md:text-sm uppercase w-full md:w-32">KHOẢNG NGÀY:</span>
+                            <input type="date" id="tu-ngay" class="border border-slate-300 rounded px-2 py-1.5 text-xs md:text-sm outline-none">
+                            <span class="text-slate-400">đến</span>
+                            <input type="date" id="den-ngay" class="border border-slate-300 rounded px-2 py-1.5 text-xs md:text-sm outline-none">
+                            <button onclick="locKhoangNgay()" class="bg-evnOrange text-white px-3 py-1.5 rounded text-xs md:text-sm font-bold hover:bg-evnOrangeDark transition-colors">Áp dụng</button>
                         </div>
                     </div>
                     
-                    <div class="flex flex-col md:flex-row md:items-center gap-2 border-b border-slate-100 pb-3">
-                        <span class="font-bold text-slate-700 text-xs md:text-sm uppercase w-32 shrink-0 mb-1 md:mb-0">CHỌN MỐC:</span>
-                        <div id="vung-chon-gio" class="flex flex-wrap gap-2"></div>
+                    <div class="flex items-center gap-2 border-b border-slate-100 pb-3">
+                        <span class="font-bold text-slate-700 text-xs md:text-sm uppercase w-32 shrink-0">CHỌN MỐC GIỜ:</span>
+                        <select id="select-moc-gio" onchange="chonMocGio(this.value)" class="border border-evnOrange rounded-lg px-3 py-1.5 text-sm font-bold text-evnOrangeDark outline-none bg-orange-50 min-w-[150px]">
+                            <option value="">Đang tải...</option>
+                        </select>
                     </div>
 
-                    <div class="border border-slate-200 rounded-xl overflow-hidden shadow-sm bg-white mt-2">
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left border-collapse whitespace-nowrap">
-                                <thead class="bg-gradient-to-r from-evnBlue to-evnDark text-white font-semibold text-sm">
-                                    <tr>
-                                        <th class="px-3 py-3 border-r border-blue-800 text-center">STT</th>
-                                        <th class="px-4 py-3 border-r border-blue-800 uppercase">Tên khách hàng</th>
-                                        <th class="px-4 py-3 border-r border-blue-800 text-right uppercase text-yellow-300 drop-shadow-md">Công suất (kW)</th>
-                                        <th class="px-4 py-3 border-r border-blue-800 uppercase">Thời gian</th>
-                                        <th class="px-4 py-3 border-r border-blue-800 text-right uppercase">Mang tải (%)</th>
-                                        <th class="px-4 py-3 border-r border-blue-800 text-right uppercase">Lệch pha (%)</th>
-                                        <th class="px-3 py-3 border-r border-blue-800 text-right">I_A (A)</th>
-                                        <th class="px-3 py-3 border-r border-blue-800 text-right">I_B (A)</th>
-                                        <th class="px-3 py-3 border-r border-blue-800 text-right">I_C (A)</th>
-                                        <th class="px-3 py-3 border-r border-blue-800 text-right">U_A (V)</th>
-                                        <th class="px-3 py-3 border-r border-blue-800 text-right">U_B (V)</th>
-                                        <th class="px-3 py-3 text-right">U_C (V)</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="bang-du-lieu-desktop" class="text-sm divide-y divide-slate-200"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-slate-50 px-3 md:px-5 py-3 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center text-sm gap-2">
-                        <span id="phan-trang-info" class="font-medium text-slate-600 text-center w-full md:w-auto">--</span>
-                        <div id="phan-trang-nut" class="flex flex-wrap justify-center gap-1.5 w-full md:w-auto"></div>
+                    <div class="border border-slate-200 rounded-xl shadow-sm bg-white mt-2 overflow-auto" style="max-height: 65vh;">
+                        <table id="bang-du-lieu-thong-minh" class="display nowrap w-full text-sm">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">STT</th>
+                                    <th>Tên khách hàng</th>
+                                    <th class="text-right">Công suất (kW)</th>
+                                    <th>Thời gian</th>
+                                    <th class="text-right">Mang tải (%)</th>
+                                    <th class="text-right">Lệch pha (%)</th>
+                                    <th class="text-right">I_A (A)</th>
+                                    <th class="text-right">I_B (A)</th>
+                                    <th class="text-right">I_C (A)</th>
+                                    <th class="text-right">U_A (V)</th>
+                                    <th class="text-right">U_B (V)</th>
+                                    <th class="text-right">U_C (V)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                </tbody>
+                        </table>
                     </div>
                 </section>
             </div>
@@ -129,75 +143,144 @@
 </div>
 
 <script>
-const SO_DONG_MOI_TRANG = 15;
-let duLieuToanBoGoc = {}; let danhSachNgayLoc = []; let duLieuCuaMocHienTai = []; let trangHienTai = 1;
+let duLieuToanBoGoc = {}; 
+let danhSachNgayLoc = []; 
+let dataTableInstance = null;
 
-function taoChuoiNgay(dateObj) { return `${dateObj.getDate().toString().padStart(2, '0')}/${(dateObj.getMonth() + 1).toString().padStart(2, '0')}/${dateObj.getFullYear()}`; }
+$(document).ready(function() {
+    dataTableInstance = $('#bang-du-lieu-thong-minh').DataTable({
+        language: {
+            url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/vi.json', 
+            search: "Tìm trạm/khách hàng:"
+        },
+        pageLength: 5000, 
+        order: [[1, 'asc']], 
+        paging: false, 
+        info: true, 
+        autoWidth: false, // Ngăn chặn lỗi đoán sai kích thước cột
+        columnDefs: [
+            { className: "dt-right", targets: [2, 4, 5, 6, 7, 8, 9, 10, 11] }, 
+            { className: "dt-center", targets: [0] } 
+        ]
+    });
+    
+    taiDuLieu();
+    setInterval(taiDuLieu, 300000); // 5 phút tự động cập nhật một lần
+});
+
+function taoChuoiNgay(dateObj) { 
+    return `${dateObj.getDate().toString().padStart(2, '0')}/${(dateObj.getMonth() + 1).toString().padStart(2, '0')}/${dateObj.getFullYear()}`; 
+}
 
 async function taiDuLieu() {
     try {
         const res = await fetch(`https://raw.githubusercontent.com/nguyentuan86pctb-cpu/BaoCaoTienHai/main/data.json?t=${Date.now()}`);
         const json = await res.json();
-        duLieuToanBoGoc = json.du_lieu || {}; const cacNgay = Object.keys(duLieuToanBoGoc).sort(); const ngayMoiNhat = cacNgay[cacNgay.length - 1];
-        document.getElementById('cap-nhat-luc').innerHTML = `<svg class="w-4 h-4 text-green-600 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Dữ liệu ngày: <span class="font-bold text-evnDark ml-1">${ngayMoiNhat || '--'}</span> <span class="hidden md:inline mx-2">—</span> Cập nhật: <span class="font-medium text-slate-600">${json.cap_nhat_luc || '--'}</span>`;
+        duLieuToanBoGoc = json.du_lieu || {}; 
+        const cacNgay = Object.keys(duLieuToanBoGoc).sort(); 
+        const ngayMoiNhat = cacNgay[cacNgay.length - 1];
+        
+        document.getElementById('cap-nhat-luc').innerHTML = `
+            <svg class="w-4 h-4 text-green-600 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> 
+            Dữ liệu ngày: <span class="font-bold text-evnDark ml-1">${ngayMoiNhat || '--'}</span> 
+            <span class="mx-2">—</span> Cập nhật: <span class="font-medium text-slate-600">${json.cap_nhat_luc || '--'}</span>`;
+        
         locTheoNgay('hom-nay', document.querySelector(".nut-loc-ngay"));
-    } catch (err) { document.getElementById('bang-du-lieu-desktop').innerHTML = `<tr><td colspan="12" class="text-center text-red-600 py-10 font-bold bg-red-50">Lỗi kết nối: ${err.message}</td></tr>`; }
-}
-
-function locTheoNgay(loai, btnElement = null) {
-    if (btnElement) { document.querySelectorAll('.nut-loc-ngay').forEach(btn => btn.className = "nut-loc-ngay px-3 md:px-4 py-1.5 rounded border text-xs md:text-sm font-bold shadow-sm bg-white text-slate-600 border-slate-300"); btnElement.className = "nut-loc-ngay px-3 md:px-4 py-1.5 rounded border text-xs md:text-sm font-bold shadow-sm bg-evnBlue text-white border-evnBlue"; }
-    let homNay = new Date(); danhSachNgayLoc = [];
-    if (loai === 'hom-nay') danhSachNgayLoc.push(taoChuoiNgay(homNay));
-    else if (loai === 'hom-qua') { let d = new Date(); d.setDate(d.getDate() - 1); danhSachNgayLoc.push(taoChuoiNgay(d)); }
-    else if (loai === '7-ngay') { for (let i = 0; i < 7; i++) { let d = new Date(); d.setDate(d.getDate() - i); danhSachNgayLoc.push(taoChuoiNgay(d)); } }
-    else if (loai === 'tat-ca') danhSachNgayLoc = Object.keys(duLieuToanBoGoc);
-    taoNutChonGio();
-}
-
-function locKhoangNgay() {
-    let tu = document.getElementById('tu-ngay').value; let den = document.getElementById('den-ngay').value;
-    if(!tu || !den) { alert("Sếp ơi, chọn đủ Từ ngày và Đến ngày đã!"); return; }
-    document.querySelectorAll('.nut-loc-ngay').forEach(btn => btn.className = "nut-loc-ngay px-3 md:px-4 py-1.5 rounded border text-xs md:text-sm font-bold shadow-sm bg-white text-slate-600 border-slate-300");
-    danhSachNgayLoc = []; for (let dt = new Date(tu); dt <= new Date(den); dt.setDate(dt.getDate() + 1)) { danhSachNgayLoc.push(taoChuoiNgay(new Date(dt))); }
-    taoNutChonGio();
-}
-
-function taoNutChonGio() {
-    const vungChon = document.getElementById('vung-chon-gio'); let cacMocGio = new Set();
-    danhSachNgayLoc.forEach(ngay => { if (duLieuToanBoGoc[ngay]) Object.keys(duLieuToanBoGoc[ngay]).forEach(gio => cacMocGio.add(gio)); });
-    let mangMocGio = Array.from(cacMocGio).sort();
-    if (mangMocGio.length === 0) { vungChon.innerHTML = '<span class="text-slate-500 italic px-2">Khoảng thời gian này chưa có báo cáo sếp ạ...</span>'; duLieuCuaMocHienTai = []; renderDuLieu(); return; }
-    let html = ''; const mocMacDinh = mangMocGio[mangMocGio.length - 1];
-    mangMocGio.forEach(gio => { html += `<button onclick="chonMocGio('${gio}')" id="btn-gio-${gio}" class="nut-gio px-3 md:px-4 py-1.5 rounded border text-xs md:text-sm font-bold shadow-sm transition-all ${gio === mocMacDinh ? 'bg-evnOrange text-white border-evnOrange' : 'bg-white text-slate-600 border-slate-300 hover:border-evnOrange hover:text-evnOrange'}">${gio}</button>`; });
-    vungChon.innerHTML = html; chonMocGio(mocMacDinh); 
-}
-
-function chonMocGio(gio) {
-    document.querySelectorAll('.nut-gio').forEach(btn => btn.className = "nut-gio px-3 md:px-4 py-1.5 rounded border text-xs md:text-sm font-bold shadow-sm bg-white text-slate-600 border-slate-300");
-    const btnActive = document.getElementById(`btn-gio-${gio}`); if (btnActive) btnActive.className = "nut-gio px-3 md:px-4 py-1.5 rounded border text-xs md:text-sm font-bold shadow-sm bg-evnOrange text-white border-evnOrange";
-    duLieuCuaMocHienTai = []; danhSachNgayLoc.forEach(ngay => { if(duLieuToanBoGoc[ngay] && duLieuToanBoGoc[ngay][gio]) duLieuCuaMocHienTai = duLieuCuaMocHienTai.concat(duLieuToanBoGoc[ngay][gio]); });
-    trangHienTai = 1; renderDuLieu();
-}
-
-function renderDuLieu() {
-    const tbody = document.getElementById('bang-du-lieu-desktop');
-    if (duLieuCuaMocHienTai.length === 0) { tbody.innerHTML = `<tr><td colspan="12" class="text-center text-slate-500 py-10 font-medium bg-slate-50">Hết dữ liệu rồi sếp!</td></tr>`; document.getElementById('phan-trang-info').textContent = `--`; document.getElementById('phan-trang-nut').innerHTML = ''; return; }
-    const batDau = (trangHienTai - 1) * SO_DONG_MOI_TRANG; const duLieuTrang = duLieuCuaMocHienTai.slice(batDau, batDau + SO_DONG_MOI_TRANG); let html = '';
-    duLieuTrang.forEach((row, idx) => {
-        const mtVal = parseFloat(row.i_MANG_TAI || 0); const lpVal = parseFloat(row.i_LECH_PHA || 0);
-        const styleMT = mtVal >= 200 ? `<span class="bg-red-100 text-red-700 border border-red-300 px-2 py-0.5 rounded shadow-sm font-bold">${mtVal.toFixed(2)}</span>` : mtVal.toFixed(2);
-        const styleLP = lpVal >= 50 ? `<span class="bg-red-100 text-red-700 border border-red-300 px-2 py-0.5 rounded shadow-sm font-bold">${lpVal.toFixed(2)}</span>` : lpVal.toFixed(2);
-        html += `<tr class="hover:bg-blue-50 transition-colors ${idx % 2 === 0 ? 'bg-white' : 'bg-slate-50'}"><td class="px-3 py-3 border-r border-slate-200 text-center text-slate-500">${row.stt ?? ''}</td><td class="px-4 py-3 border-r border-slate-200 font-bold text-evnDark">${row.teN_KHANG ?? ''}</td><td class="px-4 py-3 border-r border-slate-200 text-right font-black text-evnOrangeDark">${row.conG_SUAT ?? '0'}</td><td class="px-4 py-3 border-r border-slate-200 text-slate-600">${row.thoI_GIAN ?? ''}</td><td class="px-4 py-3 border-r border-slate-200 text-right">${styleMT}</td><td class="px-4 py-3 border-r border-slate-200 text-right">${styleLP}</td><td class="px-3 py-3 border-r border-slate-200 text-right text-slate-600">${row.donG_DIEN_A ?? ''}</td><td class="px-3 py-3 border-r border-slate-200 text-right text-slate-600">${row.donG_DIEN_B ?? ''}</td><td class="px-3 py-3 border-r border-slate-200 text-right text-slate-600">${row.donG_DIEN_C ?? ''}</td><td class="px-3 py-3 border-r border-slate-200 text-right text-slate-600">${row.daP_A ?? ''}</td><td class="px-3 py-3 border-r border-slate-200 text-right text-slate-600">${row.daP_B ?? ''}</td><td class="px-3 py-3 text-right text-slate-600">${row.daP_C ?? ''}</td></tr>`;
-    });
-    tbody.innerHTML = html; document.getElementById('phan-trang-info').textContent = `Đang xem: ${batDau + 1} - ${Math.min(batDau + SO_DONG_MOI_TRANG, duLieuCuaMocHienTai.length)} / Tổng ${duLieuCuaMocHienTai.length} trạm`;
-    const divNut = document.getElementById('phan-trang-nut'); divNut.innerHTML = ''; const tongTrang = Math.ceil(duLieuCuaMocHienTai.length / SO_DONG_MOI_TRANG);
-    for (let i = 1; i <= tongTrang; i++) {
-        const btn = document.createElement('button'); btn.textContent = i; btn.className = `w-8 h-8 rounded-md border font-semibold shadow-sm transition-all ${i === trangHienTai ? 'bg-evnBlue text-white border-evnBlue' : 'bg-white text-slate-600 border-slate-300 hover:border-evnBlue'}`;
-        btn.onclick = () => { trangHienTai = i; renderDuLieu(); }; divNut.appendChild(btn);
+    } catch (err) { 
+        alert("Lỗi tải dữ liệu sếp ơi: " + err.message);
     }
 }
 
-taiDuLieu(); setInterval(taiDuLieu, 60000);
+function locTheoNgay(loai, btnElement = null) {
+    if (btnElement) { 
+        document.querySelectorAll('.nut-loc-ngay').forEach(btn => btn.className = "nut-loc-ngay px-3 py-1.5 rounded border text-xs md:text-sm font-bold bg-white text-slate-600 border-slate-300"); 
+        btnElement.className = "nut-loc-ngay px-3 py-1.5 rounded border text-xs md:text-sm font-bold bg-evnBlue text-white border-evnBlue"; 
+    }
+    let homNay = new Date(); 
+    danhSachNgayLoc = [];
+    if (loai === 'hom-nay') danhSachNgayLoc.push(taoChuoiNgay(homNay));
+    else if (loai === 'hom-qua') { let d = new Date(); d.setDate(d.getDate() - 1); danhSachNgayLoc.push(taoChuoiNgay(d)); }
+    else if (loai === 'tat-ca') danhSachNgayLoc = Object.keys(duLieuToanBoGoc);
+    
+    capNhatSelectGio();
+}
+
+function locKhoangNgay() {
+    let tu = document.getElementById('tu-ngay').value; 
+    let den = document.getElementById('den-ngay').value;
+    if(!tu || !den) { alert("Sếp chọn đủ Từ ngày và Đến ngày đã nhé!"); return; }
+    
+    document.querySelectorAll('.nut-loc-ngay').forEach(btn => btn.className = "nut-loc-ngay px-3 py-1.5 rounded border text-xs md:text-sm font-bold bg-white text-slate-600 border-slate-300");
+    danhSachNgayLoc = []; 
+    for (let dt = new Date(tu); dt <= new Date(den); dt.setDate(dt.getDate() + 1)) { 
+        danhSachNgayLoc.push(taoChuoiNgay(new Date(dt))); 
+    }
+    capNhatSelectGio();
+}
+
+function capNhatSelectGio() {
+    const select = document.getElementById('select-moc-gio'); 
+    let cacMocGio = new Set();
+    danhSachNgayLoc.forEach(ngay => { 
+        if (duLieuToanBoGoc[ngay]) Object.keys(duLieuToanBoGoc[ngay]).forEach(gio => cacMocGio.add(gio)); 
+    });
+    
+    let mangMocGio = Array.from(cacMocGio).sort();
+    if (mangMocGio.length === 0) { 
+        select.innerHTML = '<option value="">(Không có dữ liệu)</option>'; 
+        dataTableInstance.clear().draw();
+        return; 
+    }
+    
+    let html = '';
+    const mocMacDinh = mangMocGio[mangMocGio.length - 1];
+    mangMocGio.reverse().forEach(gio => { 
+        html += `<option value="${gio}" ${gio === mocMacDinh ? 'selected' : ''}>Mốc: ${gio}</option>`; 
+    });
+    select.innerHTML = html; 
+    chonMocGio(mocMacDinh); 
+}
+
+function chonMocGio(gio) {
+    if (!gio) return;
+    let duLieuLoc = [];
+    danhSachNgayLoc.forEach(ngay => { 
+        if(duLieuToanBoGoc[ngay] && duLieuToanBoGoc[ngay][gio]) {
+            duLieuLoc = duLieuLoc.concat(duLieuToanBoGoc[ngay][gio]); 
+        }
+    });
+    
+    renderVaoBang(duLieuLoc);
+}
+
+function renderVaoBang(data) {
+    dataTableInstance.clear();
+    
+    data.forEach((row) => {
+        const mtVal = parseFloat(row.i_MANG_TAI || 0);
+        const lpVal = parseFloat(row.i_LECH_PHA || 0);
+        
+        const styleMT = mtVal >= 200 ? `<b class="text-red-600">${mtVal.toFixed(2)}</b>` : mtVal.toFixed(2);
+        const styleLP = lpVal >= 50 ? `<b class="text-red-600">${lpVal.toFixed(2)}</b>` : lpVal.toFixed(2);
+
+        dataTableInstance.row.add([
+            row.stt ?? '',
+            `<span class="font-bold text-evnDark">${row.teN_KHANG ?? ''}</span>`,
+            `<span class="font-bold text-evnOrangeDark">${row.conG_SUAT ?? '0'}</span>`,
+            row.thoI_GIAN ?? '',
+            styleMT,
+            styleLP,
+            row.donG_DIEN_A ?? '',
+            row.donG_DIEN_B ?? '',
+            row.donG_DIEN_C ?? '',
+            row.daP_A ?? '',
+            row.daP_B ?? '',
+            row.daP_C ?? ''
+        ]);
+    });
+    
+    dataTableInstance.draw();
+}
 </script>
 </body>
 </html>
