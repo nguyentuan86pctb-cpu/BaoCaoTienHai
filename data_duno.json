@@ -1,6 +1,6 @@
 {
-  "cap_nhat_luc": "15/05/2026 14:34:13",
-  "tong_so_kh": 145,
+  "cap_nhat_luc": "15/05/2026 15:04:15",
+  "tong_so_kh": 141,
   "du_lieu": [
     {
       "Mã Sổ GCS": 3310,
@@ -259,22 +259,6 @@
       "Tên Trạm": ""
     },
     {
-      "Mã Sổ GCS": 3063,
-      "ID hóa đơn": 1762792575.0,
-      "Mã khách hàng": "PA09030314065",
-      "Tên khách hàng": "Trạm Y tế  Đông Trà",
-      "Địa chỉ khách hàng": " Xã Đông Tiền Hải, Tỉnh Hưng Yên, Việt Nam",
-      "Kỳ-tháng/năm": "1-4/2026",
-      "Loại hóa đơn": "TD",
-      "Ngày phát hành": "02-05-2026 00:00:00",
-      "Tổng tiền": "483.356",
-      "Số điện thoại": 989546573.0,
-      "Thu ngân viên": "BĐ tư gia xã Đông Trà",
-      "Số CTơ": 2110770167.0,
-      "Số Cột": "2.4",
-      "Tên Trạm": "Đông Trà 4"
-    },
-    {
       "Mã Sổ GCS": 3067,
       "ID hóa đơn": 1762770183.0,
       "Mã khách hàng": "PA09030313772",
@@ -296,7 +280,7 @@
       "Mã khách hàng": "",
       "Tên khách hàng": "",
       "Địa chỉ khách hàng": "",
-      "Kỳ-tháng/năm": "Số hóa đơn: 2 HĐ",
+      "Kỳ-tháng/năm": "Số hóa đơn: 1 HĐ",
       "Loại hóa đơn": "",
       "Ngày phát hành": "",
       "Tổng tiền": "0",
@@ -483,28 +467,12 @@
       "Tên Trạm": ""
     },
     {
-      "Mã Sổ GCS": 3163,
-      "ID hóa đơn": 1762784225.0,
-      "Mã khách hàng": "PA09030329269",
-      "Tên khách hàng": "Trạm Y tế Đông Long",
-      "Địa chỉ khách hàng": " Xã Đông Tiền Hải, Tỉnh Hưng Yên, Việt Nam",
-      "Kỳ-tháng/năm": "1-4/2026",
-      "Loại hóa đơn": "TD",
-      "Ngày phát hành": "02-05-2026 00:00:00",
-      "Tổng tiền": "351.328",
-      "Số điện thoại": 357432489.0,
-      "Thu ngân viên": "BĐ tư gia xã Đông Long",
-      "Số CTơ": 2310283471.0,
-      "Số Cột": 2.14,
-      "Tên Trạm": "Đông Long 10"
-    },
-    {
       "Mã Sổ GCS": "",
       "ID hóa đơn": "",
       "Mã khách hàng": "",
       "Tên khách hàng": "",
       "Địa chỉ khách hàng": "",
-      "Kỳ-tháng/năm": "Số hóa đơn: 1 HĐ",
+      "Kỳ-tháng/năm": "Số hóa đơn: 0 HĐ",
       "Loại hóa đơn": "",
       "Ngày phát hành": "",
       "Tổng tiền": "0",
@@ -723,28 +691,12 @@
       "Tên Trạm": ""
     },
     {
-      "Mã Sổ GCS": 3177,
-      "ID hóa đơn": 1762774740.0,
-      "Mã khách hàng": "PA09030328372",
-      "Tên khách hàng": "Trạm Y tế Đông Trung",
-      "Địa chỉ khách hàng": " Xã Đông Tiền Hải, Tỉnh Hưng Yên, Việt Nam",
-      "Kỳ-tháng/năm": "1-4/2026",
-      "Loại hóa đơn": "TD",
-      "Ngày phát hành": "02-05-2026 00:00:00",
-      "Tổng tiền": "595.244",
-      "Số điện thoại": 977188245.0,
-      "Thu ngân viên": "BĐ tư gia xã Đông Trung",
-      "Số CTơ": 2110666499.0,
-      "Số Cột": 2.3,
-      "Tên Trạm": "Đông Trung 1"
-    },
-    {
       "Mã Sổ GCS": "",
       "ID hóa đơn": "",
       "Mã khách hàng": "",
       "Tên khách hàng": "",
       "Địa chỉ khách hàng": "",
-      "Kỳ-tháng/năm": "Số hóa đơn: 1 HĐ",
+      "Kỳ-tháng/năm": "Số hóa đơn: 0 HĐ",
       "Loại hóa đơn": "",
       "Ngày phát hành": "",
       "Tổng tiền": "0",
@@ -1795,22 +1747,6 @@
       "Tên Trạm": "Đông Xuyên 2"
     },
     {
-      "Mã Sổ GCS": 3185,
-      "ID hóa đơn": 1762785310.0,
-      "Mã khách hàng": "PA09030328750",
-      "Tên khách hàng": "Trạm Y tế Đông Xuyên",
-      "Địa chỉ khách hàng": " Xã Đông Tiền Hải, Tỉnh Hưng Yên, Việt Nam",
-      "Kỳ-tháng/năm": "1-4/2026",
-      "Loại hóa đơn": "TD",
-      "Ngày phát hành": "02-05-2026 00:00:00",
-      "Tổng tiền": "606.433",
-      "Số điện thoại": 972100315.0,
-      "Thu ngân viên": "Tư gia xã Đông Xuyên",
-      "Số CTơ": 2110642559.0,
-      "Số Cột": "1.6/1.5/2.1",
-      "Tên Trạm": "Đông Xuyên 6"
-    },
-    {
       "Mã Sổ GCS": 3186,
       "ID hóa đơn": 1762784393.0,
       "Mã khách hàng": "PA09030330644",
@@ -1848,7 +1784,7 @@
       "Mã khách hàng": "",
       "Tên khách hàng": "",
       "Địa chỉ khách hàng": "",
-      "Kỳ-tháng/năm": "Số hóa đơn: 14 HĐ",
+      "Kỳ-tháng/năm": "Số hóa đơn: 13 HĐ",
       "Loại hóa đơn": "",
       "Ngày phát hành": "",
       "Tổng tiền": "0",
