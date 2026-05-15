@@ -1,6 +1,6 @@
 {
-  "cap_nhat_luc": "15/05/2026 15:34:07",
-  "tong_so_kh": 141,
+  "cap_nhat_luc": "15/05/2026 16:04:05",
+  "tong_so_kh": 140,
   "du_lieu": [
     {
       "Mã Sổ GCS": 3310,
@@ -1315,22 +1315,6 @@
       "Tên Trạm": "An Ninh 6"
     },
     {
-      "Mã Sổ GCS": 3101,
-      "ID hóa đơn": 1762801821.0,
-      "Mã khách hàng": "PA09030400508",
-      "Tên khách hàng": "Lương Thị Oanh",
-      "Địa chỉ khách hàng": " Xã Tiền Hải, Tỉnh Hưng Yên, Việt Nam",
-      "Kỳ-tháng/năm": "1-4/2026",
-      "Loại hóa đơn": "TD",
-      "Ngày phát hành": "02-05-2026 00:00:00",
-      "Tổng tiền": "89.994",
-      "Số điện thoại": 912763568.0,
-      "Thu ngân viên": "Tư gia xã An Ninh",
-      "Số CTơ": 2310274230.0,
-      "Số Cột": "2.3/1.2",
-      "Tên Trạm": "An Ninh 6"
-    },
-    {
       "Mã Sổ GCS": 3106,
       "ID hóa đơn": 1762772606.0,
       "Mã khách hàng": "PA09030402663",
@@ -1352,7 +1336,7 @@
       "Mã khách hàng": "",
       "Tên khách hàng": "",
       "Địa chỉ khách hàng": "",
-      "Kỳ-tháng/năm": "Số hóa đơn: 3 HĐ",
+      "Kỳ-tháng/năm": "Số hóa đơn: 2 HĐ",
       "Loại hóa đơn": "",
       "Ngày phát hành": "",
       "Tổng tiền": "0",
