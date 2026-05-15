@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>EVNNPC - Điện lực Tiền Hải Dashboard (V2.1)</title>
+    <title>EVNNPC - Điện lực Tiền Hải Dashboard (V2.2)</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
@@ -260,7 +260,17 @@ function renderVaoBang(data) {
         const mtVal = parseFloat(row.i_MANG_TAI || 0);
         const lpVal = parseFloat(row.i_LECH_PHA || 0);
         
-        const styleMT = mtVal >= 200 ? `<b class="text-red-600">${mtVal.toFixed(2)}</b>` : mtVal.toFixed(2);
+        // TÍNH NĂNG MỚI: Bôi màu cột Mang tải
+        let styleMT = mtVal.toFixed(2);
+        if (mtVal >= 200) {
+            // >= 200%: Bôi nền Đỏ, chữ đậm
+            styleMT = `<span class="bg-red-100 text-red-700 border border-red-300 px-2 py-0.5 rounded shadow-sm font-bold block text-center">${mtVal.toFixed(2)}</span>`;
+        } else if (mtVal >= 110) {
+            // >= 110%: Bôi nền Vàng, chữ đậm
+            styleMT = `<span class="bg-yellow-200 text-yellow-800 border border-yellow-400 px-2 py-0.5 rounded shadow-sm font-bold block text-center">${mtVal.toFixed(2)}</span>`;
+        }
+        
+        // Cảnh báo lệch pha (giữ nguyên chữ đỏ)
         const styleLP = lpVal >= 50 ? `<b class="text-red-600">${lpVal.toFixed(2)}</b>` : lpVal.toFixed(2);
 
         dataTableInstance.row.add([
