@@ -1,6 +1,6 @@
 {
-  "cap_nhat_luc": "15/05/2026 17:34:11",
-  "tong_so_kh": 140,
+  "cap_nhat_luc": "15/05/2026 18:04:07",
+  "tong_so_kh": 138,
   "du_lieu": [
     {
       "Mã Sổ GCS": 3310,
@@ -1731,22 +1731,6 @@
       "Tên Trạm": "Đông Xuyên 2"
     },
     {
-      "Mã Sổ GCS": 3186,
-      "ID hóa đơn": 1762784393.0,
-      "Mã khách hàng": "PA09030330644",
-      "Tên khách hàng": "Đặng Văn Kinh",
-      "Địa chỉ khách hàng": " Xã Đông Tiền Hải, Tỉnh Hưng Yên, Việt Nam",
-      "Kỳ-tháng/năm": "1-4/2026",
-      "Loại hóa đơn": "TD",
-      "Ngày phát hành": "02-05-2026 00:00:00",
-      "Tổng tiền": "271.814",
-      "Số điện thoại": 325923421.0,
-      "Thu ngân viên": "Tư gia xã Đông Xuyên",
-      "Số CTơ": 2110651861.0,
-      "Số Cột": "2.8/1.1",
-      "Tên Trạm": "Đông Xuyên 11"
-    },
-    {
       "Mã Sổ GCS": 3190,
       "ID hóa đơn": 1762787893.0,
       "Mã khách hàng": "PA09030382287",
@@ -1768,7 +1752,7 @@
       "Mã khách hàng": "",
       "Tên khách hàng": "",
       "Địa chỉ khách hàng": "",
-      "Kỳ-tháng/năm": "Số hóa đơn: 13 HĐ",
+      "Kỳ-tháng/năm": "Số hóa đơn: 12 HĐ",
       "Loại hóa đơn": "",
       "Ngày phát hành": "",
       "Tổng tiền": "0",
@@ -2131,28 +2115,12 @@
       "Tên Trạm": ""
     },
     {
-      "Mã Sổ GCS": "03283B",
-      "ID hóa đơn": 1762804998.0,
-      "Mã khách hàng": "PA09030352130",
-      "Tên khách hàng": "Lý Văn Huân",
-      "Địa chỉ khách hàng": "  Xã Tiền Hải, Tỉnh Hưng Yên, Việt Nam",
-      "Kỳ-tháng/năm": "1-4/2026",
-      "Loại hóa đơn": "TD",
-      "Ngày phát hành": "02-05-2026 00:00:00",
-      "Tổng tiền": "1.481.825",
-      "Số điện thoại": 353530162.0,
-      "Thu ngân viên": "Tư gia xã Tây Ninh",
-      "Số CTơ": 2110060083.0,
-      "Số Cột": 2.7,
-      "Tên Trạm": "Tây Ninh 10"
-    },
-    {
       "Mã Sổ GCS": "",
       "ID hóa đơn": "",
       "Mã khách hàng": "",
       "Tên khách hàng": "",
       "Địa chỉ khách hàng": "",
-      "Kỳ-tháng/năm": "Số hóa đơn: 1 HĐ",
+      "Kỳ-tháng/năm": "Số hóa đơn: 0 HĐ",
       "Loại hóa đơn": "",
       "Ngày phát hành": "",
       "Tổng tiền": "0",
