@@ -1,6 +1,6 @@
 {
-  "cap_nhat_luc": "15/05/2026 10:04:13",
-  "tong_so_kh": 156,
+  "cap_nhat_luc": "15/05/2026 10:34:10",
+  "tong_so_kh": 155,
   "du_lieu": [
     {
       "Mã Sổ GCS": 3310,
@@ -1251,28 +1251,12 @@
       "Tên Trạm": ""
     },
     {
-      "Mã Sổ GCS": "03292A",
-      "ID hóa đơn": 1763082100.0,
-      "Mã khách hàng": "PA09030353424",
-      "Tên khách hàng": "Nguyễn Thị Thìn",
-      "Địa chỉ khách hàng": " Xã Nam Tiền Hải, Tỉnh Hưng Yên, Việt Nam",
-      "Kỳ-tháng/năm": "1-4/2026",
-      "Loại hóa đơn": "TD",
-      "Ngày phát hành": "02-05-2026 00:00:00",
-      "Tổng tiền": "359.208",
-      "Số điện thoại": 357341195.0,
-      "Thu ngân viên": "Tư gia xã Nam Hồng",
-      "Số CTơ": 2111228889.0,
-      "Số Cột": "2.9/2.1/1.2/1.3",
-      "Tên Trạm": "Nam Hồng 8"
-    },
-    {
       "Mã Sổ GCS": "",
       "ID hóa đơn": "",
       "Mã khách hàng": "",
       "Tên khách hàng": "",
       "Địa chỉ khách hàng": "",
-      "Kỳ-tháng/năm": "Số hóa đơn: 1 HĐ",
+      "Kỳ-tháng/năm": "Số hóa đơn: 0 HĐ",
       "Loại hóa đơn": "",
       "Ngày phát hành": "",
       "Tổng tiền": "0",
