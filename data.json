@@ -1,5 +1,5 @@
 {
-  "cap_nhat_luc": "16/05/2026 19:15:14",
+  "cap_nhat_luc": "16/05/2026 19:45:22",
   "du_lieu": {
     "07/05/2026": {
       "15h30": [
@@ -8149,6 +8149,78 @@
         }
       ],
       "19h15": [
+        {
+          "stt": 5,
+          "teN_KHANG": "Nam Hưng 3",
+          "thoI_GIAN": "2026-05-16 13:30:00",
+          "i_MANG_TAI": 115.01,
+          "i_LECH_PHA": 59.72,
+          "donG_DIEN_A": 298.8,
+          "donG_DIEN_B": 192.4,
+          "donG_DIEN_C": 167.65,
+          "daP_A": 218.8,
+          "daP_B": 220.8,
+          "daP_C": 220.6,
+          "conG_SUAT": 180
+        },
+        {
+          "stt": 1,
+          "teN_KHANG": "Tây Ninh -Trung Tâm",
+          "thoI_GIAN": "2026-05-16 13:00:00",
+          "i_MANG_TAI": 100.49,
+          "i_LECH_PHA": 65.16,
+          "donG_DIEN_A": 362.6,
+          "donG_DIEN_B": 197.4,
+          "donG_DIEN_C": 200.6,
+          "daP_A": 217.0,
+          "daP_B": 240.3,
+          "daP_C": 223.3,
+          "conG_SUAT": 250
+        },
+        {
+          "stt": 4,
+          "teN_KHANG": "Nam Hưng 3",
+          "thoI_GIAN": "2026-05-16 13:00:00",
+          "i_MANG_TAI": 108.41,
+          "i_LECH_PHA": 74.99,
+          "donG_DIEN_A": 281.65,
+          "donG_DIEN_B": 176.0,
+          "donG_DIEN_C": 133.8,
+          "daP_A": 219.4,
+          "daP_B": 220.4,
+          "daP_C": 220.3,
+          "conG_SUAT": 180
+        },
+        {
+          "stt": 3,
+          "teN_KHANG": "Nam Hưng 3",
+          "thoI_GIAN": "2026-05-16 11:00:00",
+          "i_MANG_TAI": 102.63,
+          "i_LECH_PHA": 50.31,
+          "donG_DIEN_A": 266.65,
+          "donG_DIEN_B": 202.4,
+          "donG_DIEN_C": 161.0,
+          "daP_A": 222.4,
+          "daP_B": 222.6,
+          "daP_C": 222.9,
+          "conG_SUAT": 180
+        },
+        {
+          "stt": 2,
+          "teN_KHANG": "Nam Hưng 3",
+          "thoI_GIAN": "2026-05-16 10:00:00",
+          "i_MANG_TAI": 101.21,
+          "i_LECH_PHA": 39.81,
+          "donG_DIEN_A": 262.95,
+          "donG_DIEN_B": 179.45,
+          "donG_DIEN_C": 186.85,
+          "daP_A": 219.8,
+          "daP_B": 221.5,
+          "daP_C": 221.2,
+          "conG_SUAT": 180
+        }
+      ],
+      "19h45": [
         {
           "stt": 5,
           "teN_KHANG": "Nam Hưng 3",
