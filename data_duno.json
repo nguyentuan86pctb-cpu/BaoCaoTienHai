@@ -1,6 +1,6 @@
 {
-  "cap_nhat_luc": "18/05/2026 09:04:08",
-  "tong_so_kh": 135,
+  "cap_nhat_luc": "18/05/2026 11:04:08",
+  "tong_so_kh": 134,
   "du_lieu": [
     {
       "Mã Sổ GCS": 3310,
@@ -339,22 +339,6 @@
       "Tên Trạm": "Vân Trường 8"
     },
     {
-      "Mã Sổ GCS": 3385,
-      "ID hóa đơn": 1762824575.0,
-      "Mã khách hàng": "PA09030401876",
-      "Tên khách hàng": "TRẦN VĂN NAM",
-      "Địa chỉ khách hàng": "  Xã Tây Tiền Hải, Tỉnh Hưng Yên, Việt Nam",
-      "Kỳ-tháng/năm": "1-4/2026",
-      "Loại hóa đơn": "TD",
-      "Ngày phát hành": "02-05-2026 00:00:00",
-      "Tổng tiền": "195.696",
-      "Số điện thoại": 983111301.0,
-      "Thu ngân viên": "BĐ tư gia xã Vân Trường",
-      "Số CTơ": 2410314832.0,
-      "Số Cột": "1.16",
-      "Tên Trạm": "Vân Trường 12"
-    },
-    {
       "Mã Sổ GCS": 3387,
       "ID hóa đơn": 1762820898.0,
       "Mã khách hàng": "PA09030375835",
@@ -376,7 +360,7 @@
       "Mã khách hàng": "",
       "Tên khách hàng": "",
       "Địa chỉ khách hàng": "",
-      "Kỳ-tháng/năm": "Số hóa đơn: 3 HĐ",
+      "Kỳ-tháng/năm": "Số hóa đơn: 2 HĐ",
       "Loại hóa đơn": "",
       "Ngày phát hành": "",
       "Tổng tiền": "0",
